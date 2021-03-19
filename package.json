@@ -13,13 +13,15 @@
     }
   },
   "dependencies": {
+    "ant-design-vue": "^2.0.1",
+    "clipboard": "^2.0.8",
     "core-js": "^3.6.5",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.0-0"
+    "vuedraggable": "^4.0.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "^12.0.1",
-    "@commitlint/config-conventional": "^12.0.1",
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -30,15 +32,17 @@
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-standard": "^5.1.2",
     "@vue/eslint-config-typescript": "^5.0.2",
+    "compression-webpack-plugin": "^6.0.0",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^7.0.0-0",
-    "husky": "^5.1.3",
+    "husky": "^4.3.5",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
+    "svg-sprite-loader": "^6.0.2",
     "typescript": "~3.9.3"
   }
 }
