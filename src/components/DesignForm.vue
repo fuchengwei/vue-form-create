@@ -13,8 +13,21 @@
                 :fields="basicFields"
                 :list="basicComponents"
               />
+              <ComponentGroup
+                title="高级字段"
+                :fields="advanceFields"
+                :list="advanceComponents"
+              />
+              <ComponentGroup
+                title="布局字段"
+                :fields="layoutFields"
+                :list="layoutComponents"
+              />
             </div>
           </a-layout-sider>
+          <a-layout class="center-container">
+            <Header v-bind="$props" />
+          </a-layout>
         </a-layout>
       </a-layout-content>
     </a-layout>
@@ -24,28 +37,35 @@
 <script lang="ts">
 import { defineComponent, reactive, PropType, toRefs } from 'vue'
 import ComponentGroup from './ComponentGroup.vue'
+import Header from './Header.vue'
 import { basicComponents, layoutComponents, advanceComponents } from '@/config'
 
 export default defineComponent({
   name: 'DesignForm',
   components: {
-    ComponentGroup
+    ComponentGroup,
+    Header
   },
   props: {
     preview: {
-      type: Boolean
+      type: Boolean,
+      default: true
     },
     generateCode: {
-      type: Boolean
+      type: Boolean,
+      default: true
     },
     generateJson: {
-      type: Boolean
+      type: Boolean,
+      default: true
     },
     upload: {
-      type: Boolean
+      type: Boolean,
+      default: true
     },
     clearable: {
-      type: Boolean
+      type: Boolean,
+      default: true
     },
     basicFields: {
       type: Array as PropType<Array<string>>,

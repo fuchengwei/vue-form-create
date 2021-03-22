@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import DesignForm from '@/components/Container.vue'
+import DesignForm from '@/components/DesignForm.vue'
 import Icons from '@/icons'
 import '@/styles/index.styl'
 

@@ -231,15 +231,13 @@ export const advanceComponents = [
   {
     name: '自定义区域',
     type: 'blank',
-    icon: 'icon-zidingyishuju',
     options: {
       defaultType: 'String'
     }
   },
   {
     name: '图片',
-    type: 'imgupload',
-    icon: 'icon-tupian',
+    type: 'img-upload',
     options: {
       defaultValue: [],
       size: {
@@ -259,7 +257,6 @@ export const advanceComponents = [
   {
     name: '编辑器',
     type: 'editor',
-    icon: 'icon-fuwenbenkuang',
     options: {
       defaultValue: '',
       width: ''
@@ -268,7 +265,6 @@ export const advanceComponents = [
   {
     name: '级联选择器',
     type: 'cascader',
-    icon: 'icon-jilianxuanze',
     options: {
       defaultValue: [],
       width: '',
@@ -291,7 +287,6 @@ export const layoutComponents = [
   {
     name: '栅格布局',
     type: 'grid',
-    icon: 'icon-grid-',
     columns: [
       {
         span: 12,
