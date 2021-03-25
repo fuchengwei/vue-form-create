@@ -34,6 +34,10 @@ $primary-background-color = #ecf5ff
       .svg-icon
         font-size 16px
         margin-right 5px
+    .ant-layout-content
+      padding 0
+      position relative
+      background #fafafa
   .components
     padding 8px 0
     width 100%
@@ -78,3 +82,172 @@ $primary-background-color = #ecf5ff
         span
           display inline-block
           vertical-align middle
+  .widget-form-container
+    position absolute
+    top 0
+    left 0
+    right 0
+    bottom 0
+    .widget-form-list
+      background #fff
+      border 1px dashed #999
+      min-height calc(100vh - 65px)
+      margin 10px
+      .widget-col-list
+        min-height 50px
+        border 1px dashed #ccc
+        background #fff
+      .widget-view
+        padding-bottom 18px
+        position relative
+        border 1px dashed rgba(170, 170, 170, 0.7)
+        background-color rgba(236, 245, 255, 0.3)
+        margin 2px
+        .ant-form-item
+          position unset
+        .ant-form-item-control-wrapper
+          flex 1
+        &.required
+          .ant-form-item-label::before
+            content '*'
+            color #f56c6c
+            margin-right 4px
+        .widget-view-description
+          height 15px
+          line-height 15px
+          font-size 13px
+          margin-top 6px
+          color #909399
+        .widget-view-action
+          position absolute
+          right 0
+          bottom 0
+          height 28px
+          line-height 28px
+          background $primary-color
+          z-index 9
+        .widget-view-drag
+          position absolute
+          left -2px
+          top -2px
+          bottom -18px
+          height 28px
+          line-height 28px
+          background $primary-color
+          z-index 9
+        &:after
+          position absolute
+          left 0
+          right 0
+          top 0
+          bottom 0
+          display block
+        &:hover
+          background $primary-background-color
+          outline 1px solid $primary-color
+          outline-offset 0
+          &.active
+            outline 2px solid $primary-color
+            border 1px solid $primary-color
+            outline-offset 0
+          .widget-view-drag
+            display block
+        &.active
+          outline 2px solid $primary-color
+          border 1px solid $primary-color
+        &.ghost
+          background #f56c6c
+          border 2px solid #f56c6c
+          outline-width 0
+          height 3px
+          box-sizing border-box
+          font-size 0
+          content ''
+          overflow hidden
+          padding 0
+      .ghost
+        background #f56c6c
+        border 2px solid #f56c6c
+        outline-width 0
+        height 3px
+        box-sizing border-box
+        font-size 0
+        content ''
+        overflow hidden
+        padding 0
+    .ghost
+      background #f56c6c
+      border 2px solid #f56c6c
+      position relative
+      &::after
+        background #f56c6c
+    li.ghost
+      height 5px
+      list-style none
+      font-size 0
+      overflow hidden
+  .widget-config-container
+    position relative
+    .ant-layout-header
+      border-bottom 2px solid #e4e7ed
+      padding 0 5px
+      height 45px
+      line-height 45px
+      background-color #fff
+    .config-tab
+      height 41px
+      line-height 41px
+      display inline-block
+      width 145px
+      text-align center
+      font-size 14px
+      font-weight 500
+      position relative
+      cursor pointer
+      &.active
+        border-bottom 2px solid $primary-color
+    .config-content
+      padding 10px
+      background #fff
+      .ant-form-item-label
+        font-weight 500
+      .ant-form-item
+        padding-bottom 10px
+        border-bottom 1px solid #e1e1e1
+      .label
+        font-size 14px
+        font-weight 500
+        margin 0 5px
+        &:first-child
+          margin-left 0
+    .ghost
+      background #fff
+      border 1px dashed $primary-color
+      &::after
+        background #fff
+        display block
+        content ''
+        position absolute
+        top 0
+        left 0
+        right 0
+        bottom 0
+    ul
+      margin 0
+      padding 0
+    li.ghost
+      list-style none
+      font-size 0
+      display block
+      position relative
+  .form-empty
+    position absolute
+    text-align center
+    width 300px
+    font-size 20px
+    top 200px
+    left 50%
+    margin-left -150px
+    color #ccc
+  .widget-empty
+    background-position 50%

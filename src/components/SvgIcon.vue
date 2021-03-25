@@ -20,6 +20,7 @@ import { defineComponent, computed } from 'vue'
 import * as utils from '@/utils'
 
 export default defineComponent({
+  name: 'SvgIcon',
   props: {
     iconClass: {
       type: String,

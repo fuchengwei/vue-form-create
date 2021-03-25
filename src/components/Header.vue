@@ -61,9 +61,6 @@ export default defineComponent({
   name: 'Header',
   components: {
     SvgIcon
-  },
-  setup() {
-    return {}
   }
 })
 </script>

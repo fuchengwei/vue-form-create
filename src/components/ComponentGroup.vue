@@ -2,14 +2,11 @@
   <div class="widget-cate">{{ title }}</div>
   <Draggable
     tag="ul"
-    ghostClass="ghost"
     item-key="type"
-    :list="list"
+    ghostClass='ghost'
     :group="{name: 'people', pull: 'clone', put: false}"
     :sort="false"
-    :move="handleMove"
-    @start="handleMoveStart"
-    @end="handleMoveEnd"
+    :list="list"
   >
     <template #item="{ element }">
       <li
@@ -49,18 +46,6 @@ export default defineComponent({
     list: {
       type: Array as PropType<Array<string>>,
       required: true
-    },
-    handleMove: {
-      type: Function,
-      default: () => null
-    },
-    handleMoveStart: {
-      type: Function,
-      default: () => null
-    },
-    handleMoveEnd: {
-      type: Function,
-      default: () => null
     }
   }
 })

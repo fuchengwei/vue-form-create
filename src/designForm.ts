@@ -1,23 +1,23 @@
 import { App } from 'vue'
-import DesignForm from '@/components/DesignForm.vue'
+import AntdDesignForm from '@/core/AntdDesignForm.vue'
 import Icons from '@/icons'
 import '@/styles/index.styl'
 
 Icons.install()
 
-DesignForm.install = (app: App) => {
-  app.component(DesignForm.name, DesignForm)
+AntdDesignForm.install = (app: App) => {
+  app.component(AntdDesignForm.name, AntdDesignForm)
 }
 
-const components = [DesignForm]
+const components = [AntdDesignForm]
 
 const install = (app: App) => {
   components.forEach(component => app.component(component.name, component))
 }
 
-export { install, DesignForm }
+export { install, AntdDesignForm }
 
 export default {
   install,
-  DesignForm
+  AntdDesignForm
 }

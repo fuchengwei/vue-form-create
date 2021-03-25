@@ -1,5 +1,5 @@
 <template>
-  <DesignForm />
+  <AntdDesignForm />
 </template>
 
 <style lang="stylus">

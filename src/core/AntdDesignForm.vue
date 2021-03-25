@@ -11,23 +11,58 @@
               <ComponentGroup
                 title="基础字段"
                 :fields="basicFields"
-                :list="basicComponents"
+                :list="antd.basicComponents"
               />
               <ComponentGroup
                 title="高级字段"
                 :fields="advanceFields"
-                :list="advanceComponents"
+                :list="antd.advanceComponents"
               />
               <ComponentGroup
                 title="布局字段"
                 :fields="layoutFields"
-                :list="layoutComponents"
+                :list="antd.layoutComponents"
               />
             </div>
           </a-layout-sider>
           <a-layout class="center-container">
             <Header v-bind="$props" />
+            <a-layout-content :class="{'widget-empty': widgetForm.list}">
+              <AntdWidgetForm
+                ref="widgetFormRef"
+                v-if="!resetJson"
+                v-model:widgetForm="widgetForm"
+                v-model:widgetFormSelect="widgetFormSelect"
+              />
+            </a-layout-content>
           </a-layout>
+          <a-layout-sider
+            theme="light"
+            class="widget-config-container"
+            :width="300"
+          >
+            <a-layout>
+              <a-layout-header>
+                <div
+                  class="config-tab"
+                  :class="{active: configTab === 'widget'}"
+                  @click="configTab = 'widget'"
+                >字段属性</div>
+                <div
+                  class="config-tab"
+                  :class="{active: configTab === 'form'}"
+                  @click="configTab = 'form'"
+                >表单属性</div>
+              </a-layout-header>
+              <a-layout-content class="config-content">
+                <AntdFormConfig
+                  v-show="configTab === 'form'"
+                  :config="widgetForm.config"
+                />
+              </a-layout-content>
+            </a-layout>
+
+          </a-layout-sider>
         </a-layout>
       </a-layout-content>
     </a-layout>
@@ -35,16 +70,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, PropType, toRefs } from 'vue'
-import ComponentGroup from './ComponentGroup.vue'
-import Header from './Header.vue'
-import { basicComponents, layoutComponents, advanceComponents } from '@/config'
+import { defineComponent, reactive, PropType, toRefs, watch } from 'vue'
+import ComponentGroup from '../components/ComponentGroup.vue'
+import Header from '../components/Header.vue'
+import AntdWidgetForm from './AntdWidgetForm.vue'
+import AntdFormConfig from './AntdFormConfig.vue'
+import { antd } from '@/config'
 
 export default defineComponent({
-  name: 'DesignForm',
+  name: 'AntdDesignForm',
   components: {
     ComponentGroup,
-    Header
+    Header,
+    AntdWidgetForm,
+    AntdFormConfig
   },
   props: {
     preview: {
@@ -96,16 +135,16 @@ export default defineComponent({
   },
   setup() {
     const state = reactive({
-      basicComponents,
-      layoutComponents,
-      advanceComponents,
+      antd,
       resetJson: false,
       widgetForm: {
         list: [],
         config: {
-          labelWidth: 100,
-          labelPosition: 'right',
-          size: 'small'
+          labelAlign: 'right',
+          labelCol: {
+            span: 3,
+            offset: 0
+          }
         }
       },
       configTab: 'widget',
@@ -150,6 +189,13 @@ export default defineComponent({
       `,
       codeActiveName: 'vue'
     })
+
+    watch(
+      () => state.widgetForm,
+      () => {
+        console.log(state.widgetForm)
+      }
+    )
 
     return {
       ...toRefs(state)

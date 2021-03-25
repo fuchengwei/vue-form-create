@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --open",
+    "serve": "vue-cli-service serve ./example/main.ts --open",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "prepare": "husky install"
@@ -12,12 +12,14 @@
     "ant-design-vue": "^2.0.1",
     "clipboard": "^2.0.8",
     "core-js": "^3.6.5",
+    "uuid": "^8.3.2",
     "vue": "^3.0.0",
     "vuedraggable": "^4.0.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",
     "@commitlint/config-conventional": "^12.0.1",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "@vue/cli-plugin-babel": "~4.5.0",
