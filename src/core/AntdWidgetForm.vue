@@ -5,8 +5,10 @@
       class="form-empty"
     >从左侧拖拽来添加字段</div>
     <a-form
+      :layout="widgetForm.config.layout"
       :labelAlign="widgetForm.config.labelAlign"
       :labelCol="widgetForm.config.labelCol"
+      :hideRequiredMark="widgetForm.config.hideRequiredMark"
     >
       <Draggable
         class="widget-form-list"
@@ -26,6 +28,7 @@
             <AntdWidgetFormItem
               v-if="element.key"
               :key="element.key"
+              :size="widgetForm.config.size"
               :element="element"
               :selectWidget="widgetFormSelect"
               @click="handleItemClick(index)"

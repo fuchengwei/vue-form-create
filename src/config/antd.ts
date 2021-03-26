@@ -1,19 +1,34 @@
 export const basicComponents = [
   {
-    name: '单行文本',
+    label: '单行文本',
     type: 'input',
     options: {
       width: '100%',
       defaultValue: '',
-      required: false,
-      dataType: 'string',
-      pattern: '',
       placeholder: '',
-      disabled: false
+      maxlength: null,
+      prefix: '',
+      suffix: '',
+      addonBefore: '',
+      addonAfter: '',
+      disabled: false,
+      allowClear: false,
+      required: false,
+      rules: {
+        trigger: 'blur',
+        enum: '',
+        len: null,
+        max: null,
+        message: '',
+        mix: null,
+        pattern: '',
+        required: false,
+        type: 'string'
+      }
     }
   },
   {
-    name: '多行文本',
+    label: '多行文本',
     type: 'textarea',
     options: {
       width: '100%',
@@ -25,7 +40,7 @@ export const basicComponents = [
     }
   },
   {
-    name: '计数器',
+    label: '计数器',
     type: 'number',
     options: {
       width: '',
@@ -39,7 +54,7 @@ export const basicComponents = [
     }
   },
   {
-    name: '单选框组',
+    label: '单选框组',
     type: 'radio',
     options: {
       inline: false,
@@ -72,7 +87,7 @@ export const basicComponents = [
     }
   },
   {
-    name: '多选框组',
+    label: '多选框组',
     type: 'checkbox',
     options: {
       inline: false,
@@ -102,7 +117,7 @@ export const basicComponents = [
     }
   },
   {
-    name: '时间选择器',
+    label: '时间选择器',
     type: 'time',
     options: {
       defaultValue: '21:19:56',
@@ -121,7 +136,7 @@ export const basicComponents = [
     }
   },
   {
-    name: '日期选择器',
+    label: '日期选择器',
     type: 'date',
     options: {
       defaultValue: '',
@@ -140,7 +155,7 @@ export const basicComponents = [
     }
   },
   {
-    name: '评分',
+    label: '评分',
     type: 'rate',
     options: {
       defaultValue: null,
@@ -151,7 +166,7 @@ export const basicComponents = [
     }
   },
   {
-    name: '颜色选择器',
+    label: '颜色选择器',
     type: 'color',
     options: {
       defaultValue: '',
@@ -161,7 +176,7 @@ export const basicComponents = [
     }
   },
   {
-    name: '下拉选择框',
+    label: '下拉选择框',
     type: 'select',
     options: {
       defaultValue: '',
@@ -194,7 +209,7 @@ export const basicComponents = [
     }
   },
   {
-    name: '开关',
+    label: '开关',
     type: 'switch',
     options: {
       defaultValue: false,
@@ -203,7 +218,7 @@ export const basicComponents = [
     }
   },
   {
-    name: '滑块',
+    label: '滑块',
     type: 'slider',
     options: {
       defaultValue: 0,
@@ -218,7 +233,7 @@ export const basicComponents = [
     }
   },
   {
-    name: '文字',
+    label: '文字',
     type: 'text',
     options: {
       defaultValue: 'This is a text',
@@ -229,14 +244,14 @@ export const basicComponents = [
 
 export const advanceComponents = [
   {
-    name: '自定义区域',
+    label: '自定义区域',
     type: 'blank',
     options: {
       defaultType: 'String'
     }
   },
   {
-    name: '图片',
+    label: '图片',
     type: 'img-upload',
     options: {
       defaultValue: [],
@@ -255,7 +270,7 @@ export const advanceComponents = [
     }
   },
   {
-    name: '编辑器',
+    label: '编辑器',
     type: 'editor',
     options: {
       defaultValue: '',
@@ -263,7 +278,7 @@ export const advanceComponents = [
     }
   },
   {
-    name: '级联选择器',
+    label: '级联选择器',
     type: 'cascader',
     options: {
       defaultValue: [],
@@ -285,7 +300,7 @@ export const advanceComponents = [
 
 export const layoutComponents = [
   {
-    name: '栅格布局',
+    label: '栅格布局',
     type: 'grid',
     columns: [
       {

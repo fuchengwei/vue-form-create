@@ -55,9 +55,13 @@
                 >表单属性</div>
               </a-layout-header>
               <a-layout-content class="config-content">
+                <AntdWidgetConfig
+                  v-show="configTab === 'widget'"
+                  v-model:select="widgetFormSelect"
+                />
                 <AntdFormConfig
                   v-show="configTab === 'form'"
-                  :config="widgetForm.config"
+                  v-model:config="widgetForm.config"
                 />
               </a-layout-content>
             </a-layout>
@@ -74,6 +78,7 @@ import { defineComponent, reactive, PropType, toRefs, watch } from 'vue'
 import ComponentGroup from '../components/ComponentGroup.vue'
 import Header from '../components/Header.vue'
 import AntdWidgetForm from './AntdWidgetForm.vue'
+import AntdWidgetConfig from './AntdWidgetConfig.vue'
 import AntdFormConfig from './AntdFormConfig.vue'
 import { antd } from '@/config'
 
@@ -83,6 +88,7 @@ export default defineComponent({
     ComponentGroup,
     Header,
     AntdWidgetForm,
+    AntdWidgetConfig,
     AntdFormConfig
   },
   props: {
@@ -140,6 +146,9 @@ export default defineComponent({
       widgetForm: {
         list: [],
         config: {
+          size: 'default',
+          hideRequiredMark: false,
+          layout: 'horizontal',
           labelAlign: 'right',
           labelCol: {
             span: 3,
@@ -147,8 +156,8 @@ export default defineComponent({
           }
         }
       },
-      configTab: 'widget',
       widgetFormSelect: null,
+      configTab: 'widget',
       previewVisible: false,
       jsonVisible: false,
       codeVisible: false,

@@ -16,7 +16,7 @@
       >
         <a>
           <SvgIcon :iconClass="element.type" />
-          <span>{{ element.name }}</span>
+          <span>{{ element.label }}</span>
         </a>
       </li>
     </template>

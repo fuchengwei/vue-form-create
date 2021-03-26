@@ -2,14 +2,22 @@
   <a-form-item
     class="widget-view"
     v-if="element"
-    :class="{active: selectWidget.key === element.key, required: element.options.required}"
-    :label="element.name"
+    :class="{active: selectWidget.key === element.key}"
+    :label="element.label"
+    :rules="element.options.rules"
   >
     <template v-if="element.type === 'input'">
       <a-input
+        :size="size"
         :value="element.options.defaultValue"
         :style="{width: element.options.width}"
         :placeholder="element.options.placeholder"
+        :maxlength="element.options.maxlength"
+        :prefix="element.options.prefix"
+        :suffix="element.options.suffix"
+        :addonBefore="element.options.addonBefore"
+        :addonAfter="element.options.addonAfter"
+        :allowClear="element.options.allowClear"
         :disabled="element.options.disabled"
       />
     </template>
@@ -138,11 +146,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 
 export default defineComponent({
   name: 'AntdWidgetFormItem',
   props: {
+    size: {
+      type: String as PropType<string>,
+      validator: (val: string) => ['large', 'default', 'small'].includes(val)
+    },
     element: {
       type: Object
     },
