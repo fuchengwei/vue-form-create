@@ -73,6 +73,17 @@
       <a-input v-model:value.number="data.options.addonAfter" />
     </a-form-item>
 
+    <a-form-item
+      label="是否显示切换按钮"
+      v-if="hasKey('visibilityToggle')"
+    >
+      <a-switch
+        checked-children="显示"
+        un-checked-children="隐藏"
+        v-model:checked="data.options.visibilityToggle"
+      />
+    </a-form-item>
+
     <template v-if="data.type !== 'grid'">
       <a-form-item label="操作属性">
         <a-checkbox

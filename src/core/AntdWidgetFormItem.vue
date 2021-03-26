@@ -22,6 +22,23 @@
       />
     </template>
 
+    <template v-if="element.type === 'password'">
+      <a-input-password
+        :size="size"
+        :value="element.options.defaultValue"
+        :style="{width: element.options.width}"
+        :placeholder="element.options.placeholder"
+        :maxlength="element.options.maxlength"
+        :prefix="element.options.prefix"
+        :suffix="element.options.suffix"
+        :addonBefore="element.options.addonBefore"
+        :addonAfter="element.options.addonAfter"
+        :allowClear="element.options.allowClear"
+        :disabled="element.options.disabled"
+        :visibilityToggle="element.options.visibilityToggle"
+      />
+    </template>
+
     <template v-if="element.type === 'textarea'">
       <a-textarea
         :value="element.options.defaultValue"

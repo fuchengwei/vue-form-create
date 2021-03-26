@@ -116,6 +116,7 @@ export default defineComponent({
       type: Array as PropType<Array<string>>,
       default: () => [
         'input',
+        'password',
         'textarea',
         'number',
         'radio',

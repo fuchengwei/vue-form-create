@@ -28,6 +28,35 @@ export const basicComponents = [
     }
   },
   {
+    label: '密码框',
+    type: 'password',
+    options: {
+      width: '100%',
+      defaultValue: '',
+      placeholder: '',
+      maxlength: null,
+      prefix: '',
+      suffix: '',
+      addonBefore: '',
+      addonAfter: '',
+      visibilityToggle: true,
+      disabled: false,
+      allowClear: false,
+      required: false,
+      rules: {
+        trigger: 'blur',
+        enum: '',
+        len: null,
+        max: null,
+        message: '',
+        mix: null,
+        pattern: '',
+        required: false,
+        type: 'string'
+      }
+    }
+  },
+  {
     label: '多行文本',
     type: 'textarea',
     options: {
