@@ -104,8 +104,6 @@ $primary-background-color = #ecf5ff
         border 1px dashed rgba(170, 170, 170, 0.7)
         background-color rgba(236, 245, 255, 0.3)
         margin 2px
-        .ant-form-item
-          position unset
         .ant-form-item-control-wrapper
           flex 1
         .widget-view-description
@@ -117,20 +115,27 @@ $primary-background-color = #ecf5ff
         .widget-view-action
           position absolute
           right 0
-          bottom 0
+          bottom -33px
           height 28px
           line-height 28px
           background $primary-color
           z-index 9
+          .svg-icon
+            font-size 14px
+            color #fff
+            margin 0 5px
+            cursor pointer
         .widget-view-drag
           position absolute
-          left -2px
-          top -2px
-          bottom -18px
           height 28px
           line-height 28px
           background $primary-color
           z-index 9
+          .svg-icon
+            font-size 14px
+            color #fff
+            margin 0 5px
+            cursor move
         &:after
           position absolute
           left 0

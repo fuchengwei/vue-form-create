@@ -2,13 +2,14 @@
   <a-form-item
     class="widget-view"
     v-if="element"
+    :ref="(val) => formItemRef = val"
     :class="{active: selectWidget.key === element.key}"
     :label="element.label"
     :rules="element.options.rules"
   >
     <template v-if="element.type === 'input'">
       <a-input
-        :size="size"
+        :size="config.size"
         :value="element.options.defaultValue"
         :style="{width: element.options.width}"
         :placeholder="element.options.placeholder"
@@ -24,7 +25,7 @@
 
     <template v-if="element.type === 'password'">
       <a-input-password
-        :size="size"
+        :size="config.size"
         :value="element.options.defaultValue"
         :style="{width: element.options.width}"
         :placeholder="element.options.placeholder"
@@ -41,14 +42,15 @@
 
     <template v-if="element.type === 'textarea'">
       <a-textarea
-        :size="size"
+        style="resize: none"
+        :size="config.size"
         :rows="element.options.rows"
         :value="element.options.defaultValue"
         :style="{width: element.options.width}"
         :placeholder="element.options.placeholder"
         :maxlength="element.options.maxlength"
         :showCount="element.options.showCount"
-        :autosize="element.options.autosize"
+        :autoSize="element.options.autoSize"
         :allowClear="element.options.allowClear"
         :disabled="element.options.disabled"
       />
@@ -164,18 +166,46 @@
     <template v-if="element.type == 'text'">
       <span>{{element.options.defaultValue}}</span>
     </template>
+
+    <div
+      class="widget-view-action"
+      v-if="selectWidget.key === element.key"
+    >
+      <SvgIcon
+        iconClass="copy"
+        @click.stop="$emit('copy')"
+      />
+      <SvgIcon
+        iconClass="delete"
+        @click.stop="$emit('delete')"
+      />
+    </div>
+
+    <div
+      class="widget-view-drag"
+      v-if="selectWidget.key === element.key"
+      :style="{left: `${-width}px`, top: `${-height}px`}"
+    >
+      <SvgIcon
+        iconClass="move"
+        className="drag-widget"
+      />
+    </div>
   </a-form-item>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, nextTick, reactive, toRefs, watch } from 'vue'
+import SvgIcon from '@/components/SvgIcon.vue'
 
 export default defineComponent({
   name: 'AntdWidgetFormItem',
+  components: {
+    SvgIcon
+  },
   props: {
-    size: {
-      type: String as PropType<string>,
-      validator: (val: string) => ['large', 'default', 'small'].includes(val)
+    config: {
+      type: Object
     },
     element: {
       type: Object
@@ -184,8 +214,42 @@ export default defineComponent({
       type: Object
     }
   },
-  setup() {
-    return {}
+  emits: ['copy, delete'],
+  setup(props) {
+    const state = reactive({
+      formItemRef: null,
+      width: 0,
+      height: 0
+    })
+
+    const handleCalcPosition = () => {
+      nextTick(() => {
+        state.width =
+          state.formItemRef?.$el.getElementsByClassName(
+            'ant-form-item-label'
+          )[0].clientWidth ?? 0
+        state.height =
+          state.formItemRef?.$el.getElementsByClassName(
+            'ant-form-item-label'
+          )[0].clientHeight - 28 ?? 0
+      })
+    }
+
+    onresize = () => handleCalcPosition()
+
+    watch(
+      () => state.formItemRef,
+      () => handleCalcPosition()
+    )
+
+    watch(
+      () => props.config.labelCol.span,
+      () => handleCalcPosition()
+    )
+
+    return {
+      ...toRefs(state)
+    }
   }
 })
 </script>

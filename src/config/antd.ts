@@ -77,7 +77,7 @@ export const basicComponents = [
       placeholder: '',
       maxlength: null,
       rows: 4,
-      autosize: false,
+      autoSize: false,
       showCount: false,
       disabled: false,
       allowClear: false,

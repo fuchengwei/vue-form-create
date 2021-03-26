@@ -28,10 +28,12 @@
             <AntdWidgetFormItem
               v-if="element.key"
               :key="element.key"
-              :size="widgetForm.config.size"
               :element="element"
+              :config="widgetForm.config"
               :selectWidget="widgetFormSelect"
               @click="handleItemClick(index)"
+              @copy="handleCopyClick(index)"
+              @delete="handleDeleteClick(index)"
             />
           </transition-group>
         </template>
@@ -64,6 +66,60 @@ export default defineComponent({
   setup(props, context) {
     const handleItemClick = (index: number) => {
       context.emit('update:widgetFormSelect', props.widgetForm.list[index])
+    }
+
+    const handleCopyClick = (index: number) => {
+      const key = v4().replaceAll('-', '')
+      const list = JSON.parse(JSON.stringify(props.widgetForm.list))
+
+      let copyData = {
+        ...list[index],
+        options: {
+          ...list[index].options,
+          remoteFunc: `func_${key}`
+        },
+        key,
+        model: `${list[index].type}_${key}`,
+        rules: list[index].rules ?? []
+      }
+
+      if (
+        list[index].type === 'radio' ||
+        list[index].type === 'checkbox' ||
+        list[index].type === 'select'
+      ) {
+        copyData = {
+          ...copyData,
+          options: {
+            ...copyData.options,
+            options: copyData.options.options.map((item) => ({ ...item }))
+          }
+        }
+      }
+
+      list.push(copyData)
+
+      context.emit('update:widgetForm', { ...props.widgetForm, list })
+
+      context.emit('update:widgetFormSelect', copyData)
+    }
+
+    const handleDeleteClick = (index: number) => {
+      const list = JSON.parse(JSON.stringify(props.widgetForm.list))
+
+      if (list.length - 1 === index) {
+        if (index === 0) {
+          context.emit('update:widgetFormSelect', null)
+        } else {
+          context.emit('update:widgetFormSelect', list[index - 1])
+        }
+      } else {
+        context.emit('update:widgetFormSelect', list[index + 1])
+      }
+
+      list.splice(index, 1)
+
+      context.emit('update:widgetForm', { ...props.widgetForm, list })
     }
 
     const handleMoveAdd = (event) => {
@@ -111,6 +167,8 @@ export default defineComponent({
 
     return {
       handleItemClick,
+      handleCopyClick,
+      handleDeleteClick,
       handleMoveAdd
     }
   }

@@ -97,12 +97,12 @@
 
     <a-form-item
       label="是否自适应内容高度"
-      v-if="hasKey('autosize')"
+      v-if="hasKey('autoSize')"
     >
       <a-switch
         checked-children="是"
         un-checked-children="否"
-        v-model:checked="data.options.autosize"
+        v-model:checked="data.options.autoSize"
       />
     </a-form-item>
 
