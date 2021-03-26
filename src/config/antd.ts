@@ -1,3 +1,15 @@
+const rules = {
+  trigger: 'blur',
+  enum: '',
+  len: null,
+  max: null,
+  message: '',
+  mix: null,
+  pattern: '',
+  required: false,
+  type: 'string'
+}
+
 export const basicComponents = [
   {
     label: '单行文本',
@@ -62,10 +74,15 @@ export const basicComponents = [
     options: {
       width: '100%',
       defaultValue: '',
-      required: false,
+      placeholder: '',
+      maxlength: null,
+      rows: 4,
+      autosize: false,
+      showCount: false,
       disabled: false,
-      pattern: '',
-      placeholder: ''
+      allowClear: false,
+      required: false,
+      rules
     }
   },
   {

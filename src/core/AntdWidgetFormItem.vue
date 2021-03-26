@@ -41,10 +41,15 @@
 
     <template v-if="element.type === 'textarea'">
       <a-textarea
+        :size="size"
+        :rows="element.options.rows"
         :value="element.options.defaultValue"
-        :rows="5"
         :style="{width: element.options.width}"
         :placeholder="element.options.placeholder"
+        :maxlength="element.options.maxlength"
+        :showCount="element.options.showCount"
+        :autosize="element.options.autosize"
+        :allowClear="element.options.allowClear"
         :disabled="element.options.disabled"
       />
     </template>

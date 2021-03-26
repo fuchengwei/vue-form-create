@@ -84,6 +84,38 @@
       />
     </a-form-item>
 
+    <a-form-item
+      label="是否显示字数"
+      v-if="hasKey('showCount')"
+    >
+      <a-switch
+        checked-children="显示"
+        un-checked-children="隐藏"
+        v-model:checked="data.options.showCount"
+      />
+    </a-form-item>
+
+    <a-form-item
+      label="是否自适应内容高度"
+      v-if="hasKey('autosize')"
+    >
+      <a-switch
+        checked-children="是"
+        un-checked-children="否"
+        v-model:checked="data.options.autosize"
+      />
+    </a-form-item>
+
+    <a-form-item
+      label="行数"
+      v-if="hasKey('rows') && !data.options.autosize"
+    >
+      <a-input-number
+        v-model:value="data.options.rows"
+        :min="0"
+      />
+    </a-form-item>
+
     <template v-if="data.type !== 'grid'">
       <a-form-item label="操作属性">
         <a-checkbox
