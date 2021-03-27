@@ -114,8 +114,8 @@ $primary-background-color = #ecf5ff
           color #909399
         .widget-view-action
           position absolute
-          right 0
-          bottom -33px
+          right -2px
+          bottom -2px
           height 28px
           line-height 28px
           background $primary-color
@@ -128,6 +128,8 @@ $primary-background-color = #ecf5ff
         .widget-view-drag
           position absolute
           height 28px
+          left -2px
+          top -3px
           line-height 28px
           background $primary-color
           z-index 9
@@ -166,6 +168,36 @@ $primary-background-color = #ecf5ff
           content ''
           overflow hidden
           padding 0
+      .widget-col
+        padding 5px
+        background-color rgba(253, 246, 236, 0.3)
+        &.active
+          outline 2px solid #e6a23c
+          border 1px solid #e6a23c
+        &:hover
+          background #fdf6ec
+          outline 1px solid #e6a23c
+          outline-offset 0px
+          &.active
+            outline 2px solid #e6a23c
+            border 1px solid #e6a23c
+            outline-offset 0
+        &.ghost
+          background #f56c6c
+          border 2px solid #f56c6c
+          outline-width 0
+          height 3px
+          box-sizing border-box
+          font-size 0
+          content ''
+          overflow hidden
+          padding 0
+        .widget-view-action.widget-col-action
+          background #e6a23c
+        .widget-view-drag.widget-col-drag
+          background #e6a23c
+        &::after
+          display none
       .ghost
         background #f56c6c
         border 2px solid #f56c6c
@@ -222,6 +254,10 @@ $primary-background-color = #ecf5ff
         margin 0 5px
         &:first-child
           margin-left 0
+      .drag-item
+        font-size 16px
+        margin 0 5px
+        cursor move
     .ghost
       background #fff
       border 1px dashed $primary-color

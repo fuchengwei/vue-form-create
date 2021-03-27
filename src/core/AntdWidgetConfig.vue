@@ -3,18 +3,18 @@
     v-if="data"
     layout="vertical"
   >
-    <a-form-item label="字段标识">
-      <a-input
-        v-if="data.type !== 'grid'"
-        v-model:value="data.model"
-      />
+    <a-form-item
+      label="字段标识"
+      v-if="data.type !== 'grid'"
+    >
+      <a-input v-model:value="data.model" />
     </a-form-item>
 
-    <a-form-item label="标题">
-      <a-input
-        v-if="data.type !== 'grid'"
-        v-model:value="data.label"
-      />
+    <a-form-item
+      label="标题"
+      v-if="data.type !== 'grid'"
+    >
+      <a-input v-model:value="data.label" />
     </a-form-item>
 
     <a-form-item
@@ -116,6 +116,84 @@
       />
     </a-form-item>
 
+    <template v-if="data.type === 'grid'">
+      <a-form-item label="栅格间隔">
+        <a-input-number
+          v-model:value="data.options.gutter"
+          :min="0"
+        />
+      </a-form-item>
+
+      <a-form-item label="列配置项">
+        <Draggable
+          tag="ul"
+          item-key="index"
+          ghostClass='ghost'
+          handle=".drag-item"
+          :group="{name: 'options'}"
+          :list="data.columns"
+        >
+          <template #item="{ element, index }">
+            <li style="margin-bottom: 5px;">
+              <SvgIcon
+                iconClass="item"
+                className="drag-item"
+              />
+              <a-input-number
+                placeholder="栅格值"
+                size="small"
+                v-model:value="element.span"
+                :min="0"
+                :max="24"
+              />
+              <a-button
+                type="primary"
+                shape="circle"
+                size="small"
+                style="margin-left: 5px;"
+                @click="handleOptionsRemove(index)"
+              >
+                <template #icon>
+                  <SvgIcon iconClass="delete" />
+                </template>
+              </a-button>
+            </li>
+          </template>
+        </Draggable>
+
+        <div>
+          <a-button
+            type="link"
+            size="small"
+            @click="handleInsertColumn"
+          >
+            添加列
+          </a-button>
+        </div>
+      </a-form-item>
+
+      <a-form-item label="垂直对齐方式">
+        <a-radio-group
+          v-model:value="data.options.align"
+          button-style="solid"
+        >
+          <a-radio-button value="top">顶部对齐</a-radio-button>
+          <a-radio-button value="middle">居中对齐</a-radio-button>
+          <a-radio-button value="bottom">底部对齐</a-radio-button>
+        </a-radio-group>
+      </a-form-item>
+
+      <a-form-item label="水平排列方式">
+        <a-select v-model:value="data.options.justify">
+          <a-select-option value="start">左对齐</a-select-option>
+          <a-select-option value="end">右对齐</a-select-option>
+          <a-select-option value="center">居中</a-select-option>
+          <a-select-option value="space-around">两侧间隔相等</a-select-option>
+          <a-select-option value="space-between">两端对齐</a-select-option>
+        </a-select>
+      </a-form-item>
+    </template>
+
     <template v-if="data.type !== 'grid'">
       <a-form-item label="操作属性">
         <a-checkbox
@@ -201,9 +279,15 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue'
+import Draggable from 'vuedraggable'
+import SvgIcon from '@/components/SvgIcon.vue'
 
 export default defineComponent({
   name: 'AntdWidgetConfig',
+  components: {
+    Draggable,
+    SvgIcon
+  },
   props: {
     select: {
       type: Object
@@ -223,9 +307,26 @@ export default defineComponent({
     const hasKey = (key: string) =>
       Object.keys(data.value.options).includes(key)
 
+    const handleInsertColumn = () => {
+      data.value.columns.push({
+        span: 0,
+        list: []
+      })
+    }
+
+    const handleOptionsRemove = (index: number) => {
+      if (data.value.type === 'grid') {
+        data.value.columns.splice(index, 1)
+      } else {
+        data.value.options.options.splice(index, 1)
+      }
+    }
+
     return {
       data,
-      hasKey
+      hasKey,
+      handleInsertColumn,
+      handleOptionsRemove
     }
   }
 })

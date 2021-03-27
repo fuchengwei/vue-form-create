@@ -74,7 +74,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, PropType, toRefs, watch } from 'vue'
+import { defineComponent, reactive, PropType, toRefs } from 'vue'
 import ComponentGroup from '../components/ComponentGroup.vue'
 import Header from '../components/Header.vue'
 import AntdWidgetForm from './AntdWidgetForm.vue'
@@ -199,13 +199,6 @@ export default defineComponent({
       `,
       codeActiveName: 'vue'
     })
-
-    watch(
-      () => state.widgetForm,
-      () => {
-        console.log(state.widgetForm)
-      }
-    )
 
     return {
       ...toRefs(state)

@@ -3,7 +3,7 @@
     class="widget-view"
     v-if="element"
     :ref="(val) => formItemRef = val"
-    :class="{active: selectWidget.key === element.key}"
+    :class="{active: selectWidget?.key === element.key}"
     :label="element.label"
     :rules="element.options.rules"
   >
@@ -169,7 +169,8 @@
 
     <div
       class="widget-view-action"
-      v-if="selectWidget.key === element.key"
+      style="right: 0; bottom: -32px;"
+      v-if="selectWidget?.key === element.key"
     >
       <SvgIcon
         iconClass="copy"
@@ -183,7 +184,7 @@
 
     <div
       class="widget-view-drag"
-      v-if="selectWidget.key === element.key"
+      v-if="selectWidget?.key === element.key"
       :style="{left: `${-width}px`, top: `${-height}px`}"
     >
       <SvgIcon
@@ -214,7 +215,7 @@ export default defineComponent({
       type: Object
     }
   },
-  emits: ['copy, delete'],
+  emits: ['copy', 'delete'],
   setup(props) {
     const state = reactive({
       formItemRef: null,
@@ -224,14 +225,12 @@ export default defineComponent({
 
     const handleCalcPosition = () => {
       nextTick(() => {
-        state.width =
-          state.formItemRef?.$el.getElementsByClassName(
-            'ant-form-item-label'
-          )[0].clientWidth ?? 0
-        state.height =
-          state.formItemRef?.$el.getElementsByClassName(
-            'ant-form-item-label'
-          )[0].clientHeight - 28 ?? 0
+        const antFormItemLabelDom = state.formItemRef?.$el.getElementsByClassName(
+          'ant-form-item-label'
+        )[0]
+
+        state.width = antFormItemLabelDom.clientWidth ?? 0
+        state.height = antFormItemLabelDom.clientHeight - 26 ?? 0
       })
     }
 
