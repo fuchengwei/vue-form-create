@@ -94,6 +94,34 @@ $primary-background-color = #ecf5ff
       border 1px dashed #999
       min-height calc(100vh - 65px)
       margin 10px
+      .widget-item-container
+        position relative
+        .widget-view-action
+          position absolute
+          right 0
+          bottom -2px
+          height 28px
+          line-height 28px
+          background $primary-color
+          z-index 9
+          .svg-icon
+            font-size 14px
+            color #fff
+            margin 0 5px
+            cursor pointer
+        .widget-view-drag
+          position absolute
+          height 28px
+          left 0
+          top -2px
+          line-height 28px
+          background $primary-color
+          z-index 9
+          .svg-icon
+            font-size 14px
+            color #fff
+            margin 0 5px
+            cursor move
       .widget-col-list
         min-height 50px
         border 1px dashed #ccc
@@ -112,32 +140,6 @@ $primary-background-color = #ecf5ff
           font-size 13px
           margin-top 6px
           color #909399
-        .widget-view-action
-          position absolute
-          right -2px
-          bottom -2px
-          height 28px
-          line-height 28px
-          background $primary-color
-          z-index 9
-          .svg-icon
-            font-size 14px
-            color #fff
-            margin 0 5px
-            cursor pointer
-        .widget-view-drag
-          position absolute
-          height 28px
-          left -2px
-          top -3px
-          line-height 28px
-          background $primary-color
-          z-index 9
-          .svg-icon
-            font-size 14px
-            color #fff
-            margin 0 5px
-            cursor move
         &:after
           position absolute
           left 0
@@ -193,9 +195,31 @@ $primary-background-color = #ecf5ff
           overflow hidden
           padding 0
         .widget-view-action.widget-col-action
+          position absolute
+          height 28px
+          right -2px
+          bottom -2px
+          line-height 28px
           background #e6a23c
+          z-index 9
+          .svg-icon
+            font-size 14px
+            color #fff
+            margin 0 5px
+            cursor move
         .widget-view-drag.widget-col-drag
+          position absolute
+          height 28px
+          left -2px
+          top -2px
+          line-height 28px
           background #e6a23c
+          z-index 9
+          .svg-icon
+            font-size 14px
+            color #fff
+            margin 0 5px
+            cursor move
         &::after
           display none
       .ghost

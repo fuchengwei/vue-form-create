@@ -4,7 +4,7 @@ const rules = {
   len: null,
   max: null,
   message: '',
-  mix: null,
+  min: null,
   pattern: '',
   required: false,
   type: 'string'
@@ -25,18 +25,8 @@ export const basicComponents = [
       addonAfter: '',
       disabled: false,
       allowClear: false,
-      required: false,
-      rules: {
-        trigger: 'blur',
-        enum: '',
-        len: null,
-        max: null,
-        message: '',
-        mix: null,
-        pattern: '',
-        required: false,
-        type: 'string'
-      }
+      readonly: false,
+      rules
     }
   },
   {
@@ -54,18 +44,8 @@ export const basicComponents = [
       visibilityToggle: true,
       disabled: false,
       allowClear: false,
-      required: false,
-      rules: {
-        trigger: 'blur',
-        enum: '',
-        len: null,
-        max: null,
-        message: '',
-        mix: null,
-        pattern: '',
-        required: false,
-        type: 'string'
-      }
+      readonly: false,
+      rules
     }
   },
   {
@@ -81,7 +61,7 @@ export const basicComponents = [
       showCount: false,
       disabled: false,
       allowClear: false,
-      required: false,
+      readonly: false,
       rules
     }
   },
@@ -90,13 +70,13 @@ export const basicComponents = [
     type: 'number',
     options: {
       width: '',
-      required: false,
       defaultValue: 0,
-      min: '',
-      max: '',
+      min: 0,
+      max: 100,
       step: 1,
+      readonly: false,
       disabled: false,
-      controlsPosition: ''
+      rules
     }
   },
   {

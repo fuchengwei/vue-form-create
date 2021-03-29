@@ -1,7 +1,8 @@
 <template>
   <a-form
-    v-if="data"
     layout="vertical"
+    v-if="data"
+    :key="data.key"
   >
     <a-form-item
       label="字段标识"
@@ -43,6 +44,27 @@
       v-if="hasKey('maxlength')"
     >
       <a-input v-model:value.number="data.options.maxlength" />
+    </a-form-item>
+
+    <a-form-item
+      label="最大值"
+      v-if="hasKey('max')"
+    >
+      <a-input-number v-model:value.number="data.options.max" />
+    </a-form-item>
+
+    <a-form-item
+      label="最小值"
+      v-if="hasKey('min')"
+    >
+      <a-input-number v-model:value.number="data.options.min" />
+    </a-form-item>
+
+    <a-form-item
+      label="步长"
+      v-if="hasKey('step')"
+    >
+      <a-input-number v-model:value.number="data.options.step" />
     </a-form-item>
 
     <a-form-item
