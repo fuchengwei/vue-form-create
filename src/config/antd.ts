@@ -116,30 +116,33 @@ export const basicComponents = [
     label: '多选框组',
     type: 'checkbox',
     options: {
-      inline: false,
       defaultValue: [],
+      width: '',
+      inline: true,
+      remote: false,
       showLabel: false,
+      remoteFunc: '',
       options: [
         {
+          label: 'Option 1',
           value: 'Option 1'
         },
         {
+          label: 'Option 2',
           value: 'Option 2'
         },
         {
+          label: 'Option 3',
           value: 'Option 3'
         }
       ],
-      required: false,
-      width: '',
-      remote: false,
       remoteOptions: [],
       props: {
         value: 'value',
         label: 'label'
       },
-      remoteFunc: '',
-      disabled: false
+      disabled: false,
+      rules
     }
   },
   {

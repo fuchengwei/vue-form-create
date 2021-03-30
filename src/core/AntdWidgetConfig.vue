@@ -202,6 +202,7 @@
         <template v-if="data.type === 'radio' || (data.type === 'select' && !data.options.multiple)">
           <a-radio-group v-model:value="data.options.defaultValue">
             <Draggable
+              tag="ul"
               item-key="index"
               ghostClass='ghost'
               handle=".drag-item"
@@ -246,6 +247,56 @@
             </Draggable>
           </a-radio-group>
         </template>
+
+        <template v-if="data.type === 'checkbox' || (data.type === 'select' && data.options.multiple)">
+          <a-checkbox-group v-model:value="data.options.defaultValue">
+            <Draggable
+              tag="ul"
+              item-key="index"
+              ghostClass='ghost'
+              handle=".drag-item"
+              :group="{name: 'options'}"
+              :list="data.options.options"
+            >
+              <template #item="{ element, index }">
+                <li>
+                  <a-checkbox
+                    :value="element.value"
+                    style="margin-right: 0;"
+                  >
+                    <a-input
+                      size="small"
+                      :style="{width: data.options.showLabel ? '90px' : '180px'}"
+                      v-model:value="element.value"
+                    />
+                    <a-input
+                      size="small"
+                      :style="{width: data.options.showLabel ? '90px' : '0', padding: data.options.showLabel ? '0 7px' : '0', border: data.options.showLabel ? '1px solid #d9d9d9' : 'none'}"
+                      v-model:value="element.label"
+                    />
+                  </a-checkbox>
+                  <SvgIcon
+                    style="margin: 0; cursor: move;"
+                    iconClass="item"
+                    className="drag-item"
+                  />
+                  <a-button
+                    type="primary"
+                    shape="circle"
+                    size="small"
+                    style="margin-left: 10px;"
+                    @click="handleOptionsRemove(index)"
+                  >
+                    <template #icon>
+                      <SvgIcon iconClass="delete" />
+                    </template>
+                  </a-button>
+                </li>
+              </template>
+            </Draggable>
+          </a-checkbox-group>
+        </template>
+
         <div style="margin-top: 5px;">
           <a-button
             type='link'

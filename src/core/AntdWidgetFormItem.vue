@@ -96,7 +96,7 @@
             v-for="item of element.options.options"
             :key="item.value"
             :value="item.value"
-            :style="{disabled: element.options.inline ? 'inline-blokc' : 'block'}"
+            :style="{display: element.options.inline ? 'inline-block' : 'block'}"
           >{{ element.options.showLabel ? item.label : item.value }}</a-checkbox>
         </a-checkbox-group>
       </template>
