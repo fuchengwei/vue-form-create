@@ -164,18 +164,13 @@ export const basicComponents = [
     type: 'date',
     options: {
       defaultValue: '',
+      width: '',
+      placeholder: '请选择时间',
+      format: 'HH:mm:ss',
       readonly: false,
+      allowClear: true,
       disabled: false,
-      editable: true,
-      clearable: true,
-      placeholder: '',
-      startPlaceholder: '',
-      endPlaceholder: '',
-      type: 'date',
-      format: 'yyyy-MM-dd',
-      timestamp: false,
-      required: false,
-      width: ''
+      rules
     }
   },
   {

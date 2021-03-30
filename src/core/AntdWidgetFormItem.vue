@@ -118,9 +118,12 @@
 
       <template v-if="element.type === 'date'">
         <a-date-picker
+          :size="config.size"
           :value="element.options.defaultValue"
           :placeholder="element.options.placeholder"
           :inputReadOnly="element.options.readonly"
+          :allowClear="element.options.allowClear"
+          :format="element.options.format"
           :disabled="element.options.disabled"
           :style="{width: element.options.width}"
         />
