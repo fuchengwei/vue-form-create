@@ -83,9 +83,12 @@ export const basicComponents = [
     label: '单选框组',
     type: 'radio',
     options: {
-      inline: false,
       defaultValue: '',
+      width: '',
+      inline: true,
+      remote: false,
       showLabel: false,
+      remoteFunc: '',
       options: [
         {
           value: 'Option 1',
@@ -100,16 +103,13 @@ export const basicComponents = [
           label: 'Option 3'
         }
       ],
-      required: false,
-      width: '',
-      remote: false,
       remoteOptions: [],
       props: {
         value: 'value',
         label: 'label'
       },
-      remoteFunc: '',
-      disabled: false
+      disabled: false,
+      rules
     }
   },
   {

@@ -34,9 +34,16 @@
 
     <a-form-item
       label="默认内容"
-      v-if="hasKey('defaultValue')"
+      v-if="hasKey('defaultValue') && (data.type === 'input' || data.type === 'password' || data.type === 'textarea' || data.type === 'reat' || data.type === 'switch')"
     >
-      <a-input v-model:value="data.options.defaultValue" />
+      <a-input
+        v-if="data.type === 'input' || data.type === 'password'"
+        v-model:value="data.options.defaultValue"
+      />
+      <a-textarea
+        v-if="data.type === 'textarea'"
+        v-model:value="data.options.defaultValue"
+      />
     </a-form-item>
 
     <a-form-item
@@ -136,6 +143,117 @@
         v-model:value="data.options.rows"
         :min="0"
       />
+    </a-form-item>
+
+    <a-form-item
+      label="布局方式"
+      v-if="hasKey('inline')"
+    >
+      <a-radio-group
+        button-style="solid"
+        v-model:value="data.options.inline"
+      >
+        <a-radio-button :value="true">行内</a-radio-button>
+        <a-radio-button :value="false">块级</a-radio-button>
+      </a-radio-group>
+    </a-form-item>
+
+    <a-form-item
+      label="是否显示标签"
+      v-if="hasKey('showLabel')"
+    >
+      <a-switch
+        checked-children="是"
+        un-checked-children="否"
+        v-model:checked="data.options.showLabel"
+      />
+    </a-form-item>
+
+    <a-form-item
+      label="选项"
+      v-if="hasKey('options')"
+    >
+      <a-radio-group
+        button-style="solid"
+        v-model:value="data.options.remote"
+      >
+        <a-radio-button :value="false">静态数据</a-radio-button>
+        <a-radio-button :value="true">远端数据</a-radio-button>
+      </a-radio-group>
+      <a-space
+        v-if="data.options.remote"
+        direction="vertical"
+        style="margin-top: 10px;"
+      >
+        <a-input
+          v-model:value="data.options.remoteFunc"
+          addon-before="远端方法"
+        />
+        <a-input
+          v-model:value="data.options.props.label"
+          addon-before="标签"
+        />
+        <a-input
+          v-model:value="data.options.props.value"
+          addon-before="值"
+        />
+      </a-space>
+      <template v-else>
+        <template v-if="data.type === 'radio' || (data.type === 'select' && !data.options.multiple)">
+          <a-radio-group v-model:value="data.options.defaultValue">
+            <Draggable
+              item-key="index"
+              ghostClass='ghost'
+              handle=".drag-item"
+              :group="{name: 'options'}"
+              :list="data.options.options"
+            >
+              <template #item="{ element, index }">
+                <div>
+                  <a-radio
+                    :value="element.value"
+                    style="margin-right: 0px;"
+                  >
+                    <a-input
+                      size="small"
+                      :style="{width: data.options.showLabel ? '90px' : '180px'}"
+                      v-model:value="element.value"
+                    />
+                    <a-input
+                      size="small"
+                      :style="{width: data.options.showLabel ? '90px' : '0', padding: data.options.showLabel ? '0 7px' : '0', border: data.options.showLabel ? '1px solid #d9d9d9' : 'none'}"
+                      v-model:value="element.label"
+                    />
+                  </a-radio>
+                  <SvgIcon
+                    style="margin: 0; cursor: move;"
+                    iconClass="item"
+                    className="drag-item"
+                  />
+                  <a-button
+                    type="primary"
+                    shape="circle"
+                    size="small"
+                    style="margin-left: 10px;"
+                    @click="handleOptionsRemove(index)"
+                  >
+                    <template #icon>
+                      <SvgIcon iconClass="delete" />
+                    </template>
+                  </a-button>
+                </div>
+              </template>
+            </Draggable>
+          </a-radio-group>
+        </template>
+        <div style="margin-top: 5px;">
+          <a-button
+            type='link'
+            size="small"
+            @click="handleInsertOption"
+          >添加选项</a-button>
+        </div>
+      </template>
     </a-form-item>
 
     <template v-if="data.type === 'grid'">
@@ -336,6 +454,14 @@ export default defineComponent({
       })
     }
 
+    const handleInsertOption = () => {
+      const index = data.value.options.options.length + 1
+      data.value.options.options.push({
+        label: `Option ${index}`,
+        value: `Option ${index}`
+      })
+    }
+
     const handleOptionsRemove = (index: number) => {
       if (data.value.type === 'grid') {
         data.value.columns.splice(index, 1)
@@ -348,6 +474,7 @@ export default defineComponent({
       data,
       hasKey,
       handleInsertColumn,
+      handleInsertOption,
       handleOptionsRemove
     }
   }
