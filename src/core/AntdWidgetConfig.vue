@@ -307,6 +307,23 @@
       </template>
     </a-form-item>
 
+    <template v-if="data.type === 'time'">
+      <a-form-item label="默认值">
+        <a-time-picker
+          style="width: 100%;"
+          v-model:value="data.options.defaultValue"
+          :format="data.options.format"
+          :placeholder="data.options.placeholder"
+        />
+      </a-form-item>
+    </template>
+
+    <template v-if="data.type === 'time' || data.type === 'date'">
+      <a-form-item label="格式">
+        <a-input v-model:value="data.options.format" />
+      </a-form-item>
+    </template>
+
     <template v-if="data.type === 'grid'">
       <a-form-item label="栅格间隔">
         <a-input-number

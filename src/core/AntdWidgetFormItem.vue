@@ -63,6 +63,7 @@
       <template v-if="element.type === 'number'">
         <a-input-number
           readonly
+          :size="config.size"
           :value="element.options.defaultValue"
           :style="{width: element.options.width}"
           :max="element.options.max"
@@ -73,6 +74,7 @@
 
       <template v-if="element.type === 'radio'">
         <a-radio-group
+          :size="config.size"
           :value="element.options.defaultValue"
           :style="{width: element.options.width}"
           :disabled="element.options.disabled"
@@ -103,9 +105,12 @@
 
       <template v-if="element.type === 'time'">
         <a-time-picker
+          :size="config.size"
           :value="element.options.defaultValue"
           :placeholder="element.options.placeholder"
           :inputReadOnly="element.options.readonly"
+          :allowClear="element.options.allowClear"
+          :format="element.options.format"
           :disabled="element.options.disabled"
           :style="{width: element.options.width}"
         />

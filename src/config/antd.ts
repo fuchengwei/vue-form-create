@@ -149,19 +149,14 @@ export const basicComponents = [
     label: '时间选择器',
     type: 'time',
     options: {
-      defaultValue: '21:19:56',
-      readonly: false,
-      disabled: false,
-      editable: true,
-      clearable: true,
-      placeholder: '',
-      startPlaceholder: '',
-      endPlaceholder: '',
-      isRange: false,
-      arrowControl: true,
+      defaultValue: '',
+      width: '',
+      placeholder: '请选择时间',
       format: 'HH:mm:ss',
-      required: false,
-      width: ''
+      readonly: false,
+      allowClear: true,
+      disabled: false,
+      rules
     }
   },
   {
