@@ -124,7 +124,6 @@ export default defineComponent({
         'time',
         'date',
         'rate',
-        'color',
         'select',
         'switch',
         'slider',
@@ -133,7 +132,7 @@ export default defineComponent({
     },
     advanceFields: {
       type: Array as PropType<Array<string>>,
-      default: () => ['blank', 'imgupload', 'editor', 'cascader']
+      default: () => ['blank', 'img-upload', 'editor', 'cascader']
     },
     layoutFields: {
       type: Array as PropType<Array<string>>,
