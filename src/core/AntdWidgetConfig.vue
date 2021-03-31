@@ -34,7 +34,7 @@
 
     <a-form-item
       label="默认内容"
-      v-if="hasKey('defaultValue') && (data.type === 'input' || data.type === 'password' || data.type === 'textarea' || data.type === 'reat' || data.type === 'switch')"
+      v-if="hasKey('defaultValue') && (data.type === 'input' || data.type === 'password' || data.type === 'textarea' || data.type === 'rate' || data.type === 'switch')"
     >
       <a-input
         v-if="data.type === 'input' || data.type === 'password'"
@@ -43,6 +43,13 @@
       <a-textarea
         v-if="data.type === 'textarea'"
         v-model:value="data.options.defaultValue"
+      />
+      <a-rate
+        v-if="data.type === 'rate'"
+        v-model:value="data.options.defaultValue"
+        :count="data.options.max"
+        :allowHalf="data.options.allowHalf"
+        :allowClear="data.options.allowClear"
       />
     </a-form-item>
 
@@ -142,6 +149,17 @@
       <a-input-number
         v-model:value="data.options.rows"
         :min="0"
+      />
+    </a-form-item>
+
+    <a-form-item
+      label="是否允许半选"
+      v-if="hasKey('allowHalf')"
+    >
+      <a-switch
+        checked-children="是"
+        un-checked-children="否"
+        v-model:checked="data.options.allowHalf"
       />
     </a-form-item>
 

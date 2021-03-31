@@ -133,8 +133,9 @@
         <a-rate
           :value="element.options.defaultValue"
           :count="element.options.max"
-          :disabled="element.options.disabled"
           :allowHalf="element.options.allowHalf"
+          :allowClear="element.options.allowClear"
+          :disabled="element.options.disabled"
         />
       </template>
 

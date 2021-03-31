@@ -179,9 +179,10 @@ export const basicComponents = [
     options: {
       defaultValue: null,
       max: 5,
-      disabled: false,
+      allowClear: true,
       allowHalf: false,
-      required: false
+      disabled: false,
+      rules
     }
   },
   {
