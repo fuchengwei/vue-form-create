@@ -51,6 +51,10 @@
         :allowHalf="data.options.allowHalf"
         :allowClear="data.options.allowClear"
       />
+      <a-switch
+        v-if="data.type === 'switch'"
+        v-model:checked="data.options.defaultValue"
+      />
     </a-form-item>
 
     <a-form-item
@@ -107,6 +111,20 @@
       v-if="hasKey('addonAfter')"
     >
       <a-input v-model:value.number="data.options.addonAfter" />
+    </a-form-item>
+
+    <a-form-item
+      label="选中时的内容"
+      v-if="hasKey('checkedChildren')"
+    >
+      <a-input v-model:value="data.options.checkedChildren" />
+    </a-form-item>
+
+    <a-form-item
+      label="非选中时的内容"
+      v-if="hasKey('unCheckedChildren')"
+    >
+      <a-input v-model:value="data.options.unCheckedChildren" />
     </a-form-item>
 
     <a-form-item

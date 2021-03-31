@@ -164,7 +164,10 @@
 
       <template v-if="element.type === 'switch'">
         <a-switch
+          :size="config.size === 'large' ? 'default' : config.size"
           :checked="element.options.defaultValue"
+          :checkedChildren="element.options.checkedChildren"
+          :unCheckedChildren="element.options.unCheckedChildren"
           :disabled="element.options.disabled"
         />
       </template>

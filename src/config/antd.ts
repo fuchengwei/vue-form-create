@@ -226,8 +226,10 @@ export const basicComponents = [
     type: 'switch',
     options: {
       defaultValue: false,
-      required: false,
-      disabled: false
+      disabled: false,
+      checkedChildren: '',
+      unCheckedChildren: '',
+      rules
     }
   },
   {
