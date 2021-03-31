@@ -186,46 +186,39 @@ export const basicComponents = [
     }
   },
   {
-    label: '颜色选择器',
-    type: 'color',
-    options: {
-      defaultValue: '',
-      disabled: false,
-      showAlpha: false,
-      required: false
-    }
-  },
-  {
     label: '下拉选择框',
     type: 'select',
     options: {
-      defaultValue: '',
-      multiple: false,
-      disabled: false,
-      clearable: false,
+      defaultValue: null,
+      width: '200px',
+      mode: null,
       placeholder: '',
-      required: false,
+      remote: false,
       showLabel: false,
-      width: '',
+      showSearch: false,
+      clearable: false,
+      disabled: false,
+      props: {
+        label: 'label',
+        value: 'value'
+      },
       options: [
         {
+          label: 'Option 1',
           value: 'Option 1'
         },
         {
+          label: 'Option 2',
           value: 'Option 2'
         },
         {
+          label: 'Option 3',
           value: 'Option 3'
         }
       ],
-      remote: false,
-      filterable: false,
       remoteOptions: [],
-      props: {
-        value: 'value',
-        label: 'label'
-      },
-      remoteFunc: ''
+      remoteFunc: '',
+      rules
     }
   },
   {

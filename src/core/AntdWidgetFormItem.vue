@@ -141,16 +141,21 @@
 
       <template v-if="element.type === 'select'">
         <a-select
+          :size="config.size"
+          :mode="element.options.mode"
           :value="element.options.defaultValue"
-          :disabled="element.options.disabled"
-          :allowClear="element.options.clearable"
           :placeholder="element.options.placeholder"
+          :filter-option="handleFilterOption"
+          :allowClear="element.options.clearable"
+          :showSearch="element.options.showSearch"
+          :disabled="element.options.disabled"
           :style="{width: element.options.width}"
         >
           <a-select-option
             v-for="item of element.options.options"
             :key="item.value"
             :value="item.value"
+            :label="element.options.showLabel ? item.label : item.value"
           >
             {{ element.options.showLabel ? item.label : item.value }}
           </a-select-option>
@@ -226,6 +231,16 @@ export default defineComponent({
       type: Object
     }
   },
-  emits: ['copy', 'delete']
+  emits: ['copy', 'delete'],
+  setup() {
+    const handleFilterOption = (input: string, option) => {
+      const { label }: { label: string } = option
+      return label.toLowerCase().includes(input)
+    }
+
+    return {
+      handleFilterOption
+    }
+  }
 })
 </script>

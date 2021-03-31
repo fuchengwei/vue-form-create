@@ -177,6 +177,32 @@
     </a-form-item>
 
     <a-form-item
+      label="模式"
+      v-if="data.type === 'select'"
+    >
+      <a-radio-group
+        button-style="solid"
+        v-model:value="data.options.mode"
+        @change="handleSelectModeChange"
+      >
+        <a-radio-button :value="null">默认</a-radio-button>
+        <a-radio-button value="multiple">多选</a-radio-button>
+        <a-radio-button value="tags">标签</a-radio-button>
+      </a-radio-group>
+    </a-form-item>
+
+    <a-form-item
+      label="单选模式是否可搜索"
+      v-if="hasKey('showSearch')"
+    >
+      <a-switch
+        checked-children="是"
+        un-checked-children="否"
+        v-model:checked="data.options.showSearch"
+      />
+    </a-form-item>
+
+    <a-form-item
       label="是否显示标签"
       v-if="hasKey('showLabel')"
     >
@@ -217,7 +243,7 @@
         />
       </a-space>
       <template v-else>
-        <template v-if="data.type === 'radio' || (data.type === 'select' && !data.options.multiple)">
+        <template v-if="data.type === 'radio' || (data.type === 'select' && data.options.mode === null)">
           <a-radio-group v-model:value="data.options.defaultValue">
             <Draggable
               tag="ul"
@@ -266,7 +292,7 @@
           </a-radio-group>
         </template>
 
-        <template v-if="data.type === 'checkbox' || (data.type === 'select' && data.options.multiple)">
+        <template v-if="data.type === 'checkbox' || (data.type === 'select' && data.options.mode !== null)">
           <a-checkbox-group v-model:value="data.options.defaultValue">
             <Draggable
               tag="ul"
@@ -567,12 +593,31 @@ export default defineComponent({
       }
     }
 
+    const handleSelectModeChange = (event) => {
+      const { value } = event.target
+      if (value === null) {
+        data.value.options.defaultValue.length
+          ? (data.value.options.defaultValue =
+              data.value.options.defaultValue[0])
+          : (data.value.options.defaultValue = '')
+      } else {
+        if (data.value.options.defaultValue) {
+          if (!(data.value.options.defaultValue instanceof Array)) {
+            data.value.options.defaultValue = [data.value.options.defaultValue]
+          }
+        } else {
+          data.value.options.defaultValue = []
+        }
+      }
+    }
+
     return {
       data,
       hasKey,
       handleInsertColumn,
       handleInsertOption,
-      handleOptionsRemove
+      handleOptionsRemove,
+      handleSelectModeChange
     }
   }
 })
