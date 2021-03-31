@@ -179,6 +179,7 @@
           :max="element.options.max"
           :step="element.options.step"
           :range="element.options.range"
+          :reverse="element.options.reverse"
           :disabled="element.options.disabled"
           :style="{width: element.options.width}"
         />

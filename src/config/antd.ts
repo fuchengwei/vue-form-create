@@ -237,14 +237,14 @@ export const basicComponents = [
     type: 'slider',
     options: {
       defaultValue: 0,
-      disabled: false,
-      required: false,
+      width: '',
       min: 0,
       max: 100,
       step: 1,
-      showInput: false,
+      disabled: false,
       range: false,
-      width: ''
+      reverse: false,
+      rules
     }
   },
   {

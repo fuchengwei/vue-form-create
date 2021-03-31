@@ -34,7 +34,7 @@
 
     <a-form-item
       label="默认内容"
-      v-if="hasKey('defaultValue') && (data.type === 'input' || data.type === 'password' || data.type === 'textarea' || data.type === 'rate' || data.type === 'switch')"
+      v-if="hasKey('defaultValue') && (data.type === 'input' || data.type === 'password' || data.type === 'textarea' || data.type === 'rate' || data.type === 'switch' || data.type === 'slider')"
     >
       <a-input
         v-if="data.type === 'input' || data.type === 'password'"
@@ -55,6 +55,22 @@
         v-if="data.type === 'switch'"
         v-model:checked="data.options.defaultValue"
       />
+      <template v-if="data.type === 'slider'">
+        <a-input-number
+          v-if="!data.options.range"
+          v-model:value.number="data.options.defaultValue"
+        />
+        <template v-if="data.options.range">
+          <a-input-number
+            v-model:value.number="data.options.defaultValue[0]"
+            :max="data.options.max"
+          />
+          <a-input-number
+            v-model:value.number="data.options.defaultValue[1]"
+            :max="data.options.max"
+          />
+        </template>
+      </template>
     </a-form-item>
 
     <a-form-item
@@ -82,7 +98,10 @@
       label="步长"
       v-if="hasKey('step')"
     >
-      <a-input-number v-model:value.number="data.options.step" />
+      <a-input-number
+        v-model:value.number="data.options.step"
+        :min="0"
+      />
     </a-form-item>
 
     <a-form-item
@@ -125,6 +144,23 @@
       v-if="hasKey('unCheckedChildren')"
     >
       <a-input v-model:value="data.options.unCheckedChildren" />
+    </a-form-item>
+
+    <a-form-item
+      label="双滑块模式"
+      v-if="hasKey('range')"
+    >
+      <a-switch
+        v-model:checked="data.options.range"
+        @change="handleSliderModeChange"
+      />
+    </a-form-item>
+
+    <a-form-item
+      label="反向坐标轴"
+      v-if="hasKey('reverse')"
+    >
+      <a-switch v-model:checked="data.options.reverse" />
     </a-form-item>
 
     <a-form-item
@@ -629,13 +665,20 @@ export default defineComponent({
       }
     }
 
+    const handleSliderModeChange = (checked: boolean) => {
+      checked
+        ? (data.value.options.defaultValue = [0, 0])
+        : (data.value.options.defaultValue = 0)
+    }
+
     return {
       data,
       hasKey,
       handleInsertColumn,
       handleInsertOption,
       handleOptionsRemove,
-      handleSelectModeChange
+      handleSelectModeChange,
+      handleSliderModeChange
     }
   }
 })
