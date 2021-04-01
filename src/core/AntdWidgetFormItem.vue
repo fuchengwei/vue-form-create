@@ -193,6 +193,7 @@
         <a-upload
           :name="element.options.file"
           :action="element.options.action"
+          :accept="element.options.accept"
           :file-list="element.options.defaultValue"
           :listType="element.options.listType"
           :multiple="element.options.multiple"

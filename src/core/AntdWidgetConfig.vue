@@ -461,6 +461,10 @@
         <a-input v-model:value="data.options.action" />
       </a-form-item>
 
+      <a-form-item label="接受上传的文件类型(多个使用 , 隔开)">
+        <a-input v-model:value="data.options.accept" />
+      </a-form-item>
+
       <a-form-item label="最大上传数量">
         <a-input-number
           v-model:value.number="data.options.maxCount"

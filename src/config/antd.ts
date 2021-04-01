@@ -266,6 +266,7 @@ export const advanceComponents = [
       action: 'http://example.com/upload',
       method: 'post',
       listType: 'text',
+      accept: 'image/*',
       maxCount: 3,
       multiple: false,
       disabled: false,
