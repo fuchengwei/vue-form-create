@@ -34,5 +34,8 @@ module.exports = {
         symbolId: 'icon-[name]'
       })
       .end()
+  },
+  devServer: {
+    disableHostCheck: true
   }
 }

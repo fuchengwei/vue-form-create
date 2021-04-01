@@ -34,10 +34,10 @@
 
     <a-form-item
       label="默认内容"
-      v-if="hasKey('defaultValue') && (data.type === 'input' || data.type === 'password' || data.type === 'textarea' || data.type === 'rate' || data.type === 'switch' || data.type === 'slider')"
+      v-if="hasKey('defaultValue') && (data.type === 'input' || data.type === 'password' || data.type === 'textarea' || data.type === 'text' || data.type === 'rate' || data.type === 'switch' || data.type === 'slider')"
     >
       <a-input
-        v-if="data.type === 'input' || data.type === 'password'"
+        v-if="data.type === 'input' || data.type === 'password' || data.type === 'text'"
         v-model:value="data.options.defaultValue"
       />
       <a-textarea
@@ -512,7 +512,10 @@
     </template>
 
     <template v-if="data.type !== 'grid'">
-      <a-form-item label="操作属性">
+      <a-form-item
+        label="操作属性"
+        v-if="hasKey('rules') || hasKey('readonly') || hasKey('disabled') || hasKey('allowClear')"
+      >
         <a-checkbox
           v-if="hasKey('rules')"
           v-model:checked="data.options.rules.required"

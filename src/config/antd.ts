@@ -251,8 +251,7 @@ export const basicComponents = [
     label: '文字',
     type: 'text',
     options: {
-      defaultValue: 'This is a text',
-      customClass: ''
+      defaultValue: 'This is a text'
     }
   }
 ]
