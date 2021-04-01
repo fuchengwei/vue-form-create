@@ -132,7 +132,7 @@ export default defineComponent({
     },
     advanceFields: {
       type: Array as PropType<Array<string>>,
-      default: () => ['blank', 'img-upload', 'editor', 'cascader']
+      default: () => ['img-upload', 'editor', 'cascader']
     },
     layoutFields: {
       type: Array as PropType<Array<string>>,

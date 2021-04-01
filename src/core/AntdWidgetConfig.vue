@@ -433,6 +433,54 @@
       </a-form-item>
     </template>
 
+    <template v-if="data.type === 'img-upload'">
+      <a-form-item label="是否支持多选">
+        <a-switch
+          checked-children="是"
+          un-checked-children="否"
+          v-model:checked="data.options.multiple"
+        />
+      </a-form-item>
+
+      <a-form-item label="模式">
+        <a-radio-group
+          button-style="solid"
+          v-model:value="data.options.listType"
+        >
+          <a-radio-button value="text">text</a-radio-button>
+          <a-radio-button value="picture">picture</a-radio-button>
+          <a-radio-button value="picture-card">picture-card</a-radio-button>
+        </a-radio-group>
+      </a-form-item>
+
+      <a-form-item label="文件参数名">
+        <a-input v-model:value="data.options.name" />
+      </a-form-item>
+
+      <a-form-item label="上传地址">
+        <a-input v-model:value="data.options.action" />
+      </a-form-item>
+
+      <a-form-item label="最大上传数量">
+        <a-input-number
+          v-model:value.number="data.options.maxCount"
+          :min="1"
+        />
+      </a-form-item>
+
+      <a-form-item label="上传请求方法">
+        <a-radio-group
+          button-style="solid"
+          v-model:value="data.options.method"
+        >
+          <a-radio-button value="post">POST</a-radio-button>
+          <a-radio-button value="put">PUT</a-radio-button>
+          <a-radio-button value="get">GET</a-radio-button>
+          <a-radio-button value="delete">DELETE</a-radio-button>
+        </a-radio-group>
+      </a-form-item>
+    </template>
+
     <template v-if="data.type === 'grid'">
       <a-form-item label="栅格间隔">
         <a-input-number

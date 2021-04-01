@@ -188,6 +188,30 @@
       <template v-if="element.type == 'text'">
         <span>{{element.options.defaultValue}}</span>
       </template>
+
+      <template v-if="element.type === 'img-upload'">
+        <a-upload
+          :name="element.options.file"
+          :action="element.options.action"
+          :file-list="element.options.defaultValue"
+          :listType="element.options.listType"
+          :multiple="element.options.multiple"
+          :disabled="element.options.disabled"
+        >
+          <SvgIcon
+            v-if="element.options.listType === 'picture-card'"
+            iconClass="insert"
+          />
+          <a-button v-else>
+            <SvgIcon
+              iconClass="img-upload"
+              style="margin-right: 10px;"
+            />
+            点击上传
+          </a-button>
+        </a-upload>
+
+      </template>
     </a-form-item>
     <div
       class="widget-view-action"

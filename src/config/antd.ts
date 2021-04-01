@@ -258,29 +258,18 @@ export const basicComponents = [
 
 export const advanceComponents = [
   {
-    label: '自定义区域',
-    type: 'blank',
-    options: {
-      defaultType: 'String'
-    }
-  },
-  {
     label: '图片',
     type: 'img-upload',
     options: {
       defaultValue: [],
-      size: {
-        width: 100,
-        height: 100
-      },
-      width: '',
-      disabled: false,
-      length: 8,
+      name: 'file',
+      action: 'http://example.com/upload',
+      method: 'post',
+      listType: 'text',
+      maxCount: 3,
       multiple: false,
-      isDelete: false,
-      min: 0,
-      isEdit: false,
-      action: 'https://jsonplaceholder.typicode.com/photos/'
+      disabled: false,
+      rules
     }
   },
   {
