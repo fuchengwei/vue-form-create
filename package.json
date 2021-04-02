@@ -14,7 +14,8 @@
     "core-js": "^3.6.5",
     "uuid": "^8.3.2",
     "vue": "^3.0.0",
-    "vuedraggable": "^4.0.1"
+    "vuedraggable": "^4.0.1",
+    "wangeditor": "^4.6.13"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",

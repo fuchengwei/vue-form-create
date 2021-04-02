@@ -213,6 +213,14 @@
         </a-upload>
 
       </template>
+
+      <template v-if="element.type === 'editor'">
+        <Editor
+          :value="element.options.defaultValue"
+          :disable="element.options.disabled"
+          :style="{width: element.options.width}"
+        />
+      </template>
     </a-form-item>
     <div
       class="widget-view-action"
@@ -243,11 +251,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import SvgIcon from '@/components/SvgIcon.vue'
+import Editor from '@/components/Editor.vue'
 
 export default defineComponent({
   name: 'AntdWidgetFormItem',
   components: {
-    SvgIcon
+    SvgIcon,
+    Editor
   },
   props: {
     config: {

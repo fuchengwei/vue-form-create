@@ -278,7 +278,8 @@ export const advanceComponents = [
     type: 'editor',
     options: {
       defaultValue: '',
-      width: ''
+      width: '',
+      disabled: false
     }
   },
   {
