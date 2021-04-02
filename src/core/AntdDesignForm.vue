@@ -83,7 +83,7 @@ import Header from '../components/Header.vue'
 import AntdWidgetForm from './AntdWidgetForm.vue'
 import AntdWidgetConfig from './AntdWidgetConfig.vue'
 import AntdFormConfig from './AntdFormConfig.vue'
-import * as config from '@/config'
+import { antd } from '@/config'
 
 export default defineComponent({
   name: 'AntdDesignForm',
@@ -144,9 +144,9 @@ export default defineComponent({
   },
   setup() {
     const state = reactive({
-      antd: config.antd,
+      antd,
       resetJson: false,
-      widgetForm: config.widgetForm,
+      widgetForm: antd.widgetForm,
       widgetFormSelect: null,
       configTab: 'widget',
       previewVisible: false,
@@ -191,7 +191,7 @@ export default defineComponent({
     })
 
     const handleClearableClick = () =>
-      (state.widgetForm = config.widgetForm) && (state.widgetFormSelect = null)
+      (state.widgetForm = antd.widgetForm) && (state.widgetFormSelect = null)
 
     return {
       ...toRefs(state),

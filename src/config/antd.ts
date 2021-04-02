@@ -10,6 +10,20 @@ const rules = {
   type: 'string'
 }
 
+export const widgetForm = {
+  list: [],
+  config: {
+    size: 'default',
+    hideRequiredMark: false,
+    layout: 'horizontal',
+    labelAlign: 'right',
+    labelCol: {
+      span: 3,
+      offset: 0
+    }
+  }
+}
+
 export const basicComponents = [
   {
     label: '单行文本',
