@@ -285,14 +285,17 @@
       >
         <a-input
           v-model:value="data.options.remoteFunc"
+          size="small"
           addon-before="远端方法"
         />
         <a-input
           v-model:value="data.options.props.label"
+          size="small"
           addon-before="标签"
         />
         <a-input
           v-model:value="data.options.props.value"
+          size="small"
           addon-before="值"
         />
       </a-space>
@@ -484,6 +487,34 @@
         </a-radio-group>
       </a-form-item>
     </template>
+
+    <a-form-item
+      label="远端数据"
+      v-if="data.type === 'cascader'"
+    >
+      <a-space direction="vertical">
+        <a-input
+          v-model:value="data.options.remoteFunc"
+          size="small"
+          addon-before="远端方法"
+        />
+        <a-input
+          v-model:value="data.options.props.label"
+          size="small"
+          addon-before="标签"
+        />
+        <a-input
+          v-model:value="data.options.props.value"
+          size="small"
+          addon-before="值"
+        />
+        <a-input
+          v-model:value="data.options.props.children"
+          size="small"
+          addon-before="子选项"
+        />
+      </a-space>
+    </a-form-item>
 
     <template v-if="data.type === 'grid'">
       <a-form-item label="栅格间隔">

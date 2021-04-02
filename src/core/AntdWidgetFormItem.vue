@@ -221,6 +221,18 @@
           :style="{width: element.options.width}"
         />
       </template>
+
+      <template v-if="element.type === 'cascader'">
+        <a-cascader
+          :size="config.size"
+          :value="element.options.defaultValue"
+          :options="element.options.remoteOptions"
+          :placeholder="element.options.placeholder"
+          :allowClear="element.options.allowClear"
+          :disabled="element.options.disabled"
+          :style="{width: element.options.width}"
+        />
+      </template>
     </a-form-item>
     <div
       class="widget-view-action"

@@ -287,18 +287,19 @@ export const advanceComponents = [
     type: 'cascader',
     options: {
       defaultValue: [],
-      width: '',
+      width: '200px',
       placeholder: '',
       disabled: false,
-      clearable: false,
+      allowClear: false,
       remote: true,
       remoteOptions: [],
       props: {
-        value: 'value',
         label: 'label',
+        value: 'value',
         children: 'children'
       },
-      remoteFunc: ''
+      remoteFunc: '',
+      rules
     }
   }
 ]
