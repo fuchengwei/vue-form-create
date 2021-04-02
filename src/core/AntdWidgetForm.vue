@@ -12,7 +12,7 @@
     >
       <Draggable
         class="widget-form-list"
-        item-key="type"
+        item-key="key"
         ghostClass='ghost'
         handle=".drag-widget"
         :animation="200"
@@ -44,7 +44,7 @@
                 >
                   <Draggable
                     class="widget-col-list"
-                    item-key="type"
+                    item-key="key"
                     ghostClass='ghost'
                     handle=".drag-widget"
                     :animation="200"
