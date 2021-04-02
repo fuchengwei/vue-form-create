@@ -26,7 +26,10 @@
             </div>
           </a-layout-sider>
           <a-layout class="center-container">
-            <Header v-bind="$props" />
+            <Header
+              v-bind="$props"
+              @clearable="handleClearableClick"
+            />
             <a-layout-content :class="{'widget-empty': widgetForm.list}">
               <AntdWidgetForm
                 ref="widgetFormRef"
@@ -80,7 +83,7 @@ import Header from '../components/Header.vue'
 import AntdWidgetForm from './AntdWidgetForm.vue'
 import AntdWidgetConfig from './AntdWidgetConfig.vue'
 import AntdFormConfig from './AntdFormConfig.vue'
-import { antd } from '@/config'
+import * as config from '@/config'
 
 export default defineComponent({
   name: 'AntdDesignForm',
@@ -141,21 +144,9 @@ export default defineComponent({
   },
   setup() {
     const state = reactive({
-      antd,
+      antd: config.antd,
       resetJson: false,
-      widgetForm: {
-        list: [],
-        config: {
-          size: 'default',
-          hideRequiredMark: false,
-          layout: 'horizontal',
-          labelAlign: 'right',
-          labelCol: {
-            span: 3,
-            offset: 0
-          }
-        }
-      },
+      widgetForm: config.widgetForm,
       widgetFormSelect: null,
       configTab: 'widget',
       previewVisible: false,
@@ -199,8 +190,12 @@ export default defineComponent({
       codeActiveName: 'vue'
     })
 
+    const handleClearableClick = () =>
+      (state.widgetForm = config.widgetForm) && (state.widgetFormSelect = null)
+
     return {
-      ...toRefs(state)
+      ...toRefs(state),
+      handleClearableClick
     }
   }
 })

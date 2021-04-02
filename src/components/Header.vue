@@ -14,6 +14,7 @@
       v-if="$attrs.clearable"
       type="link"
       size="small"
+      @click="$emit('clearable')"
     >
       <template #icon>
         <SvgIcon iconClass="clearable" />
@@ -61,6 +62,7 @@ export default defineComponent({
   name: 'Header',
   components: {
     SvgIcon
-  }
+  },
+  emits: ['clearable']
 })
 </script>
