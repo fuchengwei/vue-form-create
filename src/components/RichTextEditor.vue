@@ -14,7 +14,7 @@ import {
 import WangEditor from 'wangeditor'
 
 export default defineComponent({
-  name: 'Editor',
+  name: 'RichTextEditor',
   props: {
     value: {
       type: String,
@@ -39,6 +39,7 @@ export default defineComponent({
     onMounted(() => {
       instance = new WangEditor(editor.value)
       Object.assign(instance.config, {
+        zIndex: 9,
         onchange: (html: string) => (content.value = html)
       })
       instance.create()

@@ -288,8 +288,8 @@ export const advanceComponents = [
     }
   },
   {
-    label: '编辑器',
-    type: 'editor',
+    label: '富文本编辑器',
+    type: 'richtext-editor',
     options: {
       defaultValue: '',
       width: '',

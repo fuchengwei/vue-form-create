@@ -214,8 +214,8 @@
 
       </template>
 
-      <template v-if="element.type === 'editor'">
-        <Editor
+      <template v-if="element.type === 'richtext-editor'">
+        <RichTextEditor
           :value="element.options.defaultValue"
           :disable="element.options.disabled"
           :style="{width: element.options.width}"
@@ -263,13 +263,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import SvgIcon from '@/components/SvgIcon.vue'
-import Editor from '@/components/Editor.vue'
+import RichTextEditor from '@/components/RichTextEditor.vue'
 
 export default defineComponent({
   name: 'AntdWidgetFormItem',
   components: {
     SvgIcon,
-    Editor
+    RichTextEditor
   },
   props: {
     config: {

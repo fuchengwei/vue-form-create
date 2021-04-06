@@ -1,9 +1,10 @@
 <template>
   <a-layout-header class="btn-bar">
     <a-button
-      v-if="$attrs.upload"
+      v-if="$attrs.uploadJson"
       type="link"
       size="small"
+      @click="$emit('uploadJson')"
     >
       <template #icon>
         <SvgIcon iconClass="upload" />
@@ -35,6 +36,7 @@
       v-if="$attrs.generateJson"
       type="link"
       size="small"
+      @click="$emit('generateJson')"
     >
       <template #icon>
         <SvgIcon iconClass="generate-json" />
@@ -63,6 +65,6 @@ export default defineComponent({
   components: {
     SvgIcon
   },
-  emits: ['clearable']
+  emits: ['uploadJson', 'clearable', 'generateJson']
 })
 </script>
