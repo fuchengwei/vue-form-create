@@ -90,7 +90,10 @@ export const basicComponents = [
       step: 1,
       readonly: false,
       disabled: false,
-      rules
+      rules: {
+        ...rules,
+        type: 'number'
+      }
     }
   },
   {
@@ -156,7 +159,10 @@ export const basicComponents = [
         label: 'label'
       },
       disabled: false,
-      rules
+      rules: {
+        ...rules,
+        type: 'array'
+      }
     }
   },
   {
@@ -284,7 +290,10 @@ export const advanceComponents = [
       maxCount: 3,
       multiple: false,
       disabled: false,
-      rules
+      rules: {
+        ...rules,
+        type: 'array'
+      }
     }
   },
   {

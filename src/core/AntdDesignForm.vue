@@ -28,6 +28,7 @@
           <a-layout class="center-container">
             <AntdHeader
               v-bind="$props"
+              @preview="() => previewVisible = true"
               @uploadJson="() => uploadJsonVisible = true"
               @generateJson="() => (generateJsonTemplate = JSON.stringify(widgetForm, null, 2)) && (generateJsonVisible = true)"
               @clearable="() => (widgetForm = JSON.parse(JSON.stringify(antd.widgetForm))) && (widgetFormSelect = null)"
@@ -92,14 +93,46 @@
       </a-modal>
 
       <a-modal
+        v-model:visible="previewVisible"
+        :width="800"
+      >
+        <AntdGenerateForm
+          style="margin-top: 20px;"
+          ref="generateFormRef"
+          :data="widgetForm"
+        />
+        <template #footer>
+          <a-button @click="handleReset">重置</a-button>
+          <a-button
+            type="primary"
+            @click="handleGetData"
+          >获取数据</a-button>
+        </template>
+      </a-modal>
+
+      <a-modal
         v-model:visible="generateJsonVisible"
         title="生成JSON"
         okText='Copy'
         :width="800"
-        @ok="handleGenerateJson"
+        @ok="handleCopyClick(generateJsonTemplate)"
       >
         <CodeEditor
           :value="generateJsonTemplate"
+          language="json"
+          readonly
+        />
+      </a-modal>
+
+      <a-modal
+        v-model:visible="dataJsonVisible"
+        title="获取数据"
+        okText='Copy'
+        :width="800"
+        @ok="handleCopyClick(dataJsonTemplate)"
+      >
+        <CodeEditor
+          :value="dataJsonTemplate"
           language="json"
           readonly
         />
@@ -115,6 +148,7 @@ import CodeEditor from '@/components/CodeEditor.vue'
 import ComponentGroup from '@/components/ComponentGroup.vue'
 import AntdHeader from '@/core/AntdHeader.vue'
 import AntdWidgetForm from './AntdWidgetForm.vue'
+import AntdGenerateForm from './AntdGenerateForm.vue'
 import AntdWidgetConfig from './AntdWidgetConfig.vue'
 import AntdFormConfig from './AntdFormConfig.vue'
 import { antd } from '@/config'
@@ -127,6 +161,7 @@ export default defineComponent({
     ComponentGroup,
     CodeEditor,
     AntdWidgetForm,
+    AntdGenerateForm,
     AntdWidgetConfig,
     AntdFormConfig
   },
@@ -183,12 +218,15 @@ export default defineComponent({
       antd,
       widgetForm: antd.widgetForm,
       widgetFormSelect: null,
+      generateFormRef: null,
       configTab: 'widget',
       previewVisible: false,
       uploadJsonVisible: false,
+      dataJsonVisible: false,
       generateJsonVisible: false,
       generateCodeVisible: false,
       generateJsonTemplate: JSON.stringify(antd.widgetForm, null, 2),
+      dataJsonTemplate: '',
       jsonEg: JSON.stringify(antd.widgetForm, null, 2)
     })
 
@@ -208,15 +246,26 @@ export default defineComponent({
       }
     }
 
-    const handleGenerateJson = () => {
-      copy(state.generateJsonTemplate)
+    const handleCopyClick = (text: string) => {
+      copy(text)
       message.success('复制成功')
     }
+
+    const handleGetData = () => {
+      state.generateFormRef.getData().then((res) => {
+        state.dataJsonTemplate = JSON.stringify(res, null, 2)
+        state.dataJsonVisible = true
+      })
+    }
+
+    const handleReset = () => state.generateFormRef.reset()
 
     return {
       ...toRefs(state),
       handleUploadJson,
-      handleGenerateJson
+      handleCopyClick,
+      handleGetData,
+      handleReset
     }
   }
 })

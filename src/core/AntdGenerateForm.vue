@@ -1,0 +1,141 @@
+<template>
+  <div class="fd-style">
+    <a-form
+      ref="generateForm"
+      :model="model"
+      :rules="rules"
+      :layout="widgetForm.config.layout"
+      :labelAlign="widgetForm.config.labelAlign"
+      :labelCol="widgetForm.config.labelCol"
+      :hideRequiredMark="widgetForm.config.hideRequiredMark"
+    >
+      <template v-for="(element, index) of widgetForm.list">
+        <template v-if="element.type === 'grid'">
+          <a-row
+            type="flex"
+            v-if="element.key"
+            :key="element.key"
+            :gutter="element.options.gutter ?? 0"
+            :justify="element.options.justify"
+            :align="element.options.align"
+          >
+            <a-col
+              v-for="(col, colIndex) of element.columns"
+              :key="colIndex"
+              :span="col.span ?? 0"
+            >
+              <AntdGenerateFormItem
+                v-for="colItem of col.list"
+                v-model:model="model"
+                :key="colItem.key"
+                :element="widgetForm.list[index].columns[colIndex]"
+                :config="data.config"
+              />
+            </a-col>
+          </a-row>
+        </template>
+        <AntdGenerateFormItem
+          v-else
+          v-model:model="model"
+          :key="element.key"
+          :element="widgetForm.list[index]"
+          :config="data.config"
+        />
+      </template>
+    </a-form>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, onMounted, reactive, toRefs, watch } from 'vue'
+import { message } from 'ant-design-vue'
+import AntdGenerateFormItem from './AntdGenerateFormItem.vue'
+
+export default defineComponent({
+  name: 'AntdGenerateForm',
+  components: {
+    AntdGenerateFormItem
+  },
+  props: {
+    data: {
+      type: Object
+    },
+    value: {
+      type: Object
+    }
+  },
+  setup(props) {
+    const state = reactive({
+      generateForm: null,
+      model: {},
+      rules: {},
+      widgetForm: JSON.parse(JSON.stringify(props.data))
+    })
+
+    const generateModel = (list) => {
+      for (let index = 0; index < list.length; index++) {
+        const model = list[index].model
+        if (!model) {
+          return
+        }
+        if (list[index].type === 'grid') {
+          list[index].columns.forEach((col) => generateModel(col.list))
+        } else {
+          if (props.value && Object.keys(props.value).includes(model)) {
+            state.model[model] = props.value[model]
+          } else {
+            state.model[model] = list[index].options.defaultValue
+          }
+
+          if (state.rules[model]) {
+            state.rules[model] = [
+              ...state.rules[model],
+              list[index].options.rules
+            ]
+          } else {
+            state.rules[model] = [list[index].options.rules]
+          }
+        }
+      }
+    }
+
+    watch(
+      () => props.data,
+      (val) => {
+        state.widgetForm = JSON.parse(JSON.stringify(val))
+        generateModel(state.widgetForm.list)
+      },
+      { deep: true }
+    )
+
+    onMounted(() => generateModel(state.widgetForm.list))
+
+    const getData = () => {
+      return new Promise((resolve, reject) => {
+        state.generateForm
+          .validate()
+          .then((validate) => {
+            if (validate) {
+              resolve(state.model)
+            } else {
+            }
+          })
+          .catch((error) => {
+            message.error('验证失败')
+            reject(error)
+          })
+      })
+    }
+
+    const reset = () => {
+      state.generateForm.resetFields()
+    }
+
+    return {
+      ...toRefs(state),
+      getData,
+      reset
+    }
+  }
+})
+</script>

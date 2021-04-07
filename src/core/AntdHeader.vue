@@ -26,6 +26,7 @@
       v-if="$attrs.preview"
       type="link"
       size="small"
+      @click="$emit('preview')"
     >
       <template #icon>
         <SvgIcon iconClass="preview" />
@@ -65,6 +66,6 @@ export default defineComponent({
   components: {
     SvgIcon
   },
-  emits: ['uploadJson', 'clearable', 'generateJson']
+  emits: ['uploadJson', 'clearable', 'preview', 'generateJson']
 })
 </script>
