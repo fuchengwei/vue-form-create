@@ -58,10 +58,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import SvgIcon from './SvgIcon.vue'
+import SvgIcon from '../components/SvgIcon.vue'
 
 export default defineComponent({
-  name: 'Header',
+  name: 'AntdHeader',
   components: {
     SvgIcon
   },

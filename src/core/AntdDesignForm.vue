@@ -26,7 +26,7 @@
             </div>
           </a-layout-sider>
           <a-layout class="center-container">
-            <Header
+            <AntdHeader
               v-bind="$props"
               @uploadJson="() => uploadJsonVisible = true"
               @generateJson="() => (generateJsonTemplate = JSON.stringify(widgetForm, null, 2)) && (generateJsonVisible = true)"
@@ -111,9 +111,9 @@
 <script lang="ts">
 import { defineComponent, reactive, PropType, toRefs } from 'vue'
 import { message } from 'ant-design-vue'
-import Header from '@/components/Header.vue'
-import ComponentGroup from '@/components/ComponentGroup.vue'
 import CodeEditor from '@/components/CodeEditor.vue'
+import ComponentGroup from '@/components/ComponentGroup.vue'
+import AntdHeader from '@/core/AntdHeader.vue'
 import AntdWidgetForm from './AntdWidgetForm.vue'
 import AntdWidgetConfig from './AntdWidgetConfig.vue'
 import AntdFormConfig from './AntdFormConfig.vue'
@@ -123,7 +123,7 @@ import { copy } from '@/utils'
 export default defineComponent({
   name: 'AntdDesignForm',
   components: {
-    Header,
+    AntdHeader,
     ComponentGroup,
     CodeEditor,
     AntdWidgetForm,

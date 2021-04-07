@@ -65,7 +65,7 @@
                           :config="widgetForm.config"
                           :selectWidget="widgetFormSelect"
                           @click.stop="handleItemClick(element)"
-                          @copy="handleCopyClick(index)"
+                          @copy="handleCopyClick(index, col.list)"
                           @delete="handleDeleteClick(index, col.list)"
                         />
                       </transition-group>
@@ -101,7 +101,7 @@
                 :config="widgetForm.config"
                 :selectWidget="widgetFormSelect"
                 @click="handleItemClick(element)"
-                @copy="handleCopyClick(index)"
+                @copy="handleCopyClick(index, widgetForm.list)"
                 @delete="handleDeleteClick(index, widgetForm.list)"
               />
             </template>
@@ -119,14 +119,33 @@ import { v4 } from 'uuid'
 import AntdWidgetFormItem from './AntdWidgetFormItem.vue'
 import SvgIcon from '@/components/SvgIcon.vue'
 
-const handleList = (key: string, list) => {
+const handleListInsert = (key: string, list, obj) => {
+  const newList = []
+  list.forEach((item) => {
+    if (item.key === key) {
+      newList.push(item)
+      newList.push(obj)
+    } else {
+      if (item.columns) {
+        item.columns = item.columns.map((col) => ({
+          ...col,
+          list: handleListInsert(key, col.list, obj)
+        }))
+      }
+      newList.push(item)
+    }
+  })
+  return newList
+}
+
+const handleListDelete = (key: string, list) => {
   const newList = []
   list.forEach((item) => {
     if (item.key !== key) {
       if (item.columns) {
         item.columns = item.columns.map((col) => ({
           ...col,
-          list: handleList(key, col.list)
+          list: handleListDelete(key, col.list)
         }))
       }
       newList.push(item)
@@ -156,9 +175,9 @@ export default defineComponent({
       context.emit('update:widgetFormSelect', row)
     }
 
-    const handleCopyClick = (index: number) => {
+    const handleCopyClick = (index: number, list) => {
       const key = v4().replaceAll('-', '')
-      const list = JSON.parse(JSON.stringify(props.widgetForm.list))
+      const oldList = JSON.parse(JSON.stringify(props.widgetForm.list))
 
       let copyData = {
         ...list[index],
@@ -185,9 +204,10 @@ export default defineComponent({
         }
       }
 
-      list.push(copyData)
-
-      context.emit('update:widgetForm', { ...props.widgetForm, list })
+      context.emit('update:widgetForm', {
+        ...props.widgetForm,
+        list: handleListInsert(list[index].key, oldList, copyData)
+      })
 
       context.emit('update:widgetFormSelect', copyData)
     }
@@ -207,7 +227,7 @@ export default defineComponent({
 
       context.emit('update:widgetForm', {
         ...props.widgetForm,
-        list: handleList(list[index].key, oldList)
+        list: handleListDelete(list[index].key, oldList)
       })
     }
 
