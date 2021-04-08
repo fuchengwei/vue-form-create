@@ -30,8 +30,8 @@
               v-bind="$props"
               @preview="() => previewVisible = true"
               @uploadJson="() => uploadJsonVisible = true"
-              @generateJson="() => (generateJsonTemplate = JSON.stringify(widgetForm, null, 2)) && (generateJsonVisible = true)"
-              @clearable="() => (widgetForm = JSON.parse(JSON.stringify(antd.widgetForm))) && (widgetFormSelect = null)"
+              @generateJson="handleGenerateJson"
+              @clearable="handleClearable"
             />
             <a-layout-content :class="{'widget-empty': widgetForm.list}">
               <AntdWidgetForm
@@ -216,7 +216,7 @@ export default defineComponent({
   setup() {
     const state = reactive({
       antd,
-      widgetForm: antd.widgetForm,
+      widgetForm: JSON.parse(JSON.stringify(antd.widgetForm)),
       widgetFormSelect: null,
       generateFormRef: null,
       configTab: 'widget',
@@ -258,6 +258,17 @@ export default defineComponent({
       })
     }
 
+    const handleGenerateJson = () =>
+      (state.generateJsonTemplate = JSON.stringify(
+        state.widgetForm,
+        null,
+        2
+      )) && (state.generateJsonVisible = true)
+
+    const handleClearable = () =>
+      (state.widgetForm = JSON.parse(JSON.stringify(antd.widgetForm))) &&
+      (state.widgetFormSelect = null)
+
     const handleReset = () => state.generateFormRef.reset()
 
     return {
@@ -265,6 +276,8 @@ export default defineComponent({
       handleUploadJson,
       handleCopyClick,
       handleGetData,
+      handleGenerateJson,
+      handleClearable,
       handleReset
     }
   }

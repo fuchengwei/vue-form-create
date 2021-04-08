@@ -4,7 +4,6 @@
     :key="element.key"
     :label="element.label"
     :name="element.model"
-    :rules="element.options.rules"
   >
     <template v-if="element.type === 'input'">
       <a-input

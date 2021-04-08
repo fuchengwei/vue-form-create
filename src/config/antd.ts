@@ -7,7 +7,7 @@ const rules = {
   min: null,
   pattern: '',
   required: false,
-  type: 'string'
+  type: 'any'
 }
 
 export const widgetForm = {
@@ -90,10 +90,7 @@ export const basicComponents = [
       step: 1,
       readonly: false,
       disabled: false,
-      rules: {
-        ...rules,
-        type: 'number'
-      }
+      rules
     }
   },
   {
@@ -159,10 +156,7 @@ export const basicComponents = [
         label: 'label'
       },
       disabled: false,
-      rules: {
-        ...rules,
-        type: 'array'
-      }
+      rules
     }
   },
   {
@@ -173,6 +167,7 @@ export const basicComponents = [
       width: '',
       placeholder: '请选择时间',
       format: 'HH:mm:ss',
+      valueFormat: 'HH:mm:ss',
       readonly: false,
       allowClear: true,
       disabled: false,
@@ -290,10 +285,7 @@ export const advanceComponents = [
       maxCount: 3,
       multiple: false,
       disabled: false,
-      rules: {
-        ...rules,
-        type: 'array'
-      }
+      rules
     }
   },
   {

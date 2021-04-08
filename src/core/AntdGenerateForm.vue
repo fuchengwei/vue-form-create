@@ -47,7 +47,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, toRefs, watch } from 'vue'
+import {
+  defineComponent,
+  nextTick,
+  onMounted,
+  reactive,
+  toRefs,
+  watch
+} from 'vue'
 import { message } from 'ant-design-vue'
 import AntdGenerateFormItem from './AntdGenerateFormItem.vue'
 
@@ -73,6 +80,8 @@ export default defineComponent({
     })
 
     const generateModel = (list) => {
+      state.model = {}
+      state.rules = {}
       for (let index = 0; index < list.length; index++) {
         const model = list[index].model
         if (!model) {
@@ -87,16 +96,10 @@ export default defineComponent({
             state.model[model] = list[index].options.defaultValue
           }
 
-          if (state.rules[model]) {
-            state.rules[model] = [
-              ...state.rules[model],
-              list[index].options.rules
-            ]
-          } else {
-            state.rules[model] = [list[index].options.rules]
-          }
+          state.rules[model] = list[index].options.rules
         }
       }
+      nextTick(() => state.generateForm.resetFields())
     }
 
     watch(

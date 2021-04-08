@@ -434,6 +434,9 @@
       <a-form-item label="格式">
         <a-input v-model:value="data.options.format" />
       </a-form-item>
+      <a-form-item label="绑定值格式">
+        <a-input v-model:value="data.options.valueFormat" />
+      </a-form-item>
     </template>
 
     <template v-if="data.type === 'img-upload'">
