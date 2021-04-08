@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
-const CompressionPlugin = require('compression-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin
 
 const resolve = dir => {
   return path.join(__dirname, dir)
@@ -9,14 +10,18 @@ const resolve = dir => {
 module.exports = {
   publicPath: '/',
   assetsDir: 'static',
-  configureWebpack: {
-    plugins: [
-      new CompressionPlugin({
-        test: /\.js$|\.html$|\.css/,
-        threshold: 10240,
-        deleteOriginalAssets: false
-      })
-    ]
+  productionSourceMap: false,
+  css: {
+    extract: false
+  },
+  configureWebpack: config => {
+    config.externals = {
+      vue: 'Vue',
+      axios: 'axios',
+      vuedraggable: 'vuedraggable',
+      wangeditor: 'wangeditor',
+      'ace-builds': 'ace'
+    }
   },
   chainWebpack: config => {
     config.module
@@ -34,6 +39,11 @@ module.exports = {
         symbolId: 'icon-[name]'
       })
       .end()
+    config.plugin('webpack-report').use(BundleAnalyzerPlugin, [
+      {
+        analyzerMode: 'static'
+      }
+    ])
   },
   devServer: {
     disableHostCheck: true
