@@ -48,6 +48,7 @@
       v-if="$attrs.generateCode"
       type="link"
       size="small"
+      @click="$emit('generateCode')"
     >
       <template #icon>
         <SvgIcon iconClass="generate-code" />
@@ -66,6 +67,6 @@ export default defineComponent({
   components: {
     SvgIcon
   },
-  emits: ['uploadJson', 'clearable', 'preview', 'generateJson']
+  emits: ['uploadJson', 'clearable', 'preview', 'generateJson', 'generateCode']
 })
 </script>

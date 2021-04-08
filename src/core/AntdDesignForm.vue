@@ -31,6 +31,7 @@
               @preview="() => previewVisible = true"
               @uploadJson="() => uploadJsonVisible = true"
               @generateJson="handleGenerateJson"
+              @generateCode="handleGenerateCode"
               @clearable="handleClearable"
             />
             <a-layout-content :class="{'widget-empty': widgetForm.list}">
@@ -137,12 +138,47 @@
           readonly
         />
       </a-modal>
+
+      <a-modal
+        v-model:visible="dataCodeVisible"
+        title="生产代码"
+        okText='Copy'
+        :width="800"
+        @ok="handleCopyClick(dataCodeTemplate)"
+      >
+        <a-tabs
+          type="card"
+          v-model:activeKey="codeLanguage"
+          :tabBarStyle="{margin: 0}"
+        >
+          <a-tab-pane
+            tab="Vue Component"
+            :key="codeType.Vue"
+          >
+            <CodeEditor
+              :value="dataCodeTemplate"
+              language="html"
+              readonly
+            />
+          </a-tab-pane>
+          <a-tab-pane
+            tab="HTML"
+            :key="codeType.Html"
+          >
+            <CodeEditor
+              :value="dataCodeTemplate"
+              language="html"
+              readonly
+            />
+          </a-tab-pane>
+        </a-tabs>
+      </a-modal>
     </a-layout>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, PropType, toRefs } from 'vue'
+import { defineComponent, reactive, PropType, toRefs, watchEffect } from 'vue'
 import { message } from 'ant-design-vue'
 import CodeEditor from '@/components/CodeEditor.vue'
 import ComponentGroup from '@/components/ComponentGroup.vue'
@@ -153,6 +189,8 @@ import AntdWidgetConfig from './AntdWidgetConfig.vue'
 import AntdFormConfig from './AntdFormConfig.vue'
 import { antd } from '@/config'
 import { copy } from '@/utils'
+import generateCode from '@/utils/generateCode'
+import { CodeType, PlatformType } from '@/enums'
 
 export default defineComponent({
   name: 'AntdDesignForm',
@@ -216,6 +254,7 @@ export default defineComponent({
   setup() {
     const state = reactive({
       antd,
+      codeType: CodeType,
       widgetForm: JSON.parse(JSON.stringify(antd.widgetForm)),
       widgetFormSelect: null,
       generateFormRef: null,
@@ -223,10 +262,13 @@ export default defineComponent({
       previewVisible: false,
       uploadJsonVisible: false,
       dataJsonVisible: false,
+      dataCodeVisible: false,
       generateJsonVisible: false,
       generateCodeVisible: false,
       generateJsonTemplate: JSON.stringify(antd.widgetForm, null, 2),
       dataJsonTemplate: '',
+      dataCodeTemplate: '',
+      codeLanguage: CodeType.Vue,
       jsonEg: JSON.stringify(antd.widgetForm, null, 2)
     })
 
@@ -265,6 +307,21 @@ export default defineComponent({
         2
       )) && (state.generateJsonVisible = true)
 
+    const handleGenerateCode = () => {
+      state.codeLanguage = CodeType.Vue
+      state.dataCodeVisible = true
+    }
+
+    watchEffect(() => {
+      if (state.dataCodeVisible) {
+        state.dataCodeTemplate = generateCode(
+          state.widgetForm,
+          state.codeLanguage,
+          PlatformType.Antd
+        )
+      }
+    })
+
     const handleClearable = () =>
       (state.widgetForm = JSON.parse(JSON.stringify(antd.widgetForm))) &&
       (state.widgetFormSelect = null)
@@ -288,6 +345,7 @@ export default defineComponent({
       handleCopyClick,
       handleGetData,
       handleGenerateJson,
+      handleGenerateCode,
       handleClearable,
       handleReset,
       getJson,

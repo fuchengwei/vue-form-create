@@ -119,8 +119,6 @@ export default defineComponent({
           }
         }
       })
-
-      console.log(list)
     }
 
     watch(
