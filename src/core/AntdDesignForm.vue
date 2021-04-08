@@ -271,6 +271,17 @@ export default defineComponent({
 
     const handleReset = () => state.generateFormRef.reset()
 
+    const getJson = () => state.widgetForm
+
+    const setJson = (json) => {
+      state.widgetForm = json
+      if (json.list.length) {
+        state.widgetFormSelect = json.list[0]
+      }
+    }
+
+    const clear = () => handleClearable()
+
     return {
       ...toRefs(state),
       handleUploadJson,
@@ -278,7 +289,10 @@ export default defineComponent({
       handleGetData,
       handleGenerateJson,
       handleClearable,
-      handleReset
+      handleReset,
+      getJson,
+      setJson,
+      clear
     }
   }
 })
