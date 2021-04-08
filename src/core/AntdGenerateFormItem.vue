@@ -11,7 +11,7 @@
         :size="config.size"
         :style="{width: element.options.width}"
         :placeholder="element.options.placeholder"
-        :maxlength="element.options.maxlength"
+        :maxlength="parseInt(element.options.maxlength)"
         :prefix="element.options.prefix"
         :suffix="element.options.suffix"
         :addonBefore="element.options.addonBefore"
