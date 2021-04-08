@@ -57,6 +57,7 @@ import {
 } from 'vue'
 import { message } from 'ant-design-vue'
 import AntdGenerateFormItem from './AntdGenerateFormItem.vue'
+import request from '@/utils/request'
 
 export default defineComponent({
   name: 'AntdGenerateForm',
@@ -102,16 +103,40 @@ export default defineComponent({
       nextTick(() => state.generateForm.resetFields())
     }
 
+    const generateOptions = (list) => {
+      list.forEach((item) => {
+        if (item.type === 'grid') {
+          item.columns.forEach((col) => generateOptions(col.list))
+        } else {
+          if (item.options.remote && item.options.remoteFunc) {
+            request.get(item.options.remoteFunc).then((resp) => {
+              item.options.remoteOptions = resp.data.map((data) => ({
+                label: data[item.options.props.label],
+                value: data[item.options.props.value],
+                children: data[item.options.props.children]
+              }))
+            })
+          }
+        }
+      })
+
+      console.log(list)
+    }
+
     watch(
       () => props.data,
       (val) => {
         state.widgetForm = JSON.parse(JSON.stringify(val))
         generateModel(state.widgetForm.list)
+        generateOptions(state.widgetForm.list)
       },
       { deep: true }
     )
 
-    onMounted(() => generateModel(state.widgetForm.list))
+    onMounted(() => {
+      generateModel(state.widgetForm.list)
+      generateOptions(state.widgetForm.list)
+    })
 
     const getData = () => {
       return new Promise((resolve, reject) => {

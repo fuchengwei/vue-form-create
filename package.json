@@ -11,6 +11,7 @@
   "dependencies": {
     "ace-builds": "^1.4.12",
     "ant-design-vue": "^2.1.0",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "uuid": "^8.3.2",
     "vue": "^3.0.0",

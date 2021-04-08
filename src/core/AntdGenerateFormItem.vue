@@ -73,7 +73,7 @@
         :disabled="element.options.disabled"
       >
         <a-radio
-          v-for="item of element.options.options"
+          v-for="item of element.options.remote ? element.options.remoteOptions : element.options.options"
           :key="item.value"
           :value="item.value"
           :style="{display: element.options.inline ? 'inline-block' : 'block'}"
@@ -88,7 +88,7 @@
         :disabled="element.options.disabled"
       >
         <a-checkbox
-          v-for="item of element.options.options"
+          v-for="item of element.options.remote ? element.options.remoteOptions : element.options.options"
           :key="item.value"
           :value="item.value"
           :style="{display: element.options.inline ? 'inline-block' : 'block'}"
@@ -145,7 +145,7 @@
         :style="{width: element.options.width}"
       >
         <a-select-option
-          v-for="item of element.options.options"
+          v-for="item of element.options.remote ? element.options.remoteOptions : element.options.options"
           :key="item.value"
           :value="item.value"
           :label="element.options.showLabel ? item.label : item.value"
