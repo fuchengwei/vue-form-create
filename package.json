@@ -1,8 +1,8 @@
 {
   "name": "vue-form-create",
   "description": "一个基于Vue3.0 + TS 的表单设计器",
-  "version": "0.0.1",
-  "main": "dist/FormCreate.common.js",
+  "version": "0.0.4",
+  "main": "dist/formCreate.common.js",
   "homepage": "https://github.com/fuchengwei/vue-form-create",
   "author": {
     "name": "fuchengwei"
@@ -24,14 +24,14 @@
   ],
   "scripts": {
     "serve": "vue-cli-service serve ./example/main.ts --open",
-    "build": "vue-cli-service build --target lib --name FormCreate ./src/index.ts",
+    "build": "vue-cli-service build --target lib --name formCreate ./src/index.ts",
     "lint": "vue-cli-service lint",
     "prepare": "husky install"
   },
   "dependencies": {
-    "vue": "^3.0.11",
     "core-js": "^3.6.5",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "vue": "^3.0.11"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",
@@ -47,6 +47,8 @@
     "@vue/compiler-sfc": "^3.0.11",
     "@vue/eslint-config-standard": "^5.1.2",
     "@vue/eslint-config-typescript": "^7.0.0",
+    "ace-builds": "^1.4.12",
+    "ant-design-vue": "^2.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
@@ -59,8 +61,6 @@
     "svg-sprite-loader": "^6.0.2",
     "typescript": "~4.1.5",
     "vuedraggable": "^4.0.1",
-    "wangeditor": "^4.6.13",
-    "ace-builds": "^1.4.12",
-    "ant-design-vue": "^2.1.0"
+    "wangeditor": "^4.6.13"
   }
 }
