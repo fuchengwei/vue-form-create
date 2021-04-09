@@ -1,7 +1,7 @@
 {
   "name": "vue-form-create",
   "description": "一个基于Vue3.0 + TS 的表单设计器",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "main": "dist/formCreate.common.js",
   "homepage": "https://github.com/fuchengwei/vue-form-create",
   "author": {
@@ -31,7 +31,8 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "uuid": "^8.3.2",
-    "vue": "^3.0.11"
+    "vue": "^3.0.11",
+    "vuedraggable": "^4.0.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",
@@ -60,7 +61,6 @@
     "stylus-loader": "^3.0.2",
     "svg-sprite-loader": "^6.0.2",
     "typescript": "~4.1.5",
-    "vuedraggable": "^4.0.1",
     "wangeditor": "^4.6.13"
   }
 }
