@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin
 
 const resolve = dir => {
   return path.join(__dirname, dir)
@@ -15,12 +13,14 @@ module.exports = {
     extract: false
   },
   configureWebpack: config => {
-    config.externals = {
-      vue: 'Vue',
-      axios: 'axios',
-      vuedraggable: 'vuedraggable',
-      wangeditor: 'wangeditor',
-      'ace-builds': 'ace'
+    if (process.env.NODE_ENV === 'production') {
+      config.externals = {
+        vue: 'Vue',
+        vuedraggable: 'vuedraggable',
+        wangeditor: 'wangeditor',
+        'ace-builds': 'ace',
+        'ant-design-vue': 'antd'
+      }
     }
   },
   chainWebpack: config => {
@@ -39,11 +39,6 @@ module.exports = {
         symbolId: 'icon-[name]'
       })
       .end()
-    config.plugin('webpack-report').use(BundleAnalyzerPlugin, [
-      {
-        analyzerMode: 'static'
-      }
-    ])
   },
   devServer: {
     disableHostCheck: true

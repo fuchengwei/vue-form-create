@@ -1,43 +1,40 @@
 <template>
-  <a-form
-    layout="vertical"
-    v-if="data"
-    :key="data.key"
-  >
-    <a-form-item
-      label="字段标识"
-      v-if="data.type !== 'grid'"
-    >
+  <a-form layout="vertical" v-if="data" :key="data.key">
+    <a-form-item label="字段标识" v-if="data.type !== 'grid'">
       <a-input v-model:value="data.model" />
     </a-form-item>
 
-    <a-form-item
-      label="标题"
-      v-if="data.type !== 'grid'"
-    >
+    <a-form-item label="标题" v-if="data.type !== 'grid'">
       <a-input v-model:value="data.label" />
     </a-form-item>
 
-    <a-form-item
-      label="宽度"
-      v-if="hasKey('width')"
-    >
+    <a-form-item label="宽度" v-if="hasKey('width')">
       <a-input v-model:value="data.options.width" />
     </a-form-item>
 
-    <a-form-item
-      label="占位内容"
-      v-if="hasKey('placeholder')"
-    >
+    <a-form-item label="占位内容" v-if="hasKey('placeholder')">
       <a-input v-model:value="data.options.placeholder" />
     </a-form-item>
 
     <a-form-item
       label="默认内容"
-      v-if="hasKey('defaultValue') && (data.type === 'input' || data.type === 'password' || data.type === 'textarea' || data.type === 'text' || data.type === 'rate' || data.type === 'switch' || data.type === 'slider')"
+      v-if="
+        hasKey('defaultValue') &&
+          (data.type === 'input' ||
+            data.type === 'password' ||
+            data.type === 'textarea' ||
+            data.type === 'text' ||
+            data.type === 'rate' ||
+            data.type === 'switch' ||
+            data.type === 'slider')
+      "
     >
       <a-input
-        v-if="data.type === 'input' || data.type === 'password' || data.type === 'text'"
+        v-if="
+          data.type === 'input' ||
+            data.type === 'password' ||
+            data.type === 'text'
+        "
         v-model:value="data.options.defaultValue"
       />
       <a-textarea
@@ -73,100 +70,58 @@
       </template>
     </a-form-item>
 
-    <a-form-item
-      label="最大长度"
-      v-if="hasKey('maxlength')"
-    >
+    <a-form-item label="最大长度" v-if="hasKey('maxlength')">
       <a-input v-model:value.number="data.options.maxlength" />
     </a-form-item>
 
-    <a-form-item
-      label="最大值"
-      v-if="hasKey('max')"
-    >
+    <a-form-item label="最大值" v-if="hasKey('max')">
       <a-input-number v-model:value.number="data.options.max" />
     </a-form-item>
 
-    <a-form-item
-      label="最小值"
-      v-if="hasKey('min')"
-    >
+    <a-form-item label="最小值" v-if="hasKey('min')">
       <a-input-number v-model:value.number="data.options.min" />
     </a-form-item>
 
-    <a-form-item
-      label="步长"
-      v-if="hasKey('step')"
-    >
-      <a-input-number
-        v-model:value.number="data.options.step"
-        :min="0"
-      />
+    <a-form-item label="步长" v-if="hasKey('step')">
+      <a-input-number v-model:value.number="data.options.step" :min="0" />
     </a-form-item>
 
-    <a-form-item
-      label="前缀"
-      v-if="hasKey('prefix')"
-    >
+    <a-form-item label="前缀" v-if="hasKey('prefix')">
       <a-input v-model:value.number="data.options.prefix" />
     </a-form-item>
 
-    <a-form-item
-      label="后缀"
-      v-if="hasKey('suffix')"
-    >
+    <a-form-item label="后缀" v-if="hasKey('suffix')">
       <a-input v-model:value.number="data.options.suffix" />
     </a-form-item>
 
-    <a-form-item
-      label="前置标签"
-      v-if="hasKey('addonBefore')"
-    >
+    <a-form-item label="前置标签" v-if="hasKey('addonBefore')">
       <a-input v-model:value.number="data.options.addonBefore" />
     </a-form-item>
 
-    <a-form-item
-      label="后置标签"
-      v-if="hasKey('addonAfter')"
-    >
+    <a-form-item label="后置标签" v-if="hasKey('addonAfter')">
       <a-input v-model:value.number="data.options.addonAfter" />
     </a-form-item>
 
-    <a-form-item
-      label="选中时的内容"
-      v-if="hasKey('checkedChildren')"
-    >
+    <a-form-item label="选中时的内容" v-if="hasKey('checkedChildren')">
       <a-input v-model:value="data.options.checkedChildren" />
     </a-form-item>
 
-    <a-form-item
-      label="非选中时的内容"
-      v-if="hasKey('unCheckedChildren')"
-    >
+    <a-form-item label="非选中时的内容" v-if="hasKey('unCheckedChildren')">
       <a-input v-model:value="data.options.unCheckedChildren" />
     </a-form-item>
 
-    <a-form-item
-      label="双滑块模式"
-      v-if="hasKey('range')"
-    >
+    <a-form-item label="双滑块模式" v-if="hasKey('range')">
       <a-switch
         v-model:checked="data.options.range"
         @change="handleSliderModeChange"
       />
     </a-form-item>
 
-    <a-form-item
-      label="反向坐标轴"
-      v-if="hasKey('reverse')"
-    >
+    <a-form-item label="反向坐标轴" v-if="hasKey('reverse')">
       <a-switch v-model:checked="data.options.reverse" />
     </a-form-item>
 
-    <a-form-item
-      label="是否显示切换按钮"
-      v-if="hasKey('visibilityToggle')"
-    >
+    <a-form-item label="是否显示切换按钮" v-if="hasKey('visibilityToggle')">
       <a-switch
         checked-children="显示"
         un-checked-children="隐藏"
@@ -174,10 +129,7 @@
       />
     </a-form-item>
 
-    <a-form-item
-      label="是否显示字数"
-      v-if="hasKey('showCount')"
-    >
+    <a-form-item label="是否显示字数" v-if="hasKey('showCount')">
       <a-switch
         checked-children="显示"
         un-checked-children="隐藏"
@@ -185,10 +137,7 @@
       />
     </a-form-item>
 
-    <a-form-item
-      label="是否自适应内容高度"
-      v-if="hasKey('autoSize')"
-    >
+    <a-form-item label="是否自适应内容高度" v-if="hasKey('autoSize')">
       <a-switch
         checked-children="是"
         un-checked-children="否"
@@ -196,20 +145,11 @@
       />
     </a-form-item>
 
-    <a-form-item
-      label="行数"
-      v-if="hasKey('rows') && !data.options.autosize"
-    >
-      <a-input-number
-        v-model:value="data.options.rows"
-        :min="0"
-      />
+    <a-form-item label="行数" v-if="hasKey('rows') && !data.options.autosize">
+      <a-input-number v-model:value="data.options.rows" :min="0" />
     </a-form-item>
 
-    <a-form-item
-      label="是否允许半选"
-      v-if="hasKey('allowHalf')"
-    >
+    <a-form-item label="是否允许半选" v-if="hasKey('allowHalf')">
       <a-switch
         checked-children="是"
         un-checked-children="否"
@@ -217,23 +157,14 @@
       />
     </a-form-item>
 
-    <a-form-item
-      label="布局方式"
-      v-if="hasKey('inline')"
-    >
-      <a-radio-group
-        button-style="solid"
-        v-model:value="data.options.inline"
-      >
+    <a-form-item label="布局方式" v-if="hasKey('inline')">
+      <a-radio-group button-style="solid" v-model:value="data.options.inline">
         <a-radio-button :value="true">行内</a-radio-button>
         <a-radio-button :value="false">块级</a-radio-button>
       </a-radio-group>
     </a-form-item>
 
-    <a-form-item
-      label="模式"
-      v-if="data.type === 'select'"
-    >
+    <a-form-item label="模式" v-if="data.type === 'select'">
       <a-radio-group
         button-style="solid"
         v-model:value="data.options.mode"
@@ -245,10 +176,7 @@
       </a-radio-group>
     </a-form-item>
 
-    <a-form-item
-      label="单选模式是否可搜索"
-      v-if="hasKey('showSearch')"
-    >
+    <a-form-item label="单选模式是否可搜索" v-if="hasKey('showSearch')">
       <a-switch
         checked-children="是"
         un-checked-children="否"
@@ -256,10 +184,7 @@
       />
     </a-form-item>
 
-    <a-form-item
-      label="是否显示标签"
-      v-if="hasKey('showLabel')"
-    >
+    <a-form-item label="是否显示标签" v-if="hasKey('showLabel')">
       <a-switch
         checked-children="是"
         un-checked-children="否"
@@ -267,14 +192,8 @@
       />
     </a-form-item>
 
-    <a-form-item
-      label="选项"
-      v-if="hasKey('options')"
-    >
-      <a-radio-group
-        button-style="solid"
-        v-model:value="data.options.remote"
-      >
+    <a-form-item label="选项" v-if="hasKey('options')">
+      <a-radio-group button-style="solid" v-model:value="data.options.remote">
         <a-radio-button :value="false">静态数据</a-radio-button>
         <a-radio-button :value="true">远端数据</a-radio-button>
       </a-radio-group>
@@ -300,30 +219,40 @@
         />
       </a-space>
       <template v-else>
-        <template v-if="data.type === 'radio' || (data.type === 'select' && data.options.mode === null)">
+        <template
+          v-if="
+            data.type === 'radio' ||
+              (data.type === 'select' && data.options.mode === null)
+          "
+        >
           <a-radio-group v-model:value="data.options.defaultValue">
             <Draggable
               tag="ul"
               item-key="index"
-              ghostClass='ghost'
+              ghostClass="ghost"
               handle=".drag-item"
-              :group="{name: 'options'}"
+              :group="{ name: 'options' }"
               :list="data.options.options"
             >
               <template #item="{ element, index }">
                 <div>
-                  <a-radio
-                    :value="element.value"
-                    style="margin-right: 0px;"
-                  >
+                  <a-radio :value="element.value" style="margin-right: 0px;">
                     <a-input
                       size="small"
-                      :style="{width: data.options.showLabel ? '90px' : '180px'}"
+                      :style="{
+                        width: data.options.showLabel ? '90px' : '180px'
+                      }"
                       v-model:value="element.value"
                     />
                     <a-input
                       size="small"
-                      :style="{width: data.options.showLabel ? '90px' : '0', padding: data.options.showLabel ? '0 7px' : '0', border: data.options.showLabel ? '1px solid #d9d9d9' : 'none'}"
+                      :style="{
+                        width: data.options.showLabel ? '90px' : '0',
+                        padding: data.options.showLabel ? '0 7px' : '0',
+                        border: data.options.showLabel
+                          ? '1px solid #d9d9d9'
+                          : 'none'
+                      }"
                       v-model:value="element.label"
                     />
                   </a-radio>
@@ -349,30 +278,40 @@
           </a-radio-group>
         </template>
 
-        <template v-if="data.type === 'checkbox' || (data.type === 'select' && data.options.mode !== null)">
+        <template
+          v-if="
+            data.type === 'checkbox' ||
+              (data.type === 'select' && data.options.mode !== null)
+          "
+        >
           <a-checkbox-group v-model:value="data.options.defaultValue">
             <Draggable
               tag="ul"
               item-key="index"
-              ghostClass='ghost'
+              ghostClass="ghost"
               handle=".drag-item"
-              :group="{name: 'options'}"
+              :group="{ name: 'options' }"
               :list="data.options.options"
             >
               <template #item="{ element, index }">
                 <li>
-                  <a-checkbox
-                    :value="element.value"
-                    style="margin-right: 0;"
-                  >
+                  <a-checkbox :value="element.value" style="margin-right: 0;">
                     <a-input
                       size="small"
-                      :style="{width: data.options.showLabel ? '90px' : '180px'}"
+                      :style="{
+                        width: data.options.showLabel ? '90px' : '180px'
+                      }"
                       v-model:value="element.value"
                     />
                     <a-input
                       size="small"
-                      :style="{width: data.options.showLabel ? '90px' : '0', padding: data.options.showLabel ? '0 7px' : '0', border: data.options.showLabel ? '1px solid #d9d9d9' : 'none'}"
+                      :style="{
+                        width: data.options.showLabel ? '90px' : '0',
+                        padding: data.options.showLabel ? '0 7px' : '0',
+                        border: data.options.showLabel
+                          ? '1px solid #d9d9d9'
+                          : 'none'
+                      }"
                       v-model:value="element.label"
                     />
                   </a-checkbox>
@@ -399,11 +338,9 @@
         </template>
 
         <div style="margin-top: 5px;">
-          <a-button
-            type='link'
-            size="small"
-            @click="handleInsertOption"
-          >添加选项</a-button>
+          <a-button type="link" size="small" @click="handleInsertOption"
+            >添加选项</a-button
+          >
         </div>
       </template>
     </a-form-item>
@@ -472,17 +409,11 @@
       </a-form-item>
 
       <a-form-item label="最大上传数量">
-        <a-input-number
-          v-model:value.number="data.options.maxCount"
-          :min="1"
-        />
+        <a-input-number v-model:value.number="data.options.maxCount" :min="1" />
       </a-form-item>
 
       <a-form-item label="上传请求方法">
-        <a-radio-group
-          button-style="solid"
-          v-model:value="data.options.method"
-        >
+        <a-radio-group button-style="solid" v-model:value="data.options.method">
           <a-radio-button value="post">POST</a-radio-button>
           <a-radio-button value="put">PUT</a-radio-button>
           <a-radio-button value="get">GET</a-radio-button>
@@ -491,10 +422,7 @@
       </a-form-item>
     </template>
 
-    <a-form-item
-      label="远端数据"
-      v-if="data.type === 'cascader'"
-    >
+    <a-form-item label="远端数据" v-if="data.type === 'cascader'">
       <a-space direction="vertical">
         <a-input
           v-model:value="data.options.remoteFunc"
@@ -521,27 +449,21 @@
 
     <template v-if="data.type === 'grid'">
       <a-form-item label="栅格间隔">
-        <a-input-number
-          v-model:value="data.options.gutter"
-          :min="0"
-        />
+        <a-input-number v-model:value="data.options.gutter" :min="0" />
       </a-form-item>
 
       <a-form-item label="列配置项">
         <Draggable
           tag="ul"
           item-key="index"
-          ghostClass='ghost'
+          ghostClass="ghost"
           handle=".drag-item"
-          :group="{name: 'options'}"
+          :group="{ name: 'options' }"
           :list="data.columns"
         >
           <template #item="{ element, index }">
             <li style="margin-bottom: 5px;">
-              <SvgIcon
-                iconClass="item"
-                className="drag-item"
-              />
+              <SvgIcon iconClass="item" className="drag-item" />
               <a-input-number
                 placeholder="栅格值"
                 size="small"
@@ -565,21 +487,14 @@
         </Draggable>
 
         <div>
-          <a-button
-            type="link"
-            size="small"
-            @click="handleInsertColumn"
-          >
+          <a-button type="link" size="small" @click="handleInsertColumn">
             添加列
           </a-button>
         </div>
       </a-form-item>
 
       <a-form-item label="垂直对齐方式">
-        <a-radio-group
-          v-model:value="data.options.align"
-          button-style="solid"
-        >
+        <a-radio-group v-model:value="data.options.align" button-style="solid">
           <a-radio-button value="top">顶部对齐</a-radio-button>
           <a-radio-button value="middle">居中对齐</a-radio-button>
           <a-radio-button value="bottom">底部对齐</a-radio-button>
@@ -600,24 +515,33 @@
     <template v-if="data.type !== 'grid'">
       <a-form-item
         label="操作属性"
-        v-if="hasKey('rules') || hasKey('readonly') || hasKey('disabled') || hasKey('allowClear')"
+        v-if="
+          hasKey('rules') ||
+            hasKey('readonly') ||
+            hasKey('disabled') ||
+            hasKey('allowClear')
+        "
       >
         <a-checkbox
           v-if="hasKey('rules')"
           v-model:checked="data.options.rules.required"
-        >必填</a-checkbox>
+          >必填</a-checkbox
+        >
         <a-checkbox
           v-if="hasKey('readonly')"
           v-model:checked="data.options.readonly"
-        >只读</a-checkbox>
+          >只读</a-checkbox
+        >
         <a-checkbox
           v-if="hasKey('disabled')"
           v-model:checked="data.options.disabled"
-        >禁用</a-checkbox>
+          >禁用</a-checkbox
+        >
         <a-checkbox
           v-if="hasKey('allowClear')"
           v-model:checked="data.options.allowClear"
-        >清除</a-checkbox>
+          >清除</a-checkbox
+        >
       </a-form-item>
 
       <template v-if="hasKey('rules')">
@@ -678,7 +602,6 @@
           </a-select>
         </a-form-item>
       </template>
-
     </template>
   </a-form>
 </template>
@@ -705,10 +628,10 @@ export default defineComponent({
 
     watch(
       () => props.select,
-      (val) => (data.value = val)
+      val => (data.value = val)
     )
 
-    watch(data, (val) => context.emit('update:select', val))
+    watch(data, val => context.emit('update:select', val))
 
     const hasKey = (key: string) =>
       Object.keys(data.value.options).includes(key)
@@ -736,7 +659,7 @@ export default defineComponent({
       }
     }
 
-    const handleSelectModeChange = (event) => {
+    const handleSelectModeChange = event => {
       const { value } = event.target
       if (value === null) {
         data.value.options.defaultValue.length

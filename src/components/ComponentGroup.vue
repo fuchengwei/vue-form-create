@@ -3,8 +3,8 @@
   <Draggable
     tag="ul"
     item-key="type"
-    ghostClass='ghost'
-    :group="{name: 'people', pull: 'clone', put: false}"
+    ghostClass="ghost"
+    :group="{ name: 'people', pull: 'clone', put: false }"
     :sort="false"
     :list="list"
   >
@@ -12,7 +12,7 @@
       <li
         v-if="fields.includes(element.type)"
         class="form-edit-widget-label"
-        :class="{'no-put': element.tpye === 'divider'}"
+        :class="{ 'no-put': element.tpye === 'divider' }"
       >
         <a>
           <SvgIcon :iconClass="element.type" />

@@ -4,7 +4,7 @@
       class="widget-view"
       v-if="element"
       :key="element.key"
-      :class="{active: selectWidget?.key === element.key}"
+      :class="{ active: selectWidget?.key === element.key }"
       :label="element.label"
       :rules="element.options.rules"
     >
@@ -13,7 +13,7 @@
           readonly
           :size="config.size"
           :value="element.options.defaultValue"
-          :style="{width: element.options.width}"
+          :style="{ width: element.options.width }"
           :placeholder="element.options.placeholder"
           :maxlength="parseInt(element.options.maxlength)"
           :prefix="element.options.prefix"
@@ -30,7 +30,7 @@
           readonly
           :size="config.size"
           :value="element.options.defaultValue"
-          :style="{width: element.options.width}"
+          :style="{ width: element.options.width }"
           :placeholder="element.options.placeholder"
           :maxlength="element.options.maxlength"
           :prefix="element.options.prefix"
@@ -50,7 +50,7 @@
           :size="config.size"
           :rows="element.options.rows"
           :value="element.options.defaultValue"
-          :style="{width: element.options.width}"
+          :style="{ width: element.options.width }"
           :placeholder="element.options.placeholder"
           :maxlength="element.options.maxlength"
           :showCount="element.options.showCount"
@@ -65,7 +65,7 @@
           readonly
           :size="config.size"
           :value="element.options.defaultValue"
-          :style="{width: element.options.width}"
+          :style="{ width: element.options.width }"
           :max="element.options.max"
           :min="element.options.min"
           :disabled="element.options.disabled"
@@ -76,30 +76,38 @@
         <a-radio-group
           :size="config.size"
           :value="element.options.defaultValue"
-          :style="{width: element.options.width}"
+          :style="{ width: element.options.width }"
           :disabled="element.options.disabled"
         >
           <a-radio
             v-for="item of element.options.options"
             :key="item.value"
             :value="item.value"
-            :style="{display: element.options.inline ? 'inline-block' : 'block'}"
-          >{{ element.options.showLabel ? item.label : item.value }}</a-radio>
+            :style="{
+              display: element.options.inline ? 'inline-block' : 'block'
+            }"
+            >{{ element.options.showLabel ? item.label : item.value }}</a-radio
+          >
         </a-radio-group>
       </template>
 
       <template v-if="element.type === 'checkbox'">
         <a-checkbox-group
           :value="element.options.defaultValue"
-          :style="{width: element.options.width}"
+          :style="{ width: element.options.width }"
           :disabled="element.options.disabled"
         >
           <a-checkbox
             v-for="item of element.options.options"
             :key="item.value"
             :value="item.value"
-            :style="{display: element.options.inline ? 'inline-block' : 'block'}"
-          >{{ element.options.showLabel ? item.label : item.value }}</a-checkbox>
+            :style="{
+              display: element.options.inline ? 'inline-block' : 'block'
+            }"
+            >{{
+              element.options.showLabel ? item.label : item.value
+            }}</a-checkbox
+          >
         </a-checkbox-group>
       </template>
 
@@ -112,7 +120,7 @@
           :allowClear="element.options.allowClear"
           :format="element.options.format"
           :disabled="element.options.disabled"
-          :style="{width: element.options.width}"
+          :style="{ width: element.options.width }"
         />
       </template>
 
@@ -125,7 +133,7 @@
           :allowClear="element.options.allowClear"
           :format="element.options.format"
           :disabled="element.options.disabled"
-          :style="{width: element.options.width}"
+          :style="{ width: element.options.width }"
         />
       </template>
 
@@ -149,7 +157,7 @@
           :allowClear="element.options.clearable"
           :showSearch="element.options.showSearch"
           :disabled="element.options.disabled"
-          :style="{width: element.options.width}"
+          :style="{ width: element.options.width }"
         >
           <a-select-option
             v-for="item of element.options.options"
@@ -181,12 +189,12 @@
           :range="element.options.range"
           :reverse="element.options.reverse"
           :disabled="element.options.disabled"
-          :style="{width: element.options.width}"
+          :style="{ width: element.options.width }"
         />
       </template>
 
       <template v-if="element.type == 'text'">
-        <span>{{element.options.defaultValue}}</span>
+        <span>{{ element.options.defaultValue }}</span>
       </template>
 
       <template v-if="element.type === 'img-upload'">
@@ -204,21 +212,17 @@
             iconClass="insert"
           />
           <a-button v-else>
-            <SvgIcon
-              iconClass="img-upload"
-              style="margin-right: 10px;"
-            />
+            <SvgIcon iconClass="img-upload" style="margin-right: 10px;" />
             点击上传
           </a-button>
         </a-upload>
-
       </template>
 
       <template v-if="element.type === 'richtext-editor'">
         <RichTextEditor
           :value="element.options.defaultValue"
           :disable="element.options.disabled"
-          :style="{width: element.options.width}"
+          :style="{ width: element.options.width }"
         />
       </template>
 
@@ -230,32 +234,17 @@
           :placeholder="element.options.placeholder"
           :allowClear="element.options.allowClear"
           :disabled="element.options.disabled"
-          :style="{width: element.options.width}"
+          :style="{ width: element.options.width }"
         />
       </template>
     </a-form-item>
-    <div
-      class="widget-view-action"
-      v-if="selectWidget?.key === element.key"
-    >
-      <SvgIcon
-        iconClass="copy"
-        @click.stop="$emit('copy')"
-      />
-      <SvgIcon
-        iconClass="delete"
-        @click.stop="$emit('delete')"
-      />
+    <div class="widget-view-action" v-if="selectWidget?.key === element.key">
+      <SvgIcon iconClass="copy" @click.stop="$emit('copy')" />
+      <SvgIcon iconClass="delete" @click.stop="$emit('delete')" />
     </div>
 
-    <div
-      class="widget-view-drag"
-      v-if="selectWidget?.key === element.key"
-    >
-      <SvgIcon
-        iconClass="move"
-        className="drag-widget"
-      />
+    <div class="widget-view-drag" v-if="selectWidget?.key === element.key">
+      <SvgIcon iconClass="move" className="drag-widget" />
     </div>
   </div>
 </template>

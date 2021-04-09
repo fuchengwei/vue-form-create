@@ -9,7 +9,7 @@
       <a-input
         v-model:value="data"
         :size="config.size"
-        :style="{width: element.options.width}"
+        :style="{ width: element.options.width }"
         :placeholder="element.options.placeholder"
         :maxlength="parseInt(element.options.maxlength)"
         :prefix="element.options.prefix"
@@ -25,7 +25,7 @@
       <a-input-password
         v-model:value="data"
         :size="config.size"
-        :style="{width: element.options.width}"
+        :style="{ width: element.options.width }"
         :placeholder="element.options.placeholder"
         :maxlength="element.options.maxlength"
         :prefix="element.options.prefix"
@@ -44,7 +44,7 @@
         v-model:value="data"
         :size="config.size"
         :rows="element.options.rows"
-        :style="{width: element.options.width}"
+        :style="{ width: element.options.width }"
         :placeholder="element.options.placeholder"
         :maxlength="element.options.maxlength"
         :showCount="element.options.showCount"
@@ -58,7 +58,7 @@
       <a-input-number
         v-model:value="data"
         :size="config.size"
-        :style="{width: element.options.width}"
+        :style="{ width: element.options.width }"
         :max="element.options.max"
         :min="element.options.min"
         :disabled="element.options.disabled"
@@ -69,30 +69,40 @@
       <a-radio-group
         v-model:value="data"
         :size="config.size"
-        :style="{width: element.options.width}"
+        :style="{ width: element.options.width }"
         :disabled="element.options.disabled"
       >
         <a-radio
-          v-for="item of element.options.remote ? element.options.remoteOptions : element.options.options"
+          v-for="item of element.options.remote
+            ? element.options.remoteOptions
+            : element.options.options"
           :key="item.value"
           :value="item.value"
-          :style="{display: element.options.inline ? 'inline-block' : 'block'}"
-        >{{ element.options.showLabel ? item.label : item.value }}</a-radio>
+          :style="{
+            display: element.options.inline ? 'inline-block' : 'block'
+          }"
+          >{{ element.options.showLabel ? item.label : item.value }}</a-radio
+        >
       </a-radio-group>
     </template>
 
     <template v-if="element.type === 'checkbox'">
       <a-checkbox-group
         v-model:value="data"
-        :style="{width: element.options.width}"
+        :style="{ width: element.options.width }"
         :disabled="element.options.disabled"
       >
         <a-checkbox
-          v-for="item of element.options.remote ? element.options.remoteOptions : element.options.options"
+          v-for="item of element.options.remote
+            ? element.options.remoteOptions
+            : element.options.options"
           :key="item.value"
           :value="item.value"
-          :style="{display: element.options.inline ? 'inline-block' : 'block'}"
-        >{{ element.options.showLabel ? item.label : item.value }}</a-checkbox>
+          :style="{
+            display: element.options.inline ? 'inline-block' : 'block'
+          }"
+          >{{ element.options.showLabel ? item.label : item.value }}</a-checkbox
+        >
       </a-checkbox-group>
     </template>
 
@@ -105,7 +115,7 @@
         :allowClear="element.options.allowClear"
         :format="element.options.format"
         :disabled="element.options.disabled"
-        :style="{width: element.options.width}"
+        :style="{ width: element.options.width }"
       />
     </template>
 
@@ -118,7 +128,7 @@
         :allowClear="element.options.allowClear"
         :format="element.options.format"
         :disabled="element.options.disabled"
-        :style="{width: element.options.width}"
+        :style="{ width: element.options.width }"
       />
     </template>
 
@@ -142,10 +152,12 @@
         :allowClear="element.options.clearable"
         :showSearch="element.options.showSearch"
         :disabled="element.options.disabled"
-        :style="{width: element.options.width}"
+        :style="{ width: element.options.width }"
       >
         <a-select-option
-          v-for="item of element.options.remote ? element.options.remoteOptions : element.options.options"
+          v-for="item of element.options.remote
+            ? element.options.remoteOptions
+            : element.options.options"
           :key="item.value"
           :value="item.value"
           :label="element.options.showLabel ? item.label : item.value"
@@ -174,12 +186,12 @@
         :range="element.options.range"
         :reverse="element.options.reverse"
         :disabled="element.options.disabled"
-        :style="{width: element.options.width}"
+        :style="{ width: element.options.width }"
       />
     </template>
 
     <template v-if="element.type == 'text'">
-      <span>{{element.options.defaultValue}}</span>
+      <span>{{ element.options.defaultValue }}</span>
     </template>
 
     <template v-if="element.type === 'img-upload'">
@@ -198,21 +210,17 @@
           iconClass="insert"
         />
         <a-button v-else>
-          <SvgIcon
-            iconClass="img-upload"
-            style="margin-right: 10px;"
-          />
+          <SvgIcon iconClass="img-upload" style="margin-right: 10px;" />
           点击上传
         </a-button>
       </a-upload>
-
     </template>
 
     <template v-if="element.type === 'richtext-editor'">
       <RichTextEditor
         v-model:value="data"
         :disable="element.options.disabled"
-        :style="{width: element.options.width}"
+        :style="{ width: element.options.width }"
       />
     </template>
 
@@ -224,7 +232,7 @@
         :placeholder="element.options.placeholder"
         :allowClear="element.options.allowClear"
         :disabled="element.options.disabled"
-        :style="{width: element.options.width}"
+        :style="{ width: element.options.width }"
       />
     </template>
   </a-form-item>
@@ -256,7 +264,7 @@ export default defineComponent({
   setup(props, context) {
     const data = computed({
       get: () => props.model[props.element.model],
-      set: (val) => {
+      set: val => {
         const model = JSON.parse(JSON.stringify(props.model))
         model[props.element.model] = val
         context.emit('update:model', model)

@@ -1,12 +1,9 @@
 <template>
-  <div class="fd-style">
-    <a-layout class="fd-container">
-      <a-layout-content class="fd-main">
+  <div class="fc-style">
+    <a-layout class="fc-container">
+      <a-layout-content class="fc-main">
         <a-layout>
-          <a-layout-sider
-            theme="light"
-            :width="250"
-          >
+          <a-layout-sider theme="light" :width="250">
             <div class="components">
               <ComponentGroup
                 title="基础字段"
@@ -28,13 +25,13 @@
           <a-layout class="center-container">
             <AntdHeader
               v-bind="$props"
-              @preview="() => previewVisible = true"
-              @uploadJson="() => uploadJsonVisible = true"
+              @preview="() => (previewVisible = true)"
+              @uploadJson="() => (uploadJsonVisible = true)"
               @generateJson="handleGenerateJson"
               @generateCode="handleGenerateCode"
               @clearable="handleClearable"
             />
-            <a-layout-content :class="{'widget-empty': widgetForm.list}">
+            <a-layout-content :class="{ 'widget-empty': widgetForm.list }">
               <AntdWidgetForm
                 ref="widgetFormRef"
                 v-model:widgetForm="widgetForm"
@@ -51,14 +48,18 @@
               <a-layout-header>
                 <div
                   class="config-tab"
-                  :class="{active: configTab === 'widget'}"
+                  :class="{ active: configTab === 'widget' }"
                   @click="configTab = 'widget'"
-                >字段属性</div>
+                >
+                  字段属性
+                </div>
                 <div
                   class="config-tab"
-                  :class="{active: configTab === 'form'}"
+                  :class="{ active: configTab === 'form' }"
                   @click="configTab = 'form'"
-                >表单属性</div>
+                >
+                  表单属性
+                </div>
               </a-layout-header>
               <a-layout-content class="config-content">
                 <AntdWidgetConfig
@@ -71,7 +72,6 @@
                 />
               </a-layout-content>
             </a-layout>
-
           </a-layout-sider>
         </a-layout>
       </a-layout-content>
@@ -87,16 +87,10 @@
           message="JSON格式如下，直接复制生成的json覆盖此处代码点击确定即可"
           style="margin-bottom: 10px;"
         />
-        <CodeEditor
-          v-model:value="jsonEg"
-          language="json"
-        />
+        <CodeEditor v-model:value="jsonEg" language="json" />
       </a-modal>
 
-      <a-modal
-        v-model:visible="previewVisible"
-        :width="800"
-      >
+      <a-modal v-model:visible="previewVisible" :width="800">
         <AntdGenerateForm
           style="margin-top: 20px;"
           ref="generateFormRef"
@@ -104,72 +98,47 @@
         />
         <template #footer>
           <a-button @click="handleReset">重置</a-button>
-          <a-button
-            type="primary"
-            @click="handleGetData"
-          >获取数据</a-button>
+          <a-button type="primary" @click="handleGetData">获取数据</a-button>
         </template>
       </a-modal>
 
       <a-modal
         v-model:visible="generateJsonVisible"
         title="生成JSON"
-        okText='Copy'
+        okText="Copy"
         :width="800"
         @ok="handleCopyClick(generateJsonTemplate)"
       >
-        <CodeEditor
-          :value="generateJsonTemplate"
-          language="json"
-          readonly
-        />
+        <CodeEditor :value="generateJsonTemplate" language="json" readonly />
       </a-modal>
 
       <a-modal
         v-model:visible="dataJsonVisible"
         title="获取数据"
-        okText='Copy'
+        okText="Copy"
         :width="800"
         @ok="handleCopyClick(dataJsonTemplate)"
       >
-        <CodeEditor
-          :value="dataJsonTemplate"
-          language="json"
-          readonly
-        />
+        <CodeEditor :value="dataJsonTemplate" language="json" readonly />
       </a-modal>
 
       <a-modal
         v-model:visible="dataCodeVisible"
         title="生产代码"
-        okText='Copy'
+        okText="Copy"
         :width="800"
         @ok="handleCopyClick(dataCodeTemplate)"
       >
         <a-tabs
           type="card"
           v-model:activeKey="codeLanguage"
-          :tabBarStyle="{margin: 0}"
+          :tabBarStyle="{ margin: 0 }"
         >
-          <a-tab-pane
-            tab="Vue Component"
-            :key="codeType.Vue"
-          >
-            <CodeEditor
-              :value="dataCodeTemplate"
-              language="html"
-              readonly
-            />
+          <a-tab-pane tab="Vue Component" :key="codeType.Vue">
+            <CodeEditor :value="dataCodeTemplate" language="html" readonly />
           </a-tab-pane>
-          <a-tab-pane
-            tab="HTML"
-            :key="codeType.Html"
-          >
-            <CodeEditor
-              :value="dataCodeTemplate"
-              language="html"
-              readonly
-            />
+          <a-tab-pane tab="HTML" :key="codeType.Html">
+            <CodeEditor :value="dataCodeTemplate" language="html" readonly />
           </a-tab-pane>
         </a-tabs>
       </a-modal>
@@ -294,7 +263,7 @@ export default defineComponent({
     }
 
     const handleGetData = () => {
-      state.generateFormRef.getData().then((res) => {
+      state.generateFormRef.getData().then(res => {
         state.dataJsonTemplate = JSON.stringify(res, null, 2)
         state.dataJsonVisible = true
       })
@@ -330,7 +299,7 @@ export default defineComponent({
 
     const getJson = () => state.widgetForm
 
-    const setJson = (json) => {
+    const setJson = json => {
       state.widgetForm = json
       if (json.list.length) {
         state.widgetFormSelect = json.list[0]

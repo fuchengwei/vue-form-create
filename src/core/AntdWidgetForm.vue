@@ -1,9 +1,6 @@
 <template>
   <div class="widget-form-container">
-    <div
-      v-if="!widgetForm.list"
-      class="form-empty"
-    >从左侧拖拽来添加字段</div>
+    <div v-if="!widgetForm.list" class="form-empty">从左侧拖拽来添加字段</div>
     <a-form
       :layout="widgetForm.config.layout"
       :labelAlign="widgetForm.config.labelAlign"
@@ -13,25 +10,22 @@
       <Draggable
         class="widget-form-list"
         item-key="key"
-        ghostClass='ghost'
+        ghostClass="ghost"
         handle=".drag-widget"
         :animation="200"
-        :group="{name: 'people'}"
+        :group="{ name: 'people' }"
         :list="widgetForm.list"
         @add="handleMoveAdd"
       >
         <template #item="{ element, index }">
-          <transition-group
-            name="fade"
-            tag="div"
-          >
+          <transition-group name="fade" tag="div">
             <template v-if="element.type === 'grid'">
               <a-row
                 class="widget-col widget-view"
                 type="flex"
                 v-if="element.key"
                 :key="element.key"
-                :class="{active: widgetFormSelect?.key === element.key}"
+                :class="{ active: widgetFormSelect?.key === element.key }"
                 :gutter="element.options.gutter ?? 0"
                 :justify="element.options.justify"
                 :align="element.options.align"
@@ -45,19 +39,16 @@
                   <Draggable
                     class="widget-col-list"
                     item-key="key"
-                    ghostClass='ghost'
+                    ghostClass="ghost"
                     handle=".drag-widget"
                     :animation="200"
-                    :group="{name: 'people'}"
+                    :group="{ name: 'people' }"
                     :no-transition-on-drag="true"
                     :list="col.list"
                     @add="handleColMoveAdd($event, element, colIndex)"
                   >
                     <template #item="{ element, index }">
-                      <transition-group
-                        name="fade"
-                        tag="div"
-                      >
+                      <transition-group name="fade" tag="div">
                         <AntdWidgetFormItem
                           v-if="element.key"
                           :key="element.key"
@@ -86,10 +77,7 @@
                   class="widget-view-drag widget-col-drag"
                   v-if="widgetFormSelect?.key === element.key"
                 >
-                  <SvgIcon
-                    iconClass="move"
-                    className="drag-widget"
-                  />
+                  <SvgIcon iconClass="move" className="drag-widget" />
                 </div>
               </a-row>
             </template>
@@ -121,13 +109,13 @@ import SvgIcon from '@/components/SvgIcon.vue'
 
 const handleListInsert = (key: string, list, obj) => {
   const newList = []
-  list.forEach((item) => {
+  list.forEach(item => {
     if (item.key === key) {
       newList.push(item)
       newList.push(obj)
     } else {
       if (item.columns) {
-        item.columns = item.columns.map((col) => ({
+        item.columns = item.columns.map(col => ({
           ...col,
           list: handleListInsert(key, col.list, obj)
         }))
@@ -140,10 +128,10 @@ const handleListInsert = (key: string, list, obj) => {
 
 const handleListDelete = (key: string, list) => {
   const newList = []
-  list.forEach((item) => {
+  list.forEach(item => {
     if (item.key !== key) {
       if (item.columns) {
-        item.columns = item.columns.map((col) => ({
+        item.columns = item.columns.map(col => ({
           ...col,
           list: handleListDelete(key, col.list)
         }))
@@ -171,7 +159,7 @@ export default defineComponent({
   },
   emits: ['update:widgetForm', 'update:widgetFormSelect'],
   setup(props, context) {
-    const handleItemClick = (row) => {
+    const handleItemClick = row => {
       context.emit('update:widgetFormSelect', row)
     }
 
@@ -199,7 +187,7 @@ export default defineComponent({
           ...copyData,
           options: {
             ...copyData.options,
-            options: copyData.options.options.map((item) => ({ ...item }))
+            options: copyData.options.options.map(item => ({ ...item }))
           }
         }
       }
@@ -231,7 +219,7 @@ export default defineComponent({
       })
     }
 
-    const handleMoveAdd = (event) => {
+    const handleMoveAdd = event => {
       const { newIndex } = event
 
       const key = v4().replaceAll('-', '')
@@ -257,7 +245,7 @@ export default defineComponent({
           ...list[newIndex],
           options: {
             ...list[newIndex].options,
-            options: list[newIndex].options.options.map((item) => ({ ...item }))
+            options: list[newIndex].options.options.map(item => ({ ...item }))
           }
         }
       }
@@ -265,7 +253,7 @@ export default defineComponent({
       if (list[newIndex].type === 'grid') {
         list[newIndex] = {
           ...list[newIndex],
-          columns: list[newIndex].columns.map((item) => ({ ...item }))
+          columns: list[newIndex].columns.map(item => ({ ...item }))
         }
       }
 
@@ -309,7 +297,7 @@ export default defineComponent({
             ...row.columns[index].list[newIndex].options,
             options: row.columns[index].list[
               newIndex
-            ].options.options.map((item) => ({ ...item }))
+            ].options.options.map(item => ({ ...item }))
           }
         }
       }

@@ -29,29 +29,24 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "ace-builds": "^1.4.12",
-    "ant-design-vue": "^2.1.0",
-    "axios": "^0.21.1",
+    "vue": "^3.0.11",
     "core-js": "^3.6.5",
-    "uuid": "^8.3.2",
-    "vue": "^3.0.0",
-    "vuedraggable": "^4.0.1",
-    "wangeditor": "^4.6.13"
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",
     "@commitlint/config-conventional": "^12.0.1",
     "@types/uuid": "^8.3.0",
-    "@typescript-eslint/eslint-plugin": "^2.33.0",
-    "@typescript-eslint/parser": "^2.33.0",
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/parser": "^4.18.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-typescript": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0",
+    "@vue/compiler-sfc": "^3.0.11",
     "@vue/eslint-config-standard": "^5.1.2",
-    "@vue/eslint-config-typescript": "^5.0.2",
+    "@vue/eslint-config-typescript": "^7.0.0",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
@@ -62,7 +57,10 @@
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
     "svg-sprite-loader": "^6.0.2",
-    "typescript": "~3.9.3",
-    "webpack-bundle-analyzer": "^3.9.0"
+    "typescript": "~4.1.5",
+    "vuedraggable": "^4.0.1",
+    "wangeditor": "^4.6.13",
+    "ace-builds": "^1.4.12",
+    "ant-design-vue": "^2.1.0"
   }
 }

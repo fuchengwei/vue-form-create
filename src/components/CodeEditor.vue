@@ -1,14 +1,10 @@
 <template>
-  <div
-    ref="aceRef"
-    style="width: 100%; height:  350px;"
-  ></div>
+  <div ref="aceRef" style="width: 100%; height:  350px;"></div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, reactive, toRefs, watch } from 'vue'
 import ace, { Ace } from 'ace-builds'
-import 'ace-builds/webpack-resolver'
 
 export default defineComponent({
   name: 'CodeEditor',
@@ -53,7 +49,16 @@ export default defineComponent({
 
     watch(
       () => props.value,
-      (val: string) => state.codeEditor.setValue(val)
+      (val: string) => {
+        const currentPosition = state.codeEditor.selection.getCursor()
+        state.codeEditor.setValue(val)
+        state.codeEditor.clearSelection()
+        state.codeEditor.gotoLine(
+          currentPosition.row + 1,
+          currentPosition.column,
+          true
+        )
+      }
     )
 
     return {

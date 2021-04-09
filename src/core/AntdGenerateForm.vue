@@ -1,5 +1,5 @@
 <template>
-  <div class="fd-style">
+  <div class="fc-style">
     <a-form
       ref="generateForm"
       :model="model"
@@ -57,7 +57,6 @@ import {
 } from 'vue'
 import { message } from 'ant-design-vue'
 import AntdGenerateFormItem from './AntdGenerateFormItem.vue'
-import request from '@/utils/request'
 
 export default defineComponent({
   name: 'AntdGenerateForm',
@@ -80,7 +79,7 @@ export default defineComponent({
       widgetForm: JSON.parse(JSON.stringify(props.data))
     })
 
-    const generateModel = (list) => {
+    const generateModel = list => {
       state.model = {}
       state.rules = {}
       for (let index = 0; index < list.length; index++) {
@@ -89,7 +88,7 @@ export default defineComponent({
           return
         }
         if (list[index].type === 'grid') {
-          list[index].columns.forEach((col) => generateModel(col.list))
+          list[index].columns.forEach(col => generateModel(col.list))
         } else {
           if (props.value && Object.keys(props.value).includes(model)) {
             state.model[model] = props.value[model]
@@ -103,19 +102,23 @@ export default defineComponent({
       nextTick(() => state.generateForm.resetFields())
     }
 
-    const generateOptions = (list) => {
-      list.forEach((item) => {
+    const generateOptions = list => {
+      list.forEach(item => {
         if (item.type === 'grid') {
-          item.columns.forEach((col) => generateOptions(col.list))
+          item.columns.forEach(col => generateOptions(col.list))
         } else {
           if (item.options.remote && item.options.remoteFunc) {
-            request.get(item.options.remoteFunc).then((resp) => {
-              item.options.remoteOptions = resp.data.map((data) => ({
-                label: data[item.options.props.label],
-                value: data[item.options.props.value],
-                children: data[item.options.props.children]
-              }))
-            })
+            fetch(item.options.remoteFunc)
+              .then(resp => resp.json())
+              .then(json => {
+                if (json instanceof Array) {
+                  item.options.remoteOptions = json.map(data => ({
+                    label: data[item.options.props.label],
+                    value: data[item.options.props.value],
+                    children: data[item.options.props.children]
+                  }))
+                }
+              })
           }
         }
       })
@@ -123,7 +126,7 @@ export default defineComponent({
 
     watch(
       () => props.data,
-      (val) => {
+      val => {
         state.widgetForm = JSON.parse(JSON.stringify(val))
         generateModel(state.widgetForm.list)
         generateOptions(state.widgetForm.list)
@@ -140,13 +143,13 @@ export default defineComponent({
       return new Promise((resolve, reject) => {
         state.generateForm
           .validate()
-          .then((validate) => {
+          .then(validate => {
             if (validate) {
               resolve(state.model)
             } else {
             }
           })
-          .catch((error) => {
+          .catch(error => {
             message.error('验证失败')
             reject(error)
           })

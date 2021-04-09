@@ -30,7 +30,7 @@ export default defineComponent({
     const editor = ref()
 
     const content = computed({
-      set: (val) => context.emit('update:value', val),
+      set: val => context.emit('update:value', val),
       get: () => props.value
     })
 
