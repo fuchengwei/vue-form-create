@@ -148,7 +148,6 @@
 
 <script lang="ts">
 import { defineComponent, reactive, PropType, toRefs, watchEffect } from 'vue'
-import { message } from 'ant-design-vue'
 import CodeEditor from '@/components/CodeEditor.vue'
 import ComponentGroup from '@/components/ComponentGroup.vue'
 import AntdHeader from '@/core/AntdHeader.vue'
@@ -158,8 +157,8 @@ import AntdWidgetConfig from './AntdWidgetConfig.vue'
 import AntdFormConfig from './AntdFormConfig.vue'
 import { antd } from '@/config'
 import { copy } from '@/utils'
-import generateCode from '@/utils/generateCode'
 import { CodeType, PlatformType } from '@/enums'
+import generateCode from '@/utils/generateCode'
 
 export default defineComponent({
   name: 'AntdDesignForm',
@@ -250,16 +249,11 @@ export default defineComponent({
         }
 
         state.uploadJsonVisible = false
-
-        message.success('上传成功')
-      } catch (error) {
-        message.error(error.message)
-      }
+      } catch (error) {}
     }
 
     const handleCopyClick = (text: string) => {
       copy(text)
-      message.success('复制成功')
     }
 
     const handleGetData = () => {

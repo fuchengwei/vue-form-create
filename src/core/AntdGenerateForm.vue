@@ -55,7 +55,6 @@ import {
   toRefs,
   watch
 } from 'vue'
-import { message } from 'ant-design-vue'
 import AntdGenerateFormItem from './AntdGenerateFormItem.vue'
 
 export default defineComponent({
@@ -131,7 +130,7 @@ export default defineComponent({
         generateModel(state.widgetForm.list)
         generateOptions(state.widgetForm.list)
       },
-      { deep: true }
+      { deep: true, immediate: true }
     )
 
     onMounted(() => {
@@ -150,7 +149,6 @@ export default defineComponent({
             }
           })
           .catch(error => {
-            message.error('验证失败')
             reject(error)
           })
       })

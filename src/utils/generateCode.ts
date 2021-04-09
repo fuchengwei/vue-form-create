@@ -24,6 +24,7 @@ export default defineComponent({
 
     const handleSubmit = () => {
       state.generateFormRef.getData().then(data => {
+        console.log(data)
         // data success
         // data 表单数据
       }).catch(error => {
@@ -45,7 +46,11 @@ export default defineComponent({
 <html>
   <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://unpkg.com/ant-design-vue@next/dist/antd.min.css">
+    ${
+      platformType === PlatformType.Antd
+        ? '<link rel="stylesheet" href="https://unpkg.com/ant-design-vue@next/dist/antd.min.css" />'
+        : ''
+    }
   </head>
   <body>
     <div id="app">
@@ -57,10 +62,14 @@ export default defineComponent({
           : ''
       }
     </div>
-    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/vue@next/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/wangeditor/dist/wangEditor.min.js"></script>
+    <script src="https://unpkg.com/ace-builds/src-noconflict/ace.js"></script>
+    <script src="https://unpkg.com/vue-form-create/dist/formCreate.umd.min.js"></script>
     ${
       platformType === PlatformType.Antd
-        ? '<script src="https://unpkg.com/ant-design-vue@next/dist/antd.min.js"></script>'
+        ? `<script src="https://unpkg.com/moment/moment.js"></script>
+    <script src="https://unpkg.com/ant-design-vue@next/dist/antd.min.js"></script>`
         : ''
     }
     <script>
@@ -75,6 +84,7 @@ export default defineComponent({
       
           const handleSubmit = () => {
             state.generateFormRef.getData().then(data => {
+              console.log(data)
               // data success
               // data 表单数据
             }).catch(error => {
@@ -87,7 +97,10 @@ export default defineComponent({
             handleSubmit
           }
         }
-      }).mount('#app')
+      })
+      .use(antd)
+      .use(formCreate)
+      .mount('#app')
     </script>
   </body>
 </html>

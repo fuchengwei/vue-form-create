@@ -13,11 +13,19 @@ module.exports = {
     extract: false
   },
   configureWebpack: config => {
+    config.performance = {
+      hints: 'warning',
+      maxEntrypointSize: 50000000,
+      maxAssetSize: 30000000,
+      assetFilter: function(assetFilename) {
+        return assetFilename.endsWith('.js')
+      }
+    }
+
     if (process.env.NODE_ENV === 'production') {
       config.externals = {
         vue: 'Vue',
-        vuedraggable: 'vuedraggable',
-        wangeditor: 'wangeditor',
+        wangeditor: 'wangEditor',
         'ace-builds': 'ace',
         'ant-design-vue': 'antd'
       }
