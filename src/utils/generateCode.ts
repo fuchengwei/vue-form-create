@@ -62,7 +62,7 @@ export default defineComponent({
           : ''
       }
     </div>
-    <script src="https://unpkg.com/vue@next/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/vue@next/dist/vue.global.prod.js"></script>
     <script src="https://unpkg.com/wangeditor/dist/wangEditor.min.js"></script>
     <script src="https://unpkg.com/ace-builds/src-noconflict/ace.js"></script>
     <script src="https://unpkg.com/vue-form-create/dist/formCreate.umd.min.js"></script>

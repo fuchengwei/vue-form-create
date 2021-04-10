@@ -85,14 +85,14 @@
         <a-alert
           type="info"
           message="JSON格式如下，直接复制生成的json覆盖此处代码点击确定即可"
-          style="margin-bottom: 10px;"
+          style="margin-bottom: 10px"
         />
         <CodeEditor v-model:value="jsonEg" language="json" />
       </a-modal>
 
       <a-modal v-model:visible="previewVisible" :width="800">
         <AntdGenerateForm
-          style="margin-top: 20px;"
+          style="margin-top: 20px"
           ref="generateFormRef"
           :data="widgetForm"
         />
@@ -148,6 +148,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, PropType, toRefs, watchEffect } from 'vue'
+import { message } from 'ant-design-vue'
 import CodeEditor from '@/components/CodeEditor.vue'
 import ComponentGroup from '@/components/ComponentGroup.vue'
 import AntdHeader from '@/core/AntdHeader.vue'
@@ -249,11 +250,15 @@ export default defineComponent({
         }
 
         state.uploadJsonVisible = false
-      } catch (error) {}
+        message.success('上传成功')
+      } catch (error) {
+        message.error('上传失败')
+      }
     }
 
     const handleCopyClick = (text: string) => {
       copy(text)
+      message.success('Copy成功')
     }
 
     const handleGetData = () => {

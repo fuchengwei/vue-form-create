@@ -55,6 +55,7 @@ import {
   toRefs,
   watch
 } from 'vue'
+import { message } from 'ant-design-vue'
 import AntdGenerateFormItem from './AntdGenerateFormItem.vue'
 
 export default defineComponent({
@@ -146,6 +147,7 @@ export default defineComponent({
             if (validate) {
               resolve(state.model)
             } else {
+              message.error('验证失败')
             }
           })
           .catch(error => {

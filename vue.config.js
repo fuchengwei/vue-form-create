@@ -17,17 +17,14 @@ module.exports = {
       hints: 'warning',
       maxEntrypointSize: 50000000,
       maxAssetSize: 30000000,
-      assetFilter: function(assetFilename) {
-        return assetFilename.endsWith('.js')
-      }
+      assetFilter: assetFilename => assetFilename.endsWith('.js')
     }
 
     if (process.env.NODE_ENV === 'production') {
       config.externals = {
         vue: 'Vue',
         wangeditor: 'wangEditor',
-        'ace-builds': 'ace',
-        'ant-design-vue': 'antd'
+        'ace-builds': 'ace'
       }
     }
   },
