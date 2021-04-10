@@ -1,0 +1,50 @@
+[
+  {
+    "label": "远端label1",
+    "value": "远端value1",
+    "children": [
+      {
+        "label": "远端label1-1",
+        "value": "远端value1-1",
+        "children": [
+          {
+            "label": "远端label1-1-1",
+            "value": "远端value1-1-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "远端label2",
+    "value": "远端value2",
+    "children": [
+      {
+        "label": "远端label2-1",
+        "value": "远端value2-1",
+        "children": [
+          {
+            "label": "远端label2-1-1",
+            "value": "远端value2-1-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "远端label3",
+    "value": "远端value3",
+    "children": [
+      {
+        "label": "远端label3-1",
+        "value": "远端value3-1",
+        "children": [
+          {
+            "label": "远端label3-1-1",
+            "value": "远端value3-1-1"
+          }
+        ]
+      }
+    ]
+  }
+]
