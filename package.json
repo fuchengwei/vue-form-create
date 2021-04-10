@@ -1,7 +1,7 @@
 {
   "name": "vue-form-create",
   "description": "一个基于Vue3.0 + TS 的表单设计器",
-  "version": "0.0.12",
+  "version": "0.0.14",
   "main": "dist/formCreate.common.js",
   "homepage": "https://github.com/fuchengwei/vue-form-create",
   "author": {
@@ -50,6 +50,7 @@
     "@vue/eslint-config-standard": "^5.1.2",
     "@vue/eslint-config-typescript": "^7.0.0",
     "ace-builds": "^1.4.12",
+    "babel-plugin-import": "^1.13.3",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
