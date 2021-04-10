@@ -169,10 +169,6 @@ export default defineComponent({
 
       let copyData = {
         ...list[index],
-        options: {
-          ...list[index].options,
-          remoteFunc: `func_${key}`
-        },
         key,
         model: `${list[index].type}_${key}`,
         rules: list[index].rules ?? []
@@ -227,10 +223,6 @@ export default defineComponent({
 
       list[newIndex] = {
         ...list[newIndex],
-        options: {
-          ...list[newIndex].options,
-          remoteFunc: `func_${key}`
-        },
         key,
         model: `${list[newIndex].type}_${key}`,
         rules: []
@@ -277,10 +269,6 @@ export default defineComponent({
 
       row.columns[index].list[newIndex] = {
         ...row.columns[index].list[newIndex],
-        options: {
-          ...row.columns[index].list[newIndex].options,
-          remoteFunc: `func_${key}`
-        },
         key,
         model: `${row.columns[index].list[newIndex].type}_${key}`,
         rules: []

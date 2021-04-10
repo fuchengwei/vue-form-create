@@ -144,9 +144,9 @@
 
     <template v-if="element.type === 'select'">
       <a-select
-        v-model:mode="data"
+        v-model:value="data"
         :size="config.size"
-        :value="element.options.defaultValue"
+        :mode="element.options.mode"
         :placeholder="element.options.placeholder"
         :filter-option="handleFilterOption"
         :allowClear="element.options.clearable"

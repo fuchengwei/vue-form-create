@@ -665,7 +665,7 @@ export default defineComponent({
         data.value.options.defaultValue.length
           ? (data.value.options.defaultValue =
               data.value.options.defaultValue[0])
-          : (data.value.options.defaultValue = '')
+          : (data.value.options.defaultValue = null)
       } else {
         if (data.value.options.defaultValue) {
           if (!(data.value.options.defaultValue instanceof Array)) {

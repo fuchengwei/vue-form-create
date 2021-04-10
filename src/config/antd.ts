@@ -102,7 +102,8 @@ export const basicComponents = [
       inline: true,
       remote: false,
       showLabel: false,
-      remoteFunc: '',
+      remoteFunc:
+        'https://raw.githubusercontent.com/fuchengwei/vue-form-create/master/mock/mock.json',
       options: [
         {
           value: 'Option 1',
@@ -135,7 +136,8 @@ export const basicComponents = [
       inline: true,
       remote: false,
       showLabel: false,
-      remoteFunc: '',
+      remoteFunc:
+        'https://raw.githubusercontent.com/fuchengwei/vue-form-create/master/mock/mock.json',
       options: [
         {
           label: 'Option 1',
@@ -204,7 +206,7 @@ export const basicComponents = [
     label: '下拉选择框',
     type: 'select',
     options: {
-      defaultValue: null,
+      defaultValue: [],
       width: '200px',
       mode: null,
       placeholder: '',
@@ -232,7 +234,8 @@ export const basicComponents = [
         }
       ],
       remoteOptions: [],
-      remoteFunc: '',
+      remoteFunc:
+        'https://raw.githubusercontent.com/fuchengwei/vue-form-create/master/mock/mock.json',
       rules
     }
   },
@@ -313,7 +316,8 @@ export const advanceComponents = [
         value: 'value',
         children: 'children'
       },
-      remoteFunc: '',
+      remoteFunc:
+        'https://raw.githubusercontent.com/fuchengwei/vue-form-create/master/mock/mock.json',
       rules
     }
   }
