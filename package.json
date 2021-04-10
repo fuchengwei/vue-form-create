@@ -1,7 +1,7 @@
 {
   "name": "vue-form-create",
   "description": "一个基于Vue3.0 + TS 的表单设计器",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "main": "dist/formCreate.umd.min.js",
   "homepage": "https://github.com/fuchengwei/vue-form-create",
   "author": {
