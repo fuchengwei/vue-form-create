@@ -57,6 +57,7 @@ import {
 } from 'vue'
 import { message } from 'ant-design-vue'
 import AntdGenerateFormItem from './AntdGenerateFormItem.vue'
+import { antd } from '@/config'
 
 export default defineComponent({
   name: 'AntdGenerateForm',
@@ -65,7 +66,8 @@ export default defineComponent({
   },
   props: {
     data: {
-      type: Object
+      type: Object,
+      default: antd.widgetForm
     },
     value: {
       type: Object
@@ -76,7 +78,9 @@ export default defineComponent({
       generateForm: null,
       model: {},
       rules: {},
-      widgetForm: JSON.parse(JSON.stringify(props.data))
+      widgetForm:
+        (props.data && JSON.parse(JSON.stringify(props.data))) ??
+        antd.widgetForm
     })
 
     const generateModel = list => {
@@ -127,7 +131,8 @@ export default defineComponent({
     watch(
       () => props.data,
       val => {
-        state.widgetForm = JSON.parse(JSON.stringify(val))
+        state.widgetForm =
+          (val && JSON.parse(JSON.stringify(val))) ?? antd.widgetForm
         generateModel(state.widgetForm.list)
         generateOptions(state.widgetForm.list)
       },
@@ -135,8 +140,8 @@ export default defineComponent({
     )
 
     onMounted(() => {
-      generateModel(state.widgetForm.list)
-      generateOptions(state.widgetForm.list)
+      generateModel(state.widgetForm?.list ?? [])
+      generateOptions(state.widgetForm?.list ?? [])
     })
 
     const getData = () => {

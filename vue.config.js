@@ -19,14 +19,6 @@ module.exports = {
       maxAssetSize: 30000000,
       assetFilter: assetFilename => assetFilename.endsWith('.js')
     }
-
-    if (process.env.NODE_ENV === 'production') {
-      config.externals = {
-        vue: 'Vue',
-        wangeditor: 'wangEditor',
-        'ace-builds': 'ace'
-      }
-    }
   },
   chainWebpack: config => {
     config.module

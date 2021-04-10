@@ -1,8 +1,8 @@
 import { App } from 'vue'
-import AntdDesignForm from '@/core/AntdDesignForm.vue'
-import AntdGenerateForm from '@/core/AntdGenerateForm.vue'
-import Icons from '@/icons'
-import '@/styles/index.styl'
+import AntdDesignForm from './core/AntdDesignForm.vue'
+import AntdGenerateForm from './core/AntdGenerateForm.vue'
+import Icons from './icons'
+import './styles/index.styl'
 
 Icons.install()
 
