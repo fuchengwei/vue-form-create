@@ -1,6 +1,6 @@
 export enum CodeType {
-  Vue,
-  Html
+  Vue = 'vue',
+  Html = 'html'
 }
 
 export enum PlatformType {
