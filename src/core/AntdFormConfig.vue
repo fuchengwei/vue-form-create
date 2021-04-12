@@ -47,13 +47,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue'
+import { WidgetForm } from '@/config/antd'
+import { defineComponent, PropType, ref, watch } from 'vue'
 
 export default defineComponent({
   name: 'AntdFormConfig',
   props: {
     config: {
-      type: Object
+      type: Object as PropType<WidgetForm['config']>,
+      required: true
     }
   },
   emits: ['update:config'],

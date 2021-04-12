@@ -75,15 +75,15 @@ export default defineComponent({
   },
   setup(props) {
     const state = reactive({
-      generateForm: null,
-      model: {},
-      rules: {},
+      generateForm: null as any,
+      model: {} as any,
+      rules: {} as any,
       widgetForm:
         (props.data && JSON.parse(JSON.stringify(props.data))) ??
         antd.widgetForm
     })
 
-    const generateModel = list => {
+    const generateModel = (list: any[]) => {
       state.model = {}
       state.rules = {}
       for (let index = 0; index < list.length; index++) {
@@ -92,7 +92,7 @@ export default defineComponent({
           return
         }
         if (list[index].type === 'grid') {
-          list[index].columns.forEach(col => generateModel(col.list))
+          list[index].columns.forEach((col: any) => generateModel(col.list))
         } else {
           if (props.value && Object.keys(props.value).includes(model)) {
             state.model[model] = props.value[model]
@@ -106,10 +106,10 @@ export default defineComponent({
       nextTick(() => state.generateForm.resetFields())
     }
 
-    const generateOptions = list => {
+    const generateOptions = (list: any[]) => {
       list.forEach(item => {
         if (item.type === 'grid') {
-          item.columns.forEach(col => generateOptions(col.list))
+          item.columns.forEach((col: any) => generateOptions(col.list))
         } else {
           if (item.options.remote && item.options.remoteFunc) {
             fetch(item.options.remoteFunc)
@@ -148,14 +148,14 @@ export default defineComponent({
       return new Promise((resolve, reject) => {
         state.generateForm
           .validate()
-          .then(validate => {
+          .then((validate: boolean) => {
             if (validate) {
               resolve(state.model)
             } else {
               message.error('验证失败')
             }
           })
-          .catch(error => {
+          .catch((error: Error) => {
             reject(error)
           })
       })

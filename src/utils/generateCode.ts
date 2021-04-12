@@ -1,6 +1,11 @@
+import { WidgetForm } from '@/config/antd'
 import { CodeType, PlatformType } from '@/enums'
 
-export default function(data, codeType: CodeType, platformType: PlatformType) {
+export default function(
+  widgetForm: WidgetForm,
+  codeType: CodeType,
+  platformType: PlatformType
+) {
   if (codeType === CodeType.Vue) {
     return `<template>
   ${
@@ -19,7 +24,7 @@ export default defineComponent({
   setup() {
     const state = reactive({
       generateFormRef: null,
-      widgetForm: ${JSON.stringify(data)}
+      widgetForm: ${JSON.stringify(widgetForm)}
     })
 
     const handleSubmit = () => {
@@ -78,7 +83,7 @@ export default defineComponent({
         setup() {
           const state = reactive({
             generateFormRef: null,
-            widgetForm: ${JSON.stringify(data)}
+            widgetForm: ${JSON.stringify(widgetForm)}
           })
       
           const handleSubmit = () => {

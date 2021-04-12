@@ -101,21 +101,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick } from 'vue'
+import { defineComponent, nextTick, PropType } from 'vue'
 import Draggable from 'vuedraggable'
 import { v4 } from 'uuid'
 import AntdWidgetFormItem from './AntdWidgetFormItem.vue'
 import SvgIcon from '@/components/SvgIcon.vue'
+import { WidgetForm } from '@/config/antd'
 
-const handleListInsert = (key: string, list, obj) => {
-  const newList = []
+const handleListInsert = (key: string, list: any[], obj: any) => {
+  const newList: any[] = []
   list.forEach(item => {
     if (item.key === key) {
       newList.push(item)
       newList.push(obj)
     } else {
       if (item.columns) {
-        item.columns = item.columns.map(col => ({
+        item.columns = item.columns.map((col: any) => ({
           ...col,
           list: handleListInsert(key, col.list, obj)
         }))
@@ -126,12 +127,12 @@ const handleListInsert = (key: string, list, obj) => {
   return newList
 }
 
-const handleListDelete = (key: string, list) => {
-  const newList = []
+const handleListDelete = (key: string, list: any[]) => {
+  const newList: any[] = []
   list.forEach(item => {
     if (item.key !== key) {
       if (item.columns) {
-        item.columns = item.columns.map(col => ({
+        item.columns = item.columns.map((col: any) => ({
           ...col,
           list: handleListDelete(key, col.list)
         }))
@@ -151,7 +152,8 @@ export default defineComponent({
   },
   props: {
     widgetForm: {
-      type: Object
+      type: Object as PropType<WidgetForm>,
+      required: true
     },
     widgetFormSelect: {
       type: Object
@@ -159,11 +161,11 @@ export default defineComponent({
   },
   emits: ['update:widgetForm', 'update:widgetFormSelect'],
   setup(props, context) {
-    const handleItemClick = row => {
+    const handleItemClick = (row: any) => {
       context.emit('update:widgetFormSelect', row)
     }
 
-    const handleCopyClick = (index: number, list) => {
+    const handleCopyClick = (index: number, list: any[]) => {
       const key = v4().replaceAll('-', '')
       const oldList = JSON.parse(JSON.stringify(props.widgetForm.list))
 
@@ -183,7 +185,7 @@ export default defineComponent({
           ...copyData,
           options: {
             ...copyData.options,
-            options: copyData.options.options.map(item => ({ ...item }))
+            options: copyData.options.options.map((item: any) => ({ ...item }))
           }
         }
       }
@@ -196,7 +198,7 @@ export default defineComponent({
       context.emit('update:widgetFormSelect', copyData)
     }
 
-    const handleDeleteClick = (index: number, list) => {
+    const handleDeleteClick = (index: number, list: any[]) => {
       const oldList = JSON.parse(JSON.stringify(props.widgetForm.list))
 
       if (list.length - 1 === index) {
@@ -215,7 +217,7 @@ export default defineComponent({
       })
     }
 
-    const handleMoveAdd = event => {
+    const handleMoveAdd = (event: any) => {
       const { newIndex } = event
 
       const key = v4().replaceAll('-', '')
@@ -237,7 +239,9 @@ export default defineComponent({
           ...list[newIndex],
           options: {
             ...list[newIndex].options,
-            options: list[newIndex].options.options.map(item => ({ ...item }))
+            options: list[newIndex].options.options.map((item: any) => ({
+              ...item
+            }))
           }
         }
       }
@@ -245,7 +249,7 @@ export default defineComponent({
       if (list[newIndex].type === 'grid') {
         list[newIndex] = {
           ...list[newIndex],
-          columns: list[newIndex].columns.map(item => ({ ...item }))
+          columns: list[newIndex].columns.map((item: any) => ({ ...item }))
         }
       }
 
@@ -254,7 +258,7 @@ export default defineComponent({
       context.emit('update:widgetFormSelect', list[newIndex])
     }
 
-    const handleColMoveAdd = (event, row, index: number) => {
+    const handleColMoveAdd = (event: any, row: any, index: number) => {
       const { newIndex, oldIndex, item } = event
       const list = JSON.parse(JSON.stringify(props.widgetForm.list))
 
@@ -285,7 +289,7 @@ export default defineComponent({
             ...row.columns[index].list[newIndex].options,
             options: row.columns[index].list[
               newIndex
-            ].options.options.map(item => ({ ...item }))
+            ].options.options.map((item: any) => ({ ...item }))
           }
         }
       }

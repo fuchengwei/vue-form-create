@@ -17,6 +17,7 @@ module.exports = {
     'space-before-function-paren': [2, { anonymous: 'never', named: 'never' }],
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': ['off'],
+    '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/member-delimiter-style': [
       2,
       {

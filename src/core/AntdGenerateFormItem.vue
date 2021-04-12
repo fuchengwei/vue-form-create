@@ -239,9 +239,10 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, PropType } from 'vue'
 import SvgIcon from '@/components/SvgIcon.vue'
 import RichTextEditor from '@/components/RichTextEditor.vue'
+import { WidgetForm } from '@/config/antd'
 
 export default defineComponent({
   name: 'AntdGenerateFormItem',
@@ -251,13 +252,16 @@ export default defineComponent({
   },
   props: {
     config: {
-      type: Object
+      type: Object as PropType<WidgetForm['config']>,
+      required: true
     },
     element: {
-      type: Object
+      type: Object,
+      required: true
     },
     model: {
-      type: Object
+      type: Object,
+      required: true
     }
   },
   emits: ['update:model'],
@@ -271,12 +275,10 @@ export default defineComponent({
       }
     })
 
-    const handleFilterOption = (input: string, option) => {
-      const { label }: { label: string } = option
-      return label.toLowerCase().includes(input)
-    }
+    const handleFilterOption = (input: string, option: { label: string }) =>
+      option.label.toLowerCase().includes(input)
 
-    const handleUploadChange = ({ fileList }) => {
+    const handleUploadChange = ({ fileList }: any) => {
       data.value = fileList
     }
 

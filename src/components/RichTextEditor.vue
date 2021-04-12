@@ -34,7 +34,7 @@ export default defineComponent({
       get: () => props.value
     })
 
-    let instance: WangEditor
+    let instance: WangEditor | null
 
     onMounted(() => {
       instance = new WangEditor(editor.value)
@@ -45,12 +45,12 @@ export default defineComponent({
       instance.create()
 
       watchEffect(() =>
-        instance && props.disable ? instance.disable() : instance.enable()
+        instance && props.disable ? instance.disable() : instance?.enable()
       )
     })
 
     onBeforeUnmount(() => {
-      instance.destroy()
+      instance && instance.destroy()
       instance = null
     })
 

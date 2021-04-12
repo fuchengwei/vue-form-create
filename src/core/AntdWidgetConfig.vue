@@ -624,7 +624,7 @@ export default defineComponent({
   },
   emits: ['update:select'],
   setup(props, context) {
-    const data = ref(props.select)
+    const data = ref<any>(props.select)
 
     watch(
       () => props.select,
@@ -659,7 +659,7 @@ export default defineComponent({
       }
     }
 
-    const handleSelectModeChange = event => {
+    const handleSelectModeChange = (event: any) => {
       const { value } = event.target
       if (value === null) {
         data.value.options.defaultValue.length

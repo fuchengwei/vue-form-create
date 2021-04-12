@@ -160,6 +160,7 @@ import { antd } from '@/config'
 import { copy } from '@/utils'
 import { CodeType, PlatformType } from '@/enums'
 import generateCode from '@/utils/generateCode'
+import { WidgetForm } from '@/config/antd'
 
 export default defineComponent({
   name: 'AntdDesignForm',
@@ -226,7 +227,7 @@ export default defineComponent({
       codeType: CodeType,
       widgetForm: JSON.parse(JSON.stringify(antd.widgetForm)),
       widgetFormSelect: null,
-      generateFormRef: null,
+      generateFormRef: null as any,
       configTab: 'widget',
       previewVisible: false,
       uploadJsonVisible: false,
@@ -262,7 +263,7 @@ export default defineComponent({
     }
 
     const handleGetData = () => {
-      state.generateFormRef.getData().then(res => {
+      state.generateFormRef.getData().then((res: any) => {
         state.dataJsonTemplate = JSON.stringify(res, null, 2)
         state.dataJsonVisible = true
       })
@@ -286,7 +287,7 @@ export default defineComponent({
           state.widgetForm,
           state.codeLanguage,
           PlatformType.Antd
-        )
+        )!
       }
     })
 
@@ -298,12 +299,15 @@ export default defineComponent({
 
     const getJson = () => state.widgetForm
 
-    const setJson = json => {
+    const setJson = (json: WidgetForm) => {
       state.widgetForm = json
       if (json.list.length) {
         state.widgetFormSelect = json.list[0]
       }
     }
+
+    const getTemplate = (codeType: CodeType) =>
+      generateCode(state.widgetForm, codeType, PlatformType.Antd)
 
     const clear = () => handleClearable()
 
@@ -318,6 +322,7 @@ export default defineComponent({
       handleReset,
       getJson,
       setJson,
+      getTemplate,
       clear
     }
   }

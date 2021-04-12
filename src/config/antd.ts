@@ -1,16 +1,42 @@
-const rules = {
+export interface Rules {
+  trigger: string
+  enum: string
+  len?: number
+  max?: number
+  message: string
+  min?: number
+  pattern: string
+  required: boolean
+  type: string
+}
+
+export interface WidgetForm {
+  list: any[]
+  config: {
+    size: string
+    hideRequiredMark: boolean
+    layout: string
+    labelAlign: string
+    labelCol: {
+      span: number
+      offset: number
+    }
+  }
+}
+
+const rules: Rules = {
   trigger: 'blur',
   enum: '',
-  len: null,
-  max: null,
+  len: undefined,
+  max: undefined,
   message: '',
-  min: null,
+  min: undefined,
   pattern: '',
   required: false,
   type: 'any'
 }
 
-export const widgetForm = {
+export const widgetForm: WidgetForm = {
   list: [],
   config: {
     size: 'default',
