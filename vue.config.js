@@ -19,6 +19,9 @@ module.exports = {
       maxAssetSize: 30000000,
       assetFilter: assetFilename => assetFilename.endsWith('.js')
     }
+    config.externals = {
+      ace: 'ace'
+    }
   },
   chainWebpack: config => {
     config.module
