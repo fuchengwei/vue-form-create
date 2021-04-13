@@ -119,6 +119,7 @@
           :inputReadOnly="element.options.readonly"
           :allowClear="element.options.allowClear"
           :format="element.options.format"
+          :valueFormat="element.options.valueFormat"
           :disabled="element.options.disabled"
           :style="{ width: element.options.width }"
         />

@@ -1,17 +1,18 @@
 <template>
   <div class="fc-style">
-    <a-form
+    <el-form
       ref="generateForm"
+      label-suffix=":"
       :model="model"
       :rules="rules"
-      :layout="widgetForm.config.layout"
-      :labelAlign="widgetForm.config.labelAlign"
-      :labelCol="widgetForm.config.labelCol"
-      :hideRequiredMark="widgetForm.config.hideRequiredMark"
+      :size="widgetForm.config.size"
+      :label-position="widgetForm.config.labelPosition"
+      :label-width="`${widgetForm.config.labelWidth}px`"
+      :hide-required-asterisk="widgetForm.config.hideRequiredAsterisk"
     >
       <template v-for="(element, index) of widgetForm.list">
         <template v-if="element.type === 'grid'">
-          <a-row
+          <el-row
             type="flex"
             v-if="element.key"
             :key="element.key"
@@ -19,22 +20,22 @@
             :justify="element.options.justify"
             :align="element.options.align"
           >
-            <a-col
+            <el-col
               v-for="(col, colIndex) of element.columns"
               :key="colIndex"
               :span="col.span ?? 0"
             >
-              <AntdGenerateFormItem
+              <ElGenerateFormItem
                 v-for="colItem of col.list"
                 v-model:model="model"
                 :key="colItem.key"
-                :element="widgetForm.list[index].columns[colIndex]"
+                :element="colItem"
                 :config="data.config"
               />
-            </a-col>
-          </a-row>
+            </el-col>
+          </el-row>
         </template>
-        <AntdGenerateFormItem
+        <ElGenerateFormItem
           v-else
           v-model:model="model"
           :key="element.key"
@@ -42,7 +43,7 @@
           :config="data.config"
         />
       </template>
-    </a-form>
+    </el-form>
   </div>
 </template>
 
@@ -55,19 +56,19 @@ import {
   toRefs,
   watch
 } from 'vue'
-import { message } from 'ant-design-vue'
-import AntdGenerateFormItem from './AntdGenerateFormItem.vue'
-import { antd } from '@/config'
+import { ElMessage } from 'element-plus'
+import ElGenerateFormItem from './ElGenerateFormItem.vue'
+import { element } from '@/config'
 
 export default defineComponent({
-  name: 'AntdGenerateForm',
+  name: 'ElGenerateForm',
   components: {
-    AntdGenerateFormItem
+    ElGenerateFormItem
   },
   props: {
     data: {
       type: Object,
-      default: antd.widgetForm
+      default: element.widgetForm
     },
     value: {
       type: Object
@@ -80,12 +81,10 @@ export default defineComponent({
       rules: {} as any,
       widgetForm:
         (props.data && JSON.parse(JSON.stringify(props.data))) ??
-        antd.widgetForm
+        element.widgetForm
     })
 
     const generateModel = (list: any[]) => {
-      state.model = {}
-      state.rules = {}
       for (let index = 0; index < list.length; index++) {
         const model = list[index].model
         if (!model) {
@@ -132,7 +131,9 @@ export default defineComponent({
       () => props.data,
       val => {
         state.widgetForm =
-          (val && JSON.parse(JSON.stringify(val))) ?? antd.widgetForm
+          (val && JSON.parse(JSON.stringify(val))) ?? element.widgetForm
+        state.model = {}
+        state.rules = {}
         generateModel(state.widgetForm.list)
         generateOptions(state.widgetForm.list)
       },
@@ -152,7 +153,7 @@ export default defineComponent({
             if (validate) {
               resolve(state.model)
             } else {
-              message.error('验证失败')
+              ElMessage.error('验证失败')
             }
           })
           .catch((error: Error) => {

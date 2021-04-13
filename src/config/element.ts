@@ -14,13 +14,9 @@ export interface WidgetForm {
   list: any[]
   config: {
     size: string
-    hideRequiredMark: boolean
-    layout: string
-    labelAlign: string
-    labelCol: {
-      span: number
-      offset: number
-    }
+    hideRequiredAsterisk: boolean
+    labelWidth: number
+    labelPosition: string
   }
 }
 
@@ -39,14 +35,10 @@ const rules: Rules = {
 export const widgetForm: WidgetForm = {
   list: [],
   config: {
-    size: 'default',
-    hideRequiredMark: false,
-    layout: 'horizontal',
-    labelAlign: 'right',
-    labelCol: {
-      span: 3,
-      offset: 0
-    }
+    size: 'small',
+    hideRequiredAsterisk: false,
+    labelWidth: 100,
+    labelPosition: 'right'
   }
 }
 
@@ -61,10 +53,10 @@ export const basicComponents = [
       maxlength: null,
       prefix: '',
       suffix: '',
-      addonBefore: '',
-      addonAfter: '',
+      prepend: '',
+      append: '',
       disabled: false,
-      allowClear: false,
+      clearable: false,
       readonly: false,
       rules
     }
@@ -79,11 +71,11 @@ export const basicComponents = [
       maxlength: null,
       prefix: '',
       suffix: '',
-      addonBefore: '',
-      addonAfter: '',
-      visibilityToggle: true,
+      prepend: '',
+      append: '',
+      showPassword: true,
       disabled: false,
-      allowClear: false,
+      clearable: false,
       readonly: false,
       rules
     }
@@ -97,10 +89,10 @@ export const basicComponents = [
       placeholder: '',
       maxlength: null,
       rows: 4,
-      autoSize: false,
-      showCount: false,
+      autosize: false,
+      showWordLimit: false,
       disabled: false,
-      allowClear: false,
+      clearable: false,
       readonly: false,
       rules
     }
@@ -114,7 +106,6 @@ export const basicComponents = [
       min: 0,
       max: 100,
       step: 1,
-      readonly: false,
       disabled: false,
       rules
     }
@@ -197,7 +188,8 @@ export const basicComponents = [
       format: 'HH:mm:ss',
       valueFormat: 'HH:mm:ss',
       readonly: false,
-      allowClear: true,
+      editable: true,
+      clearable: true,
       disabled: false,
       rules
     }
@@ -211,7 +203,8 @@ export const basicComponents = [
       placeholder: '请选择时间',
       format: 'YYYY-MM-DD',
       readonly: false,
-      allowClear: true,
+      editable: true,
+      clearable: true,
       disabled: false,
       rules
     }
@@ -220,9 +213,8 @@ export const basicComponents = [
     label: '评分',
     type: 'rate',
     options: {
-      defaultValue: null,
+      defaultValue: 0,
       max: 5,
-      allowClear: true,
       allowHalf: false,
       disabled: false,
       rules
@@ -232,13 +224,13 @@ export const basicComponents = [
     label: '下拉选择框',
     type: 'select',
     options: {
-      defaultValue: [],
+      defaultValue: '',
       width: '200px',
-      mode: null,
+      multiple: false,
       placeholder: '',
       remote: false,
       showLabel: false,
-      showSearch: false,
+      filterable: false,
       clearable: false,
       disabled: false,
       props: {
@@ -271,8 +263,8 @@ export const basicComponents = [
     options: {
       defaultValue: false,
       disabled: false,
-      checkedChildren: '',
-      unCheckedChildren: '',
+      activeText: '',
+      inactiveText: '',
       rules
     }
   },
@@ -287,7 +279,6 @@ export const basicComponents = [
       step: 1,
       disabled: false,
       range: false,
-      reverse: false,
       rules
     }
   },
@@ -311,7 +302,7 @@ export const advanceComponents = [
       method: 'post',
       listType: 'text',
       accept: 'image/*',
-      maxCount: 3,
+      limit: 3,
       multiple: false,
       disabled: false,
       rules
@@ -334,7 +325,8 @@ export const advanceComponents = [
       width: '200px',
       placeholder: '',
       disabled: false,
-      allowClear: false,
+      clearable: false,
+      filterable: false,
       remote: true,
       remoteOptions: [],
       props: {

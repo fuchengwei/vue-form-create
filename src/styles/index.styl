@@ -1,5 +1,6 @@
 @import './scrollbar.styl'
 @import './antd.styl'
+@import './element.styl'
 $primary-color = #409EFF
 $primary-background-color = #ecf5ff
 html, body
@@ -20,13 +21,13 @@ html, body
   .fc-container
     background #fff
     height 100%
-    .ant-layout
+    .ant-layout, .el-container
       height 100% !important
-    &>.ant-layout
+    &>.ant-layout, .el-container
       background #fff
     .fc-main
       position relative
-      &>.ant-layout
+      &>.ant-layout, .el-container
         position absolute
         top 0
         bottom 0
@@ -36,7 +37,7 @@ html, body
     border-left 1px solid #e0e0e0
     border-right 1px solid #e0e0e0
     .btn-bar
-      height 45px
+      height 45px !important
       line-height 45px
       font-size 18px
       border-bottom 2px solid #e4e7ed
@@ -46,7 +47,8 @@ html, body
       .svg-icon
         font-size 16px
         margin-right 5px
-    .ant-layout-content
+    .ant-layout-content, .el-main
+      height calc(100% - 45px)
       padding 0
       position relative
       background #fafafa
@@ -254,11 +256,11 @@ html, body
       overflow hidden
   .widget-config-container
     position relative
-    .ant-layout-header
+    .ant-layout-header, .el-header
       border-bottom 2px solid #e4e7ed
       padding 0 5px
-      height 45px
-      line-height 45px
+      height 45px !important
+      line-height 45px !important
       background-color #fff
     .config-tab
       height 41px
@@ -276,9 +278,11 @@ html, body
       padding 10px
       background #fff
       overflow auto
-      .ant-form-item-label
+      .ant-form-item-label, .el-form-item__label
         font-weight 500
-      .ant-form-item, h4
+      .el-form-item__label
+        padding 0
+      .ant-form-item, .el-form-item, h4
         padding-bottom 10px
         border-bottom 1px solid #e1e1e1
       .label

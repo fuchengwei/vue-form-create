@@ -87,19 +87,19 @@
     </a-form-item>
 
     <a-form-item label="前缀" v-if="hasKey('prefix')">
-      <a-input v-model:value.number="data.options.prefix" />
+      <a-input v-model:value="data.options.prefix" />
     </a-form-item>
 
     <a-form-item label="后缀" v-if="hasKey('suffix')">
-      <a-input v-model:value.number="data.options.suffix" />
+      <a-input v-model:value="data.options.suffix" />
     </a-form-item>
 
     <a-form-item label="前置标签" v-if="hasKey('addonBefore')">
-      <a-input v-model:value.number="data.options.addonBefore" />
+      <a-input v-model:value="data.options.addonBefore" />
     </a-form-item>
 
     <a-form-item label="后置标签" v-if="hasKey('addonAfter')">
-      <a-input v-model:value.number="data.options.addonAfter" />
+      <a-input v-model:value="data.options.addonAfter" />
     </a-form-item>
 
     <a-form-item label="选中时的内容" v-if="hasKey('checkedChildren')">

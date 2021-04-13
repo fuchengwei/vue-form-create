@@ -1,8 +1,7 @@
-import { WidgetForm } from '@/config/antd'
 import { CodeType, PlatformType } from '@/enums'
 
 export default function(
-  widgetForm: WidgetForm,
+  widgetForm: any,
   codeType: CodeType,
   platformType: PlatformType
 ) {
@@ -13,7 +12,9 @@ export default function(
       ? `<antd-generate-form ref="generateFormRef" :data="widgetForm">
   </antd-generate-form>
   <a-button type="primary" @click="handleSubmit">提交</a-button>`
-      : ''
+      : `<el-generate-form ref="generateFormRef" :data="widgetForm">
+  </el-generate-form>
+  <el-button type="primary" @click="handleSubmit">提交</el-button>`
   }
 </template>
 
@@ -54,7 +55,7 @@ export default defineComponent({
     ${
       platformType === PlatformType.Antd
         ? '<link rel="stylesheet" href="https://unpkg.com/ant-design-vue@next/dist/antd.min.css" />'
-        : ''
+        : '<link rel="stylesheet" href="https://unpkg.com/element-plus/lib/theme-chalk/index.css" />'
     }
   </head>
   <body>
@@ -64,7 +65,9 @@ export default defineComponent({
           ? `<antd-generate-form ref="generateFormRef" :data="widgetForm">
       </antd-generate-form>
       <a-button type="primary" @click="handleSubmit">提交</a-button>`
-          : ''
+          : `<el-generate-form ref="generateFormRef" :data="widgetForm">
+      </el-generate-form>
+      <el-button type="primary" @click="handleSubmit">提交</el-button>`
       }
     </div>
     <script src="https://unpkg.com/vue@next/dist/vue.global.prod.js"></script>
@@ -74,7 +77,7 @@ export default defineComponent({
       platformType === PlatformType.Antd
         ? `<script src="https://unpkg.com/moment/moment.js"></script>
     <script src="https://unpkg.com/ant-design-vue@next/dist/antd.min.js"></script>`
-        : ''
+        : '<script src="https://unpkg.com/element-plus/lib/index.full.js"></script>'
     }
     <script>
       const { createApp, reactive, toRefs } = Vue
@@ -102,7 +105,7 @@ export default defineComponent({
           }
         }
       })
-      .use(antd)
+      .use(${platformType === PlatformType.Antd ? 'antd' : 'ElementPlus'})
       .use(formCreate)
       .mount('#app')
     </script>
