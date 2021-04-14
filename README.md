@@ -6,12 +6,12 @@
 
 ### 支持功能
 
-- [x] 远端数据获取
-- [x] 图片上传
-- [x] 富文本编辑器
-- [x] 栅格布局
-- [x] 生成JSON
-- [x] 生成代码
+- 远端数据获取
+- 图片上传
+- 富文本编辑器
+- 栅格布局
+- 生成 JSON
+- 生成代码
 
 ### 演示地址（github）
 
@@ -47,10 +47,10 @@ $ yarn add vue-form-create
 
 在浏览器中使用 `script` 标签直接引入文件，并使用全局变量 `formCreate`。
 
-我们在 npm 发布包内的 `vue-form-create/dist`提供了 `formCreate.common.js`  `formCreate.umd.js` `formCreate.umd.min.js`。你也可以通过 [![jsdelivr](https://data.jsdelivr.com/v1/package/npm/vue-form-create/badge)](https://www.jsdelivr.com/package/npm/vue-form-create) 或 [UNPKG](https://unpkg.com/vue-form-create/dist/) 进行下载。
+我们在 npm 发布包内的 `vue-form-create/dist`提供了 `formCreate.common.js` `formCreate.umd.js` `formCreate.umd.min.js`。你也可以通过 [![jsdelivr](https://data.jsdelivr.com/v1/package/npm/vue-form-create/badge)](https://www.jsdelivr.com/package/npm/vue-form-create) 或 [UNPKG](https://unpkg.com/vue-form-create/dist/) 进行下载。
 
 ```javascript
-<script src="https://unpkg.com/vue-form-create/dist/formCreate.umd.min.js"></script>
+<script src='https://unpkg.com/vue-form-create/dist/formCreate.umd.min.js'></script>
 ```
 
 ### 注意
@@ -58,20 +58,25 @@ $ yarn add vue-form-create
 1. 无论 npm 或者 cdn 引入都需要在全局引入 [ant-design-vue](https://2x.antdv.com/docs/vue/introduce-cn) 或 [element-plus](https://element-plus.gitee.io/#/zh-CN) 。并且项目依赖了 [acejs](https://github.com/ajaxorg/ace) , 需要在全局使用 cdn 的方式引入。
 
    ```javascript
-   <script src="https://unpkg.com/ace-builds/src-noconflict/ace.js"></script>
+   <script src='https://unpkg.com/ace-builds/src-noconflict/ace.js'></script>
    ```
 
-2. cdn 引入 ant-design-vue 需要自行引入 [moment](http://momentjs.com/) 。 
+2. cdn 引入 ant-design-vue 需要自行引入 [moment](http://momentjs.com/) 。
 
 3. 不想在全局安装也可以在组件内直接使用相应的组件。
 
    ```javascript
-   import { AntdDesignForm, ElDesignForm, AntdGenerateForm, ElGenerateForm } from 'vue-form-create'
+   import {
+     AntdDesignForm,
+     ElDesignForm,
+     AntdGenerateForm,
+     ElGenerateForm
+   } from 'vue-form-create'
    ```
 
 ### 示例
 
-**npm引入**
+**npm 引入**
 
 ```javascript
 import { createApp } from 'vue'
@@ -127,7 +132,7 @@ createApp(App)
 
 ```html
 <template>
-	<AntdDesignForm ref="designForm"  />
+  <AntdDesignForm ref="designForm" />
 </template>
 ```
 
@@ -139,8 +144,8 @@ createApp(App)
 | :-----------: | :--------------------: | :-----: | :----: |
 |    preview    |   设计器预览操作按钮   | boolean |  true  |
 | generateCode  |   设计器生成代码按钮   | boolean |  true  |
-| generateJson  |   设计器生成Json按钮   | boolean |  true  |
-|  uploadJson   |   设计器导入JSON按钮   | boolean |  true  |
+| generateJson  |  设计器生成 Json 按钮  | boolean |  true  |
+|  uploadJson   |  设计器导入 JSON 按钮  | boolean |  true  |
 |   clearable   |     设计器清空按钮     | boolean |  true  |
 |  basicFields  | 设计器左侧基础字段配置 |  array  |   -    |
 | advanceFields | 设计器左侧高级字段配置 |  array  |   -    |
@@ -150,12 +155,12 @@ createApp(App)
 
 通过 ref 可以获取到实例并调用实例方法
 
-|      方法名       |                说明                |             参数             |
-| :---------------: | :--------------------------------: | :--------------------------: |
-|     getJson()     |      获取设计器配置的JSON数据      |              -               |
-|  setJson(value)   |        设置设计器的配置信息        |    通过getJson获取的数据     |
-|      clear()      |             清空设计器             |                              |
-| getTemplate(type) | 获取设计器生成的可以直接使用的代码 | type的类型为 'vue' 或 'html' |
+|      方法名       |                说明                |             参数              |
+| :---------------: | :--------------------------------: | :---------------------------: |
+|     getJson()     |     获取设计器配置的 JSON 数据     |               -               |
+|  setJson(value)   |        设置设计器的配置信息        |    通过 getJson 获取的数据    |
+|      clear()      |             清空设计器             |                               |
+| getTemplate(type) | 获取设计器生成的可以直接使用的代码 | type 的类型为 'vue' 或 'html' |
 
 ##### 字段说明
 
@@ -197,7 +202,7 @@ createApp(App)
 
 ```html
 <template>
-	<AntdGenerateForm ref="generateForm"  />
+  <AntdGenerateForm ref="generateForm" />
 </template>
 ```
 
@@ -205,19 +210,19 @@ createApp(App)
 
 ##### Props
 
-| 参数  |                    说明                    |  类型  | 默认值 |
-| :---: | :----------------------------------------: | :----: | :----: |
-| data  | 表单json配置数据（从表单设计器获取的json） | object |   -    |
-| value |    表单数据（从表单生成器获取的value）     | object |   -    |
+| 参数  |                     说明                      |  类型  | 默认值 |
+| :---: | :-------------------------------------------: | :----: | :----: |
+| data  | 表单 json 配置数据（从表单设计器获取的 json） | object |   -    |
+| value |     表单数据（从表单生成器获取的 value）      | object |   -    |
 
 ##### 方法
 
 通过 ref 可以获取到实例并调用实例方法
 
-|  方法名   |            说明             |         参数          |
-| :-------: | :-------------------------: | :-------------------: |
-| getData() | 获取表单数据（返回Promise） |           -           |
-|  reset()  |        重置表单数据         | 通过getJson获取的数据 |
+|  方法名   |             说明             |          参数           |
+| :-------: | :--------------------------: | :---------------------: |
+| getData() | 获取表单数据（返回 Promise） |            -            |
+|  reset()  |         重置表单数据         | 通过 getJson 获取的数据 |
 
 ## 3 功能说明
 
@@ -237,8 +242,6 @@ createApp(App)
 
 ## 4 后续规划
 
-目前是v1.0.0的初版，后面预计支持更多的功能组件与布局组件，以及对移动端的支持。
-
-
+目前是 v1.0.0 的初版，后面预计支持更多的功能组件与布局组件，以及对移动端的支持。
 
 最后如果大家觉得还不错挺好用的话，麻烦给个 Star 😜😜😜。
