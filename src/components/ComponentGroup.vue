@@ -12,7 +12,7 @@
       <li
         v-if="fields.includes(element.type)"
         class="form-edit-widget-label"
-        :class="{ 'no-put': element.tpye === 'divider' }"
+        :class="{ 'no-put': fieldType === 'layout'  }"
       >
         <a>
           <SvgIcon :iconClass="element.type" />
@@ -38,6 +38,12 @@ export default defineComponent({
     title: {
       type: String,
       required: true
+    },
+    fieldType: {
+      type: String,
+      required: false,
+      // normal or layout
+      default: 'normal'
     },
     fields: {
       type: Array as PropType<Array<string>>,

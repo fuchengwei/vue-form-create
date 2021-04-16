@@ -19,6 +19,7 @@
                 title="布局字段"
                 :fields="layoutFields"
                 :list="antd.layoutComponents"
+                fieldType="layout"
               />
             </div>
           </a-layout-sider>
