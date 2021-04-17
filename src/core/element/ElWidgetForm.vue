@@ -43,7 +43,7 @@
                     ghostClass="ghost"
                     handle=".drag-widget"
                     :animation="200"
-                    :group="{ name: 'people',put: canElementPutInLayout }"
+                    :group="{ name: 'people' }"
                     :no-transition-on-drag="true"
                     :list="col.list"
                     @add="handleColMoveAdd($event, element, colIndex)"
@@ -297,20 +297,12 @@ export default defineComponent({
       context.emit('update:widgetFormSelect', row.columns[index].list[newIndex])
     }
 
-    const canElementPutInLayout = (a:any, b:any, c:any) => {
-      if (c.className.indexOf('no-put') >= 0) {
-        return false
-      }
-      return true
-    }
-
     return {
       handleItemClick,
       handleCopyClick,
       handleDeleteClick,
       handleMoveAdd,
-      handleColMoveAdd,
-      canElementPutInLayout
+      handleColMoveAdd
     }
   }
 })

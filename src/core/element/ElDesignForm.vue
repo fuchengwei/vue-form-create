@@ -19,7 +19,6 @@
                 title="布局字段"
                 :fields="layoutFields"
                 :list="element.layoutComponents"
-                fieldType="layout"
               />
             </div>
           </el-aside>
