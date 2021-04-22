@@ -30,7 +30,9 @@
               @generateJson="handleGenerateJson"
               @generateCode="handleGenerateCode"
               @clearable="handleClearable"
-            />
+            >
+              <slot name="header"></slot>
+            </AntdHeader>
             <a-layout-content :class="{ 'widget-empty': widgetForm.list }">
               <AntdWidgetForm
                 ref="widgetFormRef"
