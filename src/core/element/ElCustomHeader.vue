@@ -1,5 +1,6 @@
 <template>
   <el-header class="btn-bar">
+    <slot></slot>
     <el-button
       v-if="$attrs.uploadJson"
       type="text"

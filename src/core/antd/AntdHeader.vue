@@ -1,5 +1,6 @@
 <template>
   <a-layout-header class="btn-bar">
+    <slot></slot>
     <a-button
       v-if="$attrs.uploadJson"
       type="link"

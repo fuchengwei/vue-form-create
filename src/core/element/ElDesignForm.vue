@@ -30,7 +30,9 @@
               @generateJson="handleGenerateJson"
               @generateCode="handleGenerateCode"
               @clearable="handleClearable"
-            />
+            >
+              <slot name="header"></slot>
+            </ElCustomHeader>
             <el-main :class="{ 'widget-empty': widgetForm.list }">
               <ElWidgetForm
                 ref="widgetFormRef"
