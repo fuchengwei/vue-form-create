@@ -101,7 +101,6 @@ export default defineComponent({
     const updateSelectWidgetForm = inject<any>('updateSelectWidgetForm')
 
     const handleItemClick = (row: any) => {
-      console.log('handleItemClick', row)
       updateSelectWidgetForm(row)
     }
 
@@ -238,8 +237,6 @@ export default defineComponent({
           }
         }
       }
-
-      console.log('handleColMoveAdd', row.columns[index].list[newIndex])
 
       updateSelectWidgetForm(row.columns[index].list[newIndex])
     }
