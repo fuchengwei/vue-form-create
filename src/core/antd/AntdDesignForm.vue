@@ -147,7 +147,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, PropType, toRefs, watchEffect } from 'vue'
+import { defineComponent, reactive, PropType, toRefs, watchEffect, provide } from 'vue'
 import { message } from 'ant-design-vue'
 import CodeEditor from '@/components/CodeEditor.vue'
 import ComponentGroup from '@/components/ComponentGroup.vue'
@@ -226,7 +226,7 @@ export default defineComponent({
       antd,
       codeType: CodeType,
       widgetForm: JSON.parse(JSON.stringify(antd.widgetForm)),
-      widgetFormSelect: null,
+      widgetFormSelect: null as any,
       generateFormRef: null as any,
       configTab: 'widget',
       previewVisible: false,

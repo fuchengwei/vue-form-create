@@ -251,10 +251,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, inject } from 'vue'
 import SvgIcon from '@/components/SvgIcon.vue'
 import RichTextEditor from '@/components/RichTextEditor.vue'
-import { WidgetForm } from '@/config/antd'
 
 export default defineComponent({
   name: 'AntdWidgetFormItem',
@@ -263,24 +262,24 @@ export default defineComponent({
     RichTextEditor
   },
   props: {
-    config: {
-      type: Object as PropType<WidgetForm['config']>,
-      required: true
-    },
     element: {
       type: Object,
       required: true
-    },
-    selectWidget: {
-      type: Object
     }
   },
   emits: ['copy', 'delete'],
   setup() {
+    const widgetForm = inject<any>('widgetFormRef')
+    const selectWidget = inject('selectWidgetFormRef')
+
+    const config = widgetForm.value.config
+
     const handleFilterOption = (input: string, option: { label: string }) =>
       option.label.toLowerCase().includes(input)
 
     return {
+      config,
+      selectWidget,
       handleFilterOption
     }
   }
