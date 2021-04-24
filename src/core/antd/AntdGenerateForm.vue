@@ -28,7 +28,6 @@
 <script lang="ts">
 import {
   ref,
-  computed,
   defineComponent,
   nextTick,
   onMounted,

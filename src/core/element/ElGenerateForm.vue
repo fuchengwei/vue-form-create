@@ -11,30 +11,11 @@
       :hide-required-asterisk="widgetForm.config.hideRequiredAsterisk"
     >
       <template v-for="(element, index) of widgetForm.list">
-        <template v-if="element.type === 'grid'">
-          <el-row
-            type="flex"
-            v-if="element.key"
-            :key="element.key"
-            :gutter="element.options.gutter ?? 0"
-            :justify="element.options.justify"
-            :align="element.options.align"
-          >
-            <el-col
-              v-for="(col, colIndex) of element.columns"
-              :key="colIndex"
-              :span="col.span ?? 0"
-            >
-              <ElGenerateFormItem
-                v-for="colItem of col.list"
-                v-model:model="model"
-                :key="colItem.key"
-                :element="colItem"
-                :config="data.config"
-              />
-            </el-col>
-          </el-row>
-        </template>
+        <ElGenerateLayoutForm
+          v-if="islayoutComponent(element.type)"
+          :key="element.key"
+          :element="element"
+        />
         <ElGenerateFormItem
           v-else
           v-model:model="model"
@@ -49,21 +30,26 @@
 
 <script lang="ts">
 import {
+  ref,
   defineComponent,
   nextTick,
   onMounted,
+  provide,
   reactive,
   toRefs,
   watch
 } from 'vue'
 import { ElMessage } from 'element-plus'
 import ElGenerateFormItem from './ElGenerateFormItem.vue'
+import ElGenerateLayoutForm from './ElGenerateLayoutForm.vue'
 import { element } from '@/config'
+import { islayoutComponent } from '@/config/element'
 
 export default defineComponent({
   name: 'ElGenerateForm',
   components: {
-    ElGenerateFormItem
+    ElGenerateFormItem,
+    ElGenerateLayoutForm
   },
   props: {
     data: {
@@ -77,29 +63,37 @@ export default defineComponent({
   setup(props) {
     const state = reactive({
       generateForm: null as any,
-      model: {} as any,
       rules: {} as any,
       widgetForm:
         (props.data && JSON.parse(JSON.stringify(props.data))) ??
         element.widgetForm
     })
 
+    const model = ref<any>({})
+
+    provide('model', model)
+    provide('config', props.data.config)
+
+    provide('updateModel', (newModel:any) => {
+      model.value = newModel
+    })
+
     const generateModel = (list: any[]) => {
       for (let index = 0; index < list.length; index++) {
-        const model = list[index].model
-        if (!model) {
+        const modelKey = list[index].model
+        if (!modelKey) {
           return
         }
         if (list[index].type === 'grid') {
           list[index].columns.forEach((col: any) => generateModel(col.list))
         } else {
-          if (props.value && Object.keys(props.value).includes(model)) {
-            state.model[model] = props.value[model]
+          if (props.value && Object.keys(props.value).includes(modelKey)) {
+            model.value[modelKey] = props.value[modelKey]
           } else {
-            state.model[model] = list[index].options.defaultValue
+            model.value[modelKey] = list[index].options.defaultValue
           }
 
-          state.rules[model] = list[index].options.rules
+          state.rules[modelKey] = list[index].options.rules
         }
       }
       nextTick(() => state.generateForm.resetFields())
@@ -132,7 +126,7 @@ export default defineComponent({
       val => {
         state.widgetForm =
           (val && JSON.parse(JSON.stringify(val))) ?? element.widgetForm
-        state.model = {}
+        model.value = {}
         state.rules = {}
         generateModel(state.widgetForm.list)
         generateOptions(state.widgetForm.list)
@@ -151,7 +145,7 @@ export default defineComponent({
           .validate()
           .then((validate: boolean) => {
             if (validate) {
-              resolve(state.model)
+              resolve(model.value)
             } else {
               ElMessage.error('验证失败')
             }
@@ -167,9 +161,11 @@ export default defineComponent({
     }
 
     return {
+      model,
       ...toRefs(state),
       getData,
-      reset
+      reset,
+      islayoutComponent
     }
   }
 })

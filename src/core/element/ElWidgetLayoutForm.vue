@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-if="element.type === 'grid'">
-      <a-row
+      <el-row
         class="widget-col widget-view"
         type="flex"
         v-if="element.key"
@@ -11,7 +11,7 @@
         :justify="element.options.justify"
         :align="element.options.align"
       >
-        <a-col
+        <el-col
           v-for="(col, colIndex) of element.columns"
           :key="colIndex"
           :span="col.span ?? 0"
@@ -29,7 +29,7 @@
             <template #item="{ element, index }">
               <transition-group name="fade" tag="div">
                 <template v-if="islayoutComponent(element.type)">
-                  <AntdWidgetLayoutForm
+                  <ElWidgetLayoutForm
                     v-if="element.key"
                     :key="element.key"
                     :element="element"
@@ -37,7 +37,7 @@
                   />
                 </template>
                 <template v-else>
-                  <AntdWidgetFormItem
+                  <ElWidgetFormItem
                     v-if="element.key"
                     :key="element.key"
                     :element="element"
@@ -49,7 +49,7 @@
               </transition-group>
             </template>
           </Draggable>
-        </a-col>
+        </el-col>
         <div
           class="widget-view-action widget-col-action"
           v-if="selectWidgetForm?.key === element.key"
@@ -66,14 +66,14 @@
         >
           <SvgIcon iconClass="move" className="drag-widget" />
         </div>
-      </a-row>
+      </el-row>
     </template>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, inject, nextTick } from 'vue'
-import AntdWidgetFormItem from './AntdWidgetFormItem.vue'
+import ElWidgetFormItem from './ElWidgetFormItem.vue'
 import SvgIcon from '@/components/SvgIcon.vue'
 import { v4 } from 'uuid'
 import { handleListInsert, handleListDelete } from '@/utils/array'
@@ -81,10 +81,10 @@ import Draggable from 'vuedraggable'
 import { islayoutComponent } from '@/config/antd'
 
 export default defineComponent({
-  name: 'AntdWidgetLayoutForm',
+  name: 'ElWidgetLayoutForm',
   components: {
     Draggable,
-    AntdWidgetFormItem,
+    ElWidgetFormItem,
     SvgIcon
   },
   props: {
@@ -101,6 +101,7 @@ export default defineComponent({
     const updateSelectWidgetForm = inject<any>('updateSelectWidgetForm')
 
     const handleItemClick = (row: any) => {
+      console.log('handleItemClick', row)
       updateSelectWidgetForm(row)
     }
 
@@ -237,6 +238,8 @@ export default defineComponent({
           }
         }
       }
+
+      console.log('handleColMoveAdd', row.columns[index].list[newIndex])
 
       updateSelectWidgetForm(row.columns[index].list[newIndex])
     }

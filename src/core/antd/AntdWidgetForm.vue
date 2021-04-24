@@ -21,43 +21,9 @@
 <script lang="ts">
 import { defineComponent, nextTick, PropType, provide, ref, watch } from 'vue'
 import { v4 } from 'uuid'
-import { WidgetForm, islayoutComponent } from '@/config/antd'
+import { WidgetForm } from '@/config/antd'
 import DraggableForm from '@/core/antd/components/DraggableForm.vue'
-
-const handleListInsert = (key: string, list: any[], obj: any) => {
-  const newList: any[] = []
-  list.forEach(item => {
-    if (item.key === key) {
-      newList.push(item)
-      newList.push(obj)
-    } else {
-      if (item.columns) {
-        item.columns = item.columns.map((col: any) => ({
-          ...col,
-          list: handleListInsert(key, col.list, obj)
-        }))
-      }
-      newList.push(item)
-    }
-  })
-  return newList
-}
-
-const handleListDelete = (key: string, list: any[]) => {
-  const newList: any[] = []
-  list.forEach(item => {
-    if (item.key !== key) {
-      if (item.columns) {
-        item.columns = item.columns.map((col: any) => ({
-          ...col,
-          list: handleListDelete(key, col.list)
-        }))
-      }
-      newList.push(item)
-    }
-  })
-  return newList
-}
+import { handleListInsert, handleListDelete } from '@/utils/array'
 
 export default defineComponent({
   name: 'AntdWidgetForm',
@@ -79,10 +45,6 @@ export default defineComponent({
       context.emit('update:widgetFormSelect', widgetFormSelect)
     }
 
-    const handleItemClick = (row: any) => {
-      updateSelectWidgetForm(row)
-    }
-
     const updateWidgetForm = (widgetForm: any) => {
       context.emit('update:widgetForm', widgetForm)
     }
@@ -102,6 +64,10 @@ export default defineComponent({
       val => (widgetForm.value = val)
     )
     provide('getWidgetForm', () => (props.widgetForm))
+
+    const handleItemClick = (row: any) => {
+      updateSelectWidgetForm(row)
+    }
 
     const handleCopyClick = (index: number, list: any[]) => {
       const key = v4().replaceAll('-', '')
@@ -128,12 +94,12 @@ export default defineComponent({
         }
       }
 
-      context.emit('update:widgetForm', {
+      updateWidgetForm({
         ...props.widgetForm,
         list: handleListInsert(list[index].key, oldList, copyData)
       })
 
-      context.emit('update:widgetFormSelect', copyData)
+      updateSelectWidgetForm(copyData)
     }
 
     const handleDeleteClick = (index: number, list: any[]) => {
@@ -141,15 +107,15 @@ export default defineComponent({
 
       if (list.length - 1 === index) {
         if (index === 0) {
-          nextTick(() => context.emit('update:widgetFormSelect', null))
+          nextTick(() => updateSelectWidgetForm(null))
         } else {
-          context.emit('update:widgetFormSelect', list[index - 1])
+          updateSelectWidgetForm(list[index - 1])
         }
       } else {
-        context.emit('update:widgetFormSelect', list[index + 1])
+        updateSelectWidgetForm(list[index + 1])
       }
 
-      context.emit('update:widgetForm', {
+      updateWidgetForm({
         ...props.widgetForm,
         list: handleListDelete(list[index].key, oldList)
       })
@@ -191,9 +157,9 @@ export default defineComponent({
         }
       }
 
-      context.emit('update:widgetForm', { ...props.widgetForm, list })
+      updateWidgetForm({ ...props.widgetForm, list })
 
-      context.emit('update:widgetFormSelect', list[newIndex])
+      updateSelectWidgetForm(list[newIndex])
     }
 
     const handleColMoveAdd = (event: any, row: any, index: number) => {
@@ -232,18 +198,15 @@ export default defineComponent({
         }
       }
 
-      context.emit('update:widgetFormSelect', row.columns[index].list[newIndex])
+      updateSelectWidgetForm(row.columns[index].list[newIndex])
     }
 
     return {
-      updateSelectWidgetForm,
       handleItemClick,
       handleCopyClick,
       handleDeleteClick,
       handleMoveAdd,
-      handleColMoveAdd,
-      updateWidgetForm,
-      islayoutComponent
+      handleColMoveAdd
     }
   }
 })

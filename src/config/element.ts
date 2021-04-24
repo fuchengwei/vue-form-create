@@ -1,3 +1,5 @@
+import { makeComponentMap } from '@/utils/makemap'
+
 export interface Rules {
   trigger: string
   enum: string
@@ -362,3 +364,5 @@ export const layoutComponents = [
     }
   }
 ]
+
+export const islayoutComponent = makeComponentMap(layoutComponents)

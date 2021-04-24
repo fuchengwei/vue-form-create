@@ -15,12 +15,12 @@
           :span="col.span ?? 0"
         >
           <template v-for="colItem of col.list">
-            <AntdGenerateLayoutForm
+            <ElGenerateLayoutForm
               v-if="islayoutComponent(colItem.type)"
               :key="colItem.key"
               :element="colItem"
             />
-            <AntdGenerateFormItem
+            <ElGenerateFormItem
               v-else
               :key="colItem.key"
               :element="colItem"
@@ -34,13 +34,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import AntdGenerateFormItem from './AntdGenerateFormItem.vue'
+import ElGenerateFormItem from './ElGenerateFormItem.vue'
 import { islayoutComponent } from '@/config/antd'
 
 export default defineComponent({
-  name: 'AntdGenerateLayoutForm',
+  name: 'ElGenerateLayoutForm',
   components: {
-    AntdGenerateFormItem
+    ElGenerateFormItem
   },
   props: {
     element: {
