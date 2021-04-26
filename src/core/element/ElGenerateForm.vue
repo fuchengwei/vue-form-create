@@ -48,14 +48,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  nextTick,
-  onMounted,
-  reactive,
-  toRefs,
-  watch
-} from 'vue'
+import { defineComponent, onMounted, reactive, toRefs, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import ElGenerateFormItem from './ElGenerateFormItem.vue'
 import { element } from '@/config'
@@ -102,7 +95,6 @@ export default defineComponent({
           state.rules[model] = list[index].options.rules
         }
       }
-      nextTick(() => state.generateForm.resetFields())
     }
 
     const generateOptions = (list: any[]) => {

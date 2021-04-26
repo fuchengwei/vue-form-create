@@ -47,14 +47,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  nextTick,
-  onMounted,
-  reactive,
-  toRefs,
-  watch
-} from 'vue'
+import { defineComponent, onMounted, reactive, toRefs, watch } from 'vue'
 import { message } from 'ant-design-vue'
 import AntdGenerateFormItem from './AntdGenerateFormItem.vue'
 import { antd } from '@/config'
@@ -101,7 +94,6 @@ export default defineComponent({
           state.rules[model] = list[index].options.rules
         }
       }
-      nextTick(() => state.generateForm.resetFields())
     }
 
     const generateOptions = (list: any[]) => {
