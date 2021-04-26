@@ -1,7 +1,7 @@
 {
   "name": "vue-form-create",
   "description": "一个基于Vue3.0 + TS 的表单设计器",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "dist/formCreate.umd.min.js",
   "types": "src/index.d.ts",
   "homepage": "https://github.com/fuchengwei/vue-form-create",
@@ -35,6 +35,7 @@
     "ant-design-vue": "^2.1.0",
     "core-js": "^3.6.5",
     "element-plus": "^1.0.2-beta.39",
+    "lodash": "^4.17.21",
     "uuid": "^8.3.2",
     "vue": "^3.0.11",
     "vuedraggable": "^4.0.1",
@@ -43,6 +44,7 @@
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",
     "@commitlint/config-conventional": "^12.0.1",
+    "@types/lodash": "^4.14.168",
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
