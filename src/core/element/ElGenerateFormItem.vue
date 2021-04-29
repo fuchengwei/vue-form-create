@@ -13,7 +13,7 @@
         :maxlength="parseInt(element.options.maxlength)"
         :clearable="element.options.clearable"
         :readonly="element.options.readonly"
-        :disabled="element.options.disabled"
+        :disabled="edit && element.options.disabled"
       >
         <template #prefix v-if="element.options.prefix">
           {{ element.options.prefix }}
@@ -37,7 +37,7 @@
         :placeholder="element.options.placeholder"
         :maxlength="parseInt(element.options.maxlength)"
         :clearable="element.options.clearable"
-        :disabled="element.options.disabled"
+        :disabled="edit && element.options.disabled"
         :readonly="element.options.readonly"
         :show-password="element.options.showPassword"
       >
@@ -69,7 +69,7 @@
         :autosize="element.options.autosize"
         :clearable="element.options.clearable"
         :readonly="element.options.readonly"
-        :disabled="element.options.disabled"
+        :disabled="edit && element.options.disabled"
       />
     </template>
 
@@ -79,7 +79,7 @@
         :style="{ width: element.options.width }"
         :max="element.options.max"
         :min="element.options.min"
-        :disabled="element.options.disabled"
+        :disabled="edit && element.options.disabled"
       />
     </template>
 
@@ -87,7 +87,7 @@
       <el-radio-group
         v-model="data"
         :style="{ width: element.options.width }"
-        :disabled="element.options.disabled"
+        :disabled="edit && element.options.disabled"
       >
         <el-radio
           v-for="item of element.options.remote
@@ -107,7 +107,7 @@
       <el-checkbox-group
         v-model="data"
         :style="{ width: element.options.width }"
-        :disabled="element.options.disabled"
+        :disabled="edit && element.options.disabled"
       >
         <el-checkbox
           v-for="item of element.options.remote
@@ -133,7 +133,7 @@
         :editable="element.options.editable"
         :clearable="element.options.clearable"
         :format="element.options.format"
-        :disabled="element.options.disabled"
+        :disabled="edit && element.options.disabled"
         :style="{ width: element.options.width }"
       />
     </template>
@@ -146,7 +146,7 @@
         :editable="element.options.editable"
         :clearable="element.options.clearable"
         :format="element.options.format"
-        :disabled="element.options.disabled"
+        :disabled="edit && element.options.disabled"
         :style="{ width: element.options.width }"
       />
     </template>
@@ -156,7 +156,7 @@
         v-model="data"
         :max="element.options.max"
         :allowHalf="element.options.allowHalf"
-        :disabled="element.options.disabled"
+        :disabled="edit && element.options.disabled"
       />
     </template>
 
@@ -167,7 +167,7 @@
         :placeholder="element.options.placeholder"
         :clearable="element.options.clearable"
         :filterable="element.options.filterable"
-        :disabled="element.options.disabled"
+        :disabled="edit && element.options.disabled"
         :style="{ width: element.options.width }"
       >
         <el-option
@@ -187,7 +187,7 @@
         :modelValue="element.options.defaultValue"
         :active-text="element.options.activeText"
         :inactive-text="element.options.inactiveText"
-        :disabled="element.options.disabled"
+        :disabled="edit && element.options.disabled"
       />
     </template>
 
@@ -198,7 +198,7 @@
         :max="element.options.max"
         :step="element.options.step"
         :range="element.options.range"
-        :disabled="element.options.disabled"
+        :disabled="edit && element.options.disabled"
         :style="{ width: element.options.width }"
       />
     </template>
@@ -216,7 +216,7 @@
         :listType="element.options.listType"
         :multiple="element.options.multiple"
         :limit="element.options.limit"
-        :disabled="element.options.disabled"
+        :disabled="edit && element.options.disabled"
         :on-success="handleUploadSuccess"
       >
         <SvgIcon
@@ -233,7 +233,7 @@
     <template v-if="element.type === 'richtext-editor'">
       <RichTextEditor
         v-model:value="data"
-        :disable="element.options.disabled"
+        :disable="edit && element.options.disabled"
         :style="{ width: element.options.width }"
       />
     </template>
@@ -245,7 +245,7 @@
         :placeholder="element.options.placeholder"
         :filterable="element.options.filterable"
         :clearable="element.options.clearable"
-        :disabled="element.options.disabled"
+        :disabled="edit && element.options.disabled"
         :style="{ width: element.options.width }"
       />
     </template>
@@ -275,6 +275,10 @@ export default defineComponent({
     },
     model: {
       type: Object,
+      required: true
+    },
+    edit: {
+      type: Boolean,
       required: true
     }
   },

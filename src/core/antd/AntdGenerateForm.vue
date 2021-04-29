@@ -30,6 +30,7 @@
                 :key="colItem.key"
                 :element="colItem"
                 :config="data.config"
+                :edit="edit"
               />
             </a-col>
           </a-row>
@@ -40,6 +41,7 @@
           :key="element.key"
           :element="widgetForm.list[index]"
           :config="data.config"
+          :edit="edit"
         />
       </template>
     </a-form>
@@ -64,6 +66,10 @@ export default defineComponent({
     },
     value: {
       type: Object
+    },
+    edit: {
+      type: Boolean,
+      default: true
     }
   },
   setup(props) {
