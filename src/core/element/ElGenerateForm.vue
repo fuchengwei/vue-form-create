@@ -31,7 +31,7 @@
                 :key="colItem.key"
                 :element="colItem"
                 :config="data.config"
-                :edit="edit"
+                :disabled="disabled"
               />
             </el-col>
           </el-row>
@@ -42,7 +42,7 @@
           :key="element.key"
           :element="widgetForm.list[index]"
           :config="data.config"
-          :edit="edit"
+          :disabled="disabled"
         />
       </template>
     </el-form>
@@ -68,7 +68,7 @@ export default defineComponent({
     value: {
       type: Object
     },
-    edit: {
+    disabled: {
       type: Boolean,
       default: false
     }
