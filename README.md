@@ -214,7 +214,7 @@ createApp(App)
 | :---: | :-------------------------------------------: | :-----: | :----: |
 | data  | 表单 json 配置数据（从表单设计器获取的 json） | object  |   -    |
 | value |     表单数据（从表单生成器获取的 value）      | object  |   -    |
-| edit  |                  是否可编辑                   | boolean |  true  |
+| edit  |                  是否可编辑                   | boolean | false  |
 
 ##### 方法
 
