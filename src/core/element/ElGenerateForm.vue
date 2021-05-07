@@ -22,6 +22,7 @@
           :key="element.key"
           :element="widgetForm.list[index]"
           :config="data.config"
+          :disabled="disabled"
         />
       </template>
     </el-form>
@@ -32,7 +33,6 @@
 import {
   ref,
   defineComponent,
-  nextTick,
   onMounted,
   provide,
   reactive,
@@ -58,6 +58,10 @@ export default defineComponent({
     },
     value: {
       type: Object
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props) {
@@ -73,6 +77,12 @@ export default defineComponent({
 
     provide('model', model)
     provide('config', props.data.config)
+    const disabled = ref<any>(props.disabled)
+    provide('disabled', disabled)
+    watch(
+      () => props.disabled,
+      val => (disabled.value = val)
+    )
 
     provide('updateModel', (newModel:any) => {
       model.value = newModel
@@ -96,7 +106,6 @@ export default defineComponent({
           state.rules[modelKey] = list[index].options.rules
         }
       }
-      nextTick(() => state.generateForm.resetFields())
     }
 
     const generateOptions = (list: any[]) => {
