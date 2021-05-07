@@ -7,7 +7,7 @@
     :animation="200"
     :group="{ name: 'people' }"
     :list="list"
-    @add="handleColMoveAdd($event, element, colIndex)"
+    @add="handleColMoveAdd($event, layoutElement, colIndex)"
   >
     <template #item="{ element, index }">
       <transition-group name="fade" tag="div">
@@ -50,6 +50,16 @@ export default defineComponent({
       type: Array,
       required: true
     },
+    layoutElement: {
+      type: Object,
+      required: false,
+      default: null
+    },
+    colIndex: {
+      type: Number,
+      required: false,
+      default: null
+    },
     formClass: {
       type: Array,
       default() {
@@ -57,10 +67,10 @@ export default defineComponent({
       }
     }
   },
-  emits: ['handleColMoveAdd', 'handleItemClick', 'handleCopyClick', 'handleDeleteClick'],
+  emits: ['handleMoveAdd', 'handleItemClick', 'handleCopyClick', 'handleDeleteClick'],
   setup(props, context) {
     const handleColMoveAdd = ($event:any, element:any, colIndex:number) => {
-      context.emit('handleColMoveAdd', $event, element, colIndex)
+      context.emit('handleMoveAdd', $event, element, colIndex)
     }
     const handleItemClick = (element:any) => {
       context.emit('handleItemClick', element)

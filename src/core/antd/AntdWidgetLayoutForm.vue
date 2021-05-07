@@ -16,39 +16,16 @@
           :key="colIndex"
           :span="col.span ?? 0"
         >
-          <Draggable
-            class="widget-col-list"
-            item-key="key"
-            ghostClass="ghost"
-            handle=".drag-widget"
-            :animation="200"
-            :group="{ name: 'people' }"
+          <DraggableForm
+            :formClass="['widget-col-list']"
             :list="col.list"
-            @add="handleColMoveAdd($event, element, colIndex)"
-          >
-            <template #item="{ element, index }">
-              <transition-group name="fade" tag="div">
-                <template v-if="islayoutComponent(element.type)">
-                  <AntdWidgetLayoutForm
-                    v-if="element.key"
-                    :key="element.key"
-                    :element="element"
-                    @click.stop="handleItemClick(element)"
-                  />
-                </template>
-                <template v-else>
-                  <AntdWidgetFormItem
-                    v-if="element.key"
-                    :key="element.key"
-                    :element="element"
-                    @click.stop="handleItemClick(element)"
-                    @copy="handleCopyClick(index, col.list)"
-                    @delete="handleDeleteClick(index, col.list)"
-                  />
-                </template>
-              </transition-group>
-            </template>
-          </Draggable>
+            :layoutElement="element"
+            :colIndex="colIndex"
+            @handleMoveAdd="handleColMoveAdd"
+            @handleItemClick="handleItemClick"
+            @handleCopyClick="handleCopyClick"
+            @handleDeleteClick="handleDeleteClick"
+          />
         </a-col>
         <div
           class="widget-view-action widget-col-action"
@@ -73,19 +50,17 @@
 
 <script lang="ts">
 import { defineComponent, inject, nextTick } from 'vue'
-import AntdWidgetFormItem from './AntdWidgetFormItem.vue'
 import SvgIcon from '@/components/SvgIcon.vue'
 import { v4 } from 'uuid'
 import { handleListInsert, handleListDelete } from '@/utils/array'
-import Draggable from 'vuedraggable'
 import { islayoutComponent } from '@/config/antd'
+import DraggableForm from './components/DraggableForm.vue'
 
 export default defineComponent({
   name: 'AntdWidgetLayoutForm',
   components: {
-    Draggable,
-    AntdWidgetFormItem,
-    SvgIcon
+    SvgIcon,
+    DraggableForm
   },
   props: {
     element: {
@@ -95,10 +70,12 @@ export default defineComponent({
   },
   setup() {
     const selectWidgetForm = inject('selectWidgetFormRef')
-    const updateWidgetForm = inject<any>('updateWidgetForm')
+    const getSelectWidgetForm = inject<any>('getSelectWidgetForm')
+    const updateSelectWidgetForm = inject<any>('updateSelectWidgetForm')
+
     const widgetForm = inject<any>('widgetFormRef')
     const getWidgetForm = inject<any>('getWidgetForm')
-    const updateSelectWidgetForm = inject<any>('updateSelectWidgetForm')
+    const updateWidgetForm = inject<any>('updateWidgetForm')
 
     const handleItemClick = (row: any) => {
       updateSelectWidgetForm(row)
@@ -141,6 +118,7 @@ export default defineComponent({
 
     const handleDeleteClick = (index: number, list: any[]) => {
       const newWidgetForm = getWidgetForm()
+      const currentSelectWidgetForm = getSelectWidgetForm()
       const oldList = JSON.parse(JSON.stringify(newWidgetForm.list))
 
       if (list.length - 1 === index) {
@@ -155,50 +133,8 @@ export default defineComponent({
 
       updateWidgetForm({
         ...newWidgetForm,
-        list: handleListDelete(list[index].key, oldList)
+        list: handleListDelete(currentSelectWidgetForm.key, oldList)
       })
-    }
-
-    const handleMoveAdd = (event: any) => {
-      const newWidgetForm = getWidgetForm()
-      const { newIndex } = event
-
-      const key = v4().replaceAll('-', '')
-      const list = JSON.parse(JSON.stringify(newWidgetForm.list))
-
-      list[newIndex] = {
-        ...list[newIndex],
-        key,
-        model: `${list[newIndex].type}_${key}`,
-        rules: []
-      }
-
-      if (
-        list[newIndex].type === 'radio' ||
-        list[newIndex].type === 'checkbox' ||
-        list[newIndex].type === 'select'
-      ) {
-        list[newIndex] = {
-          ...list[newIndex],
-          options: {
-            ...list[newIndex].options,
-            options: list[newIndex].options.options.map((item: any) => ({
-              ...item
-            }))
-          }
-        }
-      }
-
-      if (list[newIndex].type === 'grid') {
-        list[newIndex] = {
-          ...list[newIndex],
-          columns: list[newIndex].columns.map((item: any) => ({ ...item }))
-        }
-      }
-
-      updateWidgetForm({ ...newWidgetForm, list })
-
-      updateSelectWidgetForm(list[newIndex])
     }
 
     const handleColMoveAdd = (event: any, row: any, index: number) => {
@@ -214,6 +150,8 @@ export default defineComponent({
       }
 
       const key = v4().replaceAll('-', '')
+
+      row.columns[index].list[newIndex] = JSON.parse(JSON.stringify(row.columns[index].list[newIndex]))
 
       row.columns[index].list[newIndex] = {
         ...row.columns[index].list[newIndex],
@@ -247,7 +185,6 @@ export default defineComponent({
       handleItemClick,
       handleCopyClick,
       handleDeleteClick,
-      handleMoveAdd,
       handleColMoveAdd,
       islayoutComponent
     }

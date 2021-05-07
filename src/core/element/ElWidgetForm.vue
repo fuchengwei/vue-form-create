@@ -10,7 +10,7 @@
     >
       <ElDraggableForm
         :list="widgetForm.list"
-        @handleColMoveAdd="handleMoveAdd"
+        @handleMoveAdd="handleMoveAdd"
         @handleItemClick="handleItemClick"
         @handleCopyClick="handleCopyClick"
         @handleDeleteClick="handleDeleteClick"
@@ -20,9 +20,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, PropType, provide, ref, watch } from 'vue'
+import { defineComponent, nextTick, PropType, provide, ref, watch, toRaw, isProxy } from 'vue'
 import { v4 } from 'uuid'
-import { WidgetForm } from '@/config/element'
+import { WidgetForm, islayoutComponent } from '@/config/element'
 import { handleListInsert, handleListDelete } from '@/utils/array'
 import ElDraggableForm from './components/ElDraggableForm.vue'
 
@@ -43,22 +43,30 @@ export default defineComponent({
   emits: ['update:widgetForm', 'update:widgetFormSelect'],
   setup(props, context) {
     const updateSelectWidgetForm = (widgetFormSelect: any) => {
-      console.log('updateSelectWidgetForm', widgetFormSelect)
+      if (isProxy(widgetFormSelect)) {
+        widgetFormSelect = toRaw(widgetFormSelect)
+      }
       context.emit('update:widgetFormSelect', widgetFormSelect)
+      // 手动触发select更新
+      select.value = widgetFormSelect
     }
 
     const updateWidgetForm = (widgetForm: any) => {
       context.emit('update:widgetForm', widgetForm)
     }
 
-    provide('updateSelectWidgetForm', updateSelectWidgetForm)
-    provide('updateWidgetForm', updateWidgetForm)
     const select = ref<any>({})
     provide('selectWidgetFormRef', select)
     watch(
       () => props.widgetFormSelect,
-      val => (select.value = val)
+      val => {
+        // 层次深了监听会不起效果
+        select.value = val
+      }
     )
+    provide('getSelectWidgetForm', () => (props.widgetFormSelect))
+    provide('updateSelectWidgetForm', updateSelectWidgetForm)
+
     const widgetForm = ref<any>({})
     provide('widgetFormRef', widgetForm)
     watch(
@@ -66,6 +74,7 @@ export default defineComponent({
       val => (widgetForm.value = val)
     )
     provide('getWidgetForm', () => (props.widgetForm))
+    provide('updateWidgetForm', updateWidgetForm)
 
     const handleItemClick = (row: any) => {
       updateSelectWidgetForm(row)
@@ -129,6 +138,8 @@ export default defineComponent({
       const key = v4().replaceAll('-', '')
       const list = JSON.parse(JSON.stringify(props.widgetForm.list))
 
+      list[newIndex] = JSON.parse(JSON.stringify(list[newIndex]))
+
       list[newIndex] = {
         ...list[newIndex],
         key,
@@ -158,48 +169,10 @@ export default defineComponent({
           columns: list[newIndex].columns.map((item: any) => ({ ...item }))
         }
       }
+
       updateWidgetForm({ ...props.widgetForm, list })
 
       updateSelectWidgetForm(list[newIndex])
-    }
-
-    const handleColMoveAdd = (event: any, row: any, index: number) => {
-      const { newIndex, oldIndex, item } = event
-      const list = JSON.parse(JSON.stringify(props.widgetForm.list))
-
-      if (item.className.includes('data-grid')) {
-        item.tagName === 'DIV' &&
-          list.splice(oldIndex, 0, row.columns[index].list[newIndex])
-        row.columns[index].list.splice(newIndex, 1)
-        return false
-      }
-
-      const key = v4().replaceAll('-', '')
-
-      row.columns[index].list[newIndex] = {
-        ...row.columns[index].list[newIndex],
-        key,
-        model: `${row.columns[index].list[newIndex].type}_${key}`,
-        rules: []
-      }
-
-      if (
-        row.columns[index].list[newIndex].type === 'radio' ||
-        row.columns[index].list[newIndex].type === 'checkbox' ||
-        row.columns[index].list[newIndex].type === 'select'
-      ) {
-        row.columns[index].list[newIndex] = {
-          ...row.columns[index].list[newIndex],
-          options: {
-            ...row.columns[index].list[newIndex].options,
-            options: row.columns[index].list[
-              newIndex
-            ].options.options.map((item: any) => ({ ...item }))
-          }
-        }
-      }
-
-      updateSelectWidgetForm(row.columns[index].list[newIndex])
     }
 
     return {
@@ -207,7 +180,7 @@ export default defineComponent({
       handleCopyClick,
       handleDeleteClick,
       handleMoveAdd,
-      handleColMoveAdd
+      islayoutComponent
     }
   }
 })

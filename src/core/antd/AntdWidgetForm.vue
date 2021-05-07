@@ -9,7 +9,7 @@
     >
       <DraggableForm
         :list="widgetForm.list"
-        @handleColMoveAdd="handleMoveAdd"
+        @handleMoveAdd="handleMoveAdd"
         @handleItemClick="handleItemClick"
         @handleCopyClick="handleCopyClick"
         @handleDeleteClick="handleDeleteClick"
@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, PropType, provide, ref, watch } from 'vue'
+import { defineComponent, nextTick, PropType, provide, ref, watch, toRaw, isProxy } from 'vue'
 import { v4 } from 'uuid'
 import { WidgetForm } from '@/config/antd'
 import DraggableForm from '@/core/antd/components/DraggableForm.vue'
@@ -42,21 +42,27 @@ export default defineComponent({
   emits: ['update:widgetForm', 'update:widgetFormSelect'],
   setup(props:any, context) {
     const updateSelectWidgetForm = (widgetFormSelect: any) => {
+      if (isProxy(widgetFormSelect)) {
+        widgetFormSelect = toRaw(widgetFormSelect)
+      }
       context.emit('update:widgetFormSelect', widgetFormSelect)
+      // 手动触发select更新
+      select.value = widgetFormSelect
     }
 
     const updateWidgetForm = (widgetForm: any) => {
       context.emit('update:widgetForm', widgetForm)
     }
 
-    provide('updateSelectWidgetForm', updateSelectWidgetForm)
-    provide('updateWidgetForm', updateWidgetForm)
     const select = ref<any>({})
     provide('selectWidgetFormRef', select)
     watch(
       () => props.widgetFormSelect,
       val => (select.value = val)
     )
+    provide('getSelectWidgetForm', () => (props.widgetFormSelect))
+    provide('updateSelectWidgetForm', updateSelectWidgetForm)
+
     const widgetForm = ref<any>({})
     provide('widgetFormRef', widgetForm)
     watch(
@@ -64,6 +70,7 @@ export default defineComponent({
       val => (widgetForm.value = val)
     )
     provide('getWidgetForm', () => (props.widgetForm))
+    provide('updateWidgetForm', updateWidgetForm)
 
     const handleItemClick = (row: any) => {
       updateSelectWidgetForm(row)
@@ -126,6 +133,8 @@ export default defineComponent({
 
       const key = v4().replaceAll('-', '')
       const list = JSON.parse(JSON.stringify(props.widgetForm.list))
+
+      list[newIndex] = JSON.parse(JSON.stringify(list[newIndex]))
 
       list[newIndex] = {
         ...list[newIndex],

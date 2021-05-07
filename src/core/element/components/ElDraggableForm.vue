@@ -7,7 +7,7 @@
     :animation="200"
     :group="{ name: 'people' }"
     :list="list"
-    @add="handleColMoveAdd($event, element, colIndex)"
+    @add="handleMoveAdd($event, layoutElement, colIndex)"
   >
     <template #item="{ element, index }">
       <transition-group name="fade" tag="div">
@@ -16,6 +16,7 @@
             v-if="element.key"
             :key="element.key"
             :element="element"
+            :index="index"
             @click.stop="handleItemClick(element)"
           />
         </template>
@@ -36,7 +37,7 @@
 
 <script lang="ts">
 import { defineComponent, defineAsyncComponent } from 'vue'
-import { islayoutComponent } from '@/config/antd'
+import { islayoutComponent } from '@/config/element'
 import Draggable from 'vuedraggable'
 import ElWidgetFormItem from '@/core/element/ElWidgetFormItem.vue'
 
@@ -52,6 +53,16 @@ export default defineComponent({
       type: Array,
       required: true
     },
+    layoutElement: {
+      type: Object,
+      required: false,
+      default: null
+    },
+    colIndex: {
+      type: Number,
+      required: false,
+      default: null
+    },
     formClass: {
       type: Array,
       default() {
@@ -59,10 +70,10 @@ export default defineComponent({
       }
     }
   },
-  emits: ['handleColMoveAdd', 'handleItemClick', 'handleCopyClick', 'handleDeleteClick'],
+  emits: ['handleMoveAdd', 'handleItemClick', 'handleCopyClick', 'handleDeleteClick'],
   setup(props, context) {
-    const handleColMoveAdd = ($event:any, element:any, colIndex:number) => {
-      context.emit('handleColMoveAdd', $event, element, colIndex)
+    const handleMoveAdd = ($event:any, element:any, colIndex:number) => {
+      context.emit('handleMoveAdd', $event, element, colIndex)
     }
     const handleItemClick = (element:any) => {
       context.emit('handleItemClick', element)
@@ -74,7 +85,7 @@ export default defineComponent({
       context.emit('handleDeleteClick', index, list)
     }
     return {
-      handleColMoveAdd,
+      handleMoveAdd,
       handleItemClick,
       handleCopyClick,
       handleDeleteClick,
