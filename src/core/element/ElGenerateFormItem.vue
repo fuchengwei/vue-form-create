@@ -253,7 +253,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue'
+import { computed, defineComponent, PropType, inject } from 'vue'
 import SvgIcon from '@/components/SvgIcon.vue'
 import RichTextEditor from '@/components/RichTextEditor.vue'
 import { WidgetForm } from '@/config/element'
@@ -265,33 +265,26 @@ export default defineComponent({
     RichTextEditor
   },
   props: {
-    config: {
-      type: Object as PropType<WidgetForm['config']>,
-      required: true
-    },
     element: {
       type: Object,
       required: true
-    },
-    model: {
-      type: Object,
-      required: true
-    },
-    disabled: {
-      type: Boolean,
-      required: true
     }
   },
-  emits: ['update:model'],
-  setup(props, context) {
+  setup(props) {
+    const model = inject<any>('model')
+    const updateModel = inject<any>('updateModel')
+    const disabled = inject<any>('disabled')
+
     const data = computed({
-      get: () => props.model[props.element.model],
+      get: () => model.value[props.element.model],
       set: val => {
-        const model = JSON.parse(JSON.stringify(props.model))
-        model[props.element.model] = val
-        context.emit('update:model', model)
+        const modelTmp = JSON.parse(JSON.stringify(model.value))
+        modelTmp[props.element.model] = val
+        updateModel(modelTmp)
       }
     })
+
+    const config = inject<PropType<WidgetForm['config']>>('config')
 
     const handleFilterOption = (input: string, option: { label: string }) =>
       option.label.toLowerCase().includes(input)
@@ -302,8 +295,10 @@ export default defineComponent({
 
     return {
       data,
+      config,
       handleFilterOption,
-      handleUploadSuccess
+      handleUploadSuccess,
+      disabled
     }
   }
 })

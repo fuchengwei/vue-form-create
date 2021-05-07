@@ -149,7 +149,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, PropType, toRefs, watchEffect } from 'vue'
+import { defineComponent, reactive, PropType, toRefs, watchEffect, provide } from 'vue'
 import { message } from 'ant-design-vue'
 import { defaultsDeep } from 'lodash'
 import CodeEditor from '@/components/CodeEditor.vue'
@@ -175,6 +175,11 @@ export default defineComponent({
     AntdGenerateForm,
     AntdWidgetConfig,
     AntdFormConfig
+  },
+  data() {
+    return {
+      disabled: false
+    }
   },
   props: {
     preview: {
@@ -229,7 +234,7 @@ export default defineComponent({
       antd,
       codeType: CodeType,
       widgetForm: JSON.parse(JSON.stringify(antd.widgetForm)),
-      widgetFormSelect: null,
+      widgetFormSelect: null as any,
       generateFormRef: null as any,
       configTab: 'widget',
       previewVisible: false,

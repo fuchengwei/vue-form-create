@@ -9,39 +9,16 @@
       :labelCol="widgetForm.config.labelCol"
       :hideRequiredMark="widgetForm.config.hideRequiredMark"
     >
-      <template v-for="(element, index) of widgetForm.list">
-        <template v-if="element.type === 'grid'">
-          <a-row
-            type="flex"
-            v-if="element.key"
-            :key="element.key"
-            :gutter="element.options.gutter ?? 0"
-            :justify="element.options.justify"
-            :align="element.options.align"
-          >
-            <a-col
-              v-for="(col, colIndex) of element.columns"
-              :key="colIndex"
-              :span="col.span ?? 0"
-            >
-              <AntdGenerateFormItem
-                v-for="colItem of col.list"
-                v-model:model="model"
-                :key="colItem.key"
-                :element="colItem"
-                :config="data.config"
-                :disabled="disabled"
-              />
-            </a-col>
-          </a-row>
-        </template>
+      <template v-for="(element) of widgetForm.list">
+        <AntdGenerateLayoutForm
+          v-if="islayoutComponent(element.type)"
+          :key="element.key"
+          :element="element"
+        />
         <AntdGenerateFormItem
           v-else
-          v-model:model="model"
           :key="element.key"
-          :element="widgetForm.list[index]"
-          :config="data.config"
-          :disabled="disabled"
+          :element="element"
         />
       </template>
     </a-form>
@@ -49,15 +26,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, toRefs, watch } from 'vue'
+import {
+  ref,
+  defineComponent,
+  onMounted,
+  provide,
+  reactive,
+  toRefs,
+  watch
+} from 'vue'
 import { message } from 'ant-design-vue'
 import AntdGenerateFormItem from './AntdGenerateFormItem.vue'
+import AntdGenerateLayoutForm from './AntdGenerateLayoutForm.vue'
 import { antd } from '@/config'
+import { islayoutComponent } from '@/config/antd'
 
 export default defineComponent({
   name: 'AntdGenerateForm',
   components: {
-    AntdGenerateFormItem
+    AntdGenerateFormItem,
+    AntdGenerateLayoutForm
   },
   props: {
     data: {
@@ -75,29 +63,43 @@ export default defineComponent({
   setup(props) {
     const state = reactive({
       generateForm: null as any,
-      model: {} as any,
       rules: {} as any,
       widgetForm:
         (props.data && JSON.parse(JSON.stringify(props.data))) ??
         antd.widgetForm
     })
+    const model = ref<any>({})
+
+    provide('model', model)
+    provide('config', props.data.config)
+
+    const disabled = ref<any>(props.disabled)
+    provide('disabled', disabled)
+    watch(
+      () => props.disabled,
+      val => (disabled.value = val)
+    )
+
+    provide('updateModel', (newModel:any) => {
+      model.value = newModel
+    })
 
     const generateModel = (list: any[]) => {
       for (let index = 0; index < list.length; index++) {
-        const model = list[index].model
-        if (!model) {
+        const modelKey = list[index].model
+        if (!modelKey) {
           return
         }
         if (list[index].type === 'grid') {
           list[index].columns.forEach((col: any) => generateModel(col.list))
         } else {
-          if (props.value && Object.keys(props.value).includes(model)) {
-            state.model[model] = props.value[model]
+          if (props.value && Object.keys(props.value).includes(modelKey)) {
+            model.value[modelKey] = props.value[modelKey]
           } else {
-            state.model[model] = list[index].options.defaultValue
+            model.value[modelKey] = list[index].options.defaultValue
           }
 
-          state.rules[model] = list[index].options.rules
+          state.rules[modelKey] = list[index].options.rules
         }
       }
     }
@@ -129,7 +131,7 @@ export default defineComponent({
       val => {
         state.widgetForm =
           (val && JSON.parse(JSON.stringify(val))) ?? antd.widgetForm
-        state.model = {}
+        model.value = {}
         state.rules = {}
         generateModel(state.widgetForm.list)
         generateOptions(state.widgetForm.list)
@@ -148,7 +150,7 @@ export default defineComponent({
           .validate()
           .then((validate: boolean) => {
             if (validate) {
-              resolve(state.model)
+              resolve(model.value)
             } else {
               message.error('验证失败')
             }
@@ -164,9 +166,11 @@ export default defineComponent({
     }
 
     return {
+      model,
       ...toRefs(state),
       getData,
-      reset
+      reset,
+      islayoutComponent
     }
   }
 })

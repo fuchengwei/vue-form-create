@@ -8,148 +8,28 @@
       :label-width="`${widgetForm.config.labelWidth}px`"
       :hide-required-asterisk="widgetForm.config.hideRequiredAsterisk"
     >
-      <Draggable
-        class="widget-form-list"
-        item-key="key"
-        ghostClass="ghost"
-        handle=".drag-widget"
-        :animation="200"
-        :group="{ name: 'people' }"
+      <ElDraggableForm
         :list="widgetForm.list"
-        @add="handleMoveAdd"
-      >
-        <template #item="{ element, index }">
-          <transition-group name="fade" tag="div">
-            <template v-if="element.type === 'grid'">
-              <el-row
-                class="widget-col widget-view"
-                type="flex"
-                v-if="element.key"
-                :key="element.key"
-                :class="{ active: widgetFormSelect?.key === element.key }"
-                :gutter="element.options.gutter ?? 0"
-                :justify="element.options.justify"
-                :align="element.options.align"
-                @click="handleItemClick(element)"
-              >
-                <el-col
-                  v-for="(col, colIndex) of element.columns"
-                  :key="colIndex"
-                  :span="col.span ?? 0"
-                >
-                  <Draggable
-                    class="widget-col-list"
-                    item-key="key"
-                    ghostClass="ghost"
-                    handle=".drag-widget"
-                    :animation="200"
-                    :group="{ name: 'people' }"
-                    :no-transition-on-drag="true"
-                    :list="col.list"
-                    @add="handleColMoveAdd($event, element, colIndex)"
-                  >
-                    <template #item="{ element, index }">
-                      <transition-group name="fade" tag="div">
-                        <ElWidgetFormItem
-                          v-if="element.key"
-                          :key="element.key"
-                          :element="element"
-                          :config="widgetForm.config"
-                          :selectWidget="widgetFormSelect"
-                          @click.stop="handleItemClick(element)"
-                          @copy="handleCopyClick(index, col.list)"
-                          @delete="handleDeleteClick(index, col.list)"
-                        />
-                      </transition-group>
-                    </template>
-                  </Draggable>
-                </el-col>
-                <div
-                  class="widget-view-action widget-col-action"
-                  v-if="widgetFormSelect?.key === element.key"
-                >
-                  <SvgIcon
-                    iconClass="delete"
-                    @click.stop="handleDeleteClick(index, widgetForm.list)"
-                  />
-                </div>
-
-                <div
-                  class="widget-view-drag widget-col-drag"
-                  v-if="widgetFormSelect?.key === element.key"
-                >
-                  <SvgIcon iconClass="move" className="drag-widget" />
-                </div>
-              </el-row>
-            </template>
-            <template v-else>
-              <ElWidgetFormItem
-                v-if="element.key"
-                :key="element.key"
-                :element="element"
-                :config="widgetForm.config"
-                :selectWidget="widgetFormSelect"
-                @click="handleItemClick(element)"
-                @copy="handleCopyClick(index, widgetForm.list)"
-                @delete="handleDeleteClick(index, widgetForm.list)"
-              />
-            </template>
-          </transition-group>
-        </template>
-      </Draggable>
+        @handleMoveAdd="handleMoveAdd"
+        @handleItemClick="handleItemClick"
+        @handleCopyClick="handleCopyClick"
+        @handleDeleteClick="handleDeleteClick"
+      />
     </el-form>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, PropType } from 'vue'
-import Draggable from 'vuedraggable'
+import { defineComponent, nextTick, PropType, provide, ref, watch, toRaw, isProxy } from 'vue'
 import { v4 } from 'uuid'
-import ElWidgetFormItem from './ElWidgetFormItem.vue'
-import SvgIcon from '@/components/SvgIcon.vue'
-import { WidgetForm } from '@/config/element'
-
-const handleListInsert = (key: string, list: any[], obj: any) => {
-  const newList: any[] = []
-  list.forEach(item => {
-    if (item.key === key) {
-      newList.push(item)
-      newList.push(obj)
-    } else {
-      if (item.columns) {
-        item.columns = item.columns.map((col: any) => ({
-          ...col,
-          list: handleListInsert(key, col.list, obj)
-        }))
-      }
-      newList.push(item)
-    }
-  })
-  return newList
-}
-
-const handleListDelete = (key: string, list: any[]) => {
-  const newList: any[] = []
-  list.forEach(item => {
-    if (item.key !== key) {
-      if (item.columns) {
-        item.columns = item.columns.map((col: any) => ({
-          ...col,
-          list: handleListDelete(key, col.list)
-        }))
-      }
-      newList.push(item)
-    }
-  })
-  return newList
-}
+import { WidgetForm, islayoutComponent } from '@/config/element'
+import { handleListInsert, handleListDelete } from '@/utils/array'
+import ElDraggableForm from './components/ElDraggableForm.vue'
 
 export default defineComponent({
   name: 'ElWidgetForm',
   components: {
-    SvgIcon,
-    Draggable,
-    ElWidgetFormItem
+    ElDraggableForm
   },
   props: {
     widgetForm: {
@@ -162,8 +42,42 @@ export default defineComponent({
   },
   emits: ['update:widgetForm', 'update:widgetFormSelect'],
   setup(props, context) {
+    const updateSelectWidgetForm = (widgetFormSelect: any) => {
+      if (isProxy(widgetFormSelect)) {
+        widgetFormSelect = toRaw(widgetFormSelect)
+      }
+      context.emit('update:widgetFormSelect', widgetFormSelect)
+      // 手动触发select更新
+      select.value = widgetFormSelect
+    }
+
+    const updateWidgetForm = (widgetForm: any) => {
+      context.emit('update:widgetForm', widgetForm)
+    }
+
+    const select = ref<any>({})
+    provide('selectWidgetFormRef', select)
+    watch(
+      () => props.widgetFormSelect,
+      val => {
+        // 层次深了监听会不起效果
+        select.value = val
+      }
+    )
+    provide('getSelectWidgetForm', () => (props.widgetFormSelect))
+    provide('updateSelectWidgetForm', updateSelectWidgetForm)
+
+    const widgetForm = ref<any>({})
+    provide('widgetFormRef', widgetForm)
+    watch(
+      () => props.widgetForm,
+      val => (widgetForm.value = val)
+    )
+    provide('getWidgetForm', () => (props.widgetForm))
+    provide('updateWidgetForm', updateWidgetForm)
+
     const handleItemClick = (row: any) => {
-      context.emit('update:widgetFormSelect', row)
+      updateSelectWidgetForm(row)
     }
 
     const handleCopyClick = (index: number, list: any[]) => {
@@ -191,12 +105,12 @@ export default defineComponent({
         }
       }
 
-      context.emit('update:widgetForm', {
+      updateWidgetForm({
         ...props.widgetForm,
         list: handleListInsert(list[index].key, oldList, copyData)
       })
 
-      context.emit('update:widgetFormSelect', copyData)
+      updateSelectWidgetForm(copyData)
     }
 
     const handleDeleteClick = (index: number, list: any[]) => {
@@ -204,15 +118,15 @@ export default defineComponent({
 
       if (list.length - 1 === index) {
         if (index === 0) {
-          nextTick(() => context.emit('update:widgetFormSelect', null))
+          nextTick(() => updateSelectWidgetForm(null))
         } else {
-          context.emit('update:widgetFormSelect', list[index - 1])
+          updateSelectWidgetForm(list[index - 1])
         }
       } else {
-        context.emit('update:widgetFormSelect', list[index + 1])
+        updateSelectWidgetForm(list[index + 1])
       }
 
-      context.emit('update:widgetForm', {
+      updateWidgetForm({
         ...props.widgetForm,
         list: handleListDelete(list[index].key, oldList)
       })
@@ -223,6 +137,8 @@ export default defineComponent({
 
       const key = v4().replaceAll('-', '')
       const list = JSON.parse(JSON.stringify(props.widgetForm.list))
+
+      list[newIndex] = JSON.parse(JSON.stringify(list[newIndex]))
 
       list[newIndex] = {
         ...list[newIndex],
@@ -253,48 +169,10 @@ export default defineComponent({
           columns: list[newIndex].columns.map((item: any) => ({ ...item }))
         }
       }
-      context.emit('update:widgetForm', { ...props.widgetForm, list })
 
-      context.emit('update:widgetFormSelect', list[newIndex])
-    }
+      updateWidgetForm({ ...props.widgetForm, list })
 
-    const handleColMoveAdd = (event: any, row: any, index: number) => {
-      const { newIndex, oldIndex, item } = event
-      const list = JSON.parse(JSON.stringify(props.widgetForm.list))
-
-      if (item.className.includes('data-grid')) {
-        item.tagName === 'DIV' &&
-          list.splice(oldIndex, 0, row.columns[index].list[newIndex])
-        row.columns[index].list.splice(newIndex, 1)
-        return false
-      }
-
-      const key = v4().replaceAll('-', '')
-
-      row.columns[index].list[newIndex] = {
-        ...row.columns[index].list[newIndex],
-        key,
-        model: `${row.columns[index].list[newIndex].type}_${key}`,
-        rules: []
-      }
-
-      if (
-        row.columns[index].list[newIndex].type === 'radio' ||
-        row.columns[index].list[newIndex].type === 'checkbox' ||
-        row.columns[index].list[newIndex].type === 'select'
-      ) {
-        row.columns[index].list[newIndex] = {
-          ...row.columns[index].list[newIndex],
-          options: {
-            ...row.columns[index].list[newIndex].options,
-            options: row.columns[index].list[
-              newIndex
-            ].options.options.map((item: any) => ({ ...item }))
-          }
-        }
-      }
-
-      context.emit('update:widgetFormSelect', row.columns[index].list[newIndex])
+      updateSelectWidgetForm(list[newIndex])
     }
 
     return {
@@ -302,7 +180,7 @@ export default defineComponent({
       handleCopyClick,
       handleDeleteClick,
       handleMoveAdd,
-      handleColMoveAdd
+      islayoutComponent
     }
   }
 })
