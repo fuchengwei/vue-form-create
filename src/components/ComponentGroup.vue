@@ -44,7 +44,6 @@ export default defineComponent({
       required: true
     },
     list: {
-      type: Array as PropType<Array<string>>,
       required: true
     }
   }

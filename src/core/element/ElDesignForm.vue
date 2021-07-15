@@ -248,7 +248,7 @@ export default defineComponent({
       element,
       codeType: CodeType,
       widgetForm: JSON.parse(JSON.stringify(element.widgetForm)),
-      widgetFormSelect: null,
+      widgetFormSelect: undefined,
       generateFormRef: null as any,
       configTab: 'widget',
       previewVisible: false,
@@ -320,7 +320,7 @@ export default defineComponent({
         state.widgetForm,
         JSON.parse(JSON.stringify(element.widgetForm))
       )
-      state.widgetFormSelect = null
+      state.widgetFormSelect = undefined
     }
 
     const handleReset = () => state.generateFormRef.reset()

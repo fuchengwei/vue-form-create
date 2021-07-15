@@ -184,7 +184,6 @@
     <template v-if="element.type === 'switch'">
       <el-switch
         v-model="data"
-        :modelValue="element.options.defaultValue"
         :active-text="element.options.activeText"
         :inactive-text="element.options.inactiveText"
         :disabled="disabled || element.options.disabled"

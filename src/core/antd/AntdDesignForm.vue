@@ -229,7 +229,7 @@ export default defineComponent({
       antd,
       codeType: CodeType,
       widgetForm: JSON.parse(JSON.stringify(antd.widgetForm)),
-      widgetFormSelect: null,
+      widgetFormSelect: undefined,
       generateFormRef: null as any,
       configTab: 'widget',
       previewVisible: false,
@@ -292,7 +292,7 @@ export default defineComponent({
     const handleClearable = () => {
       state.widgetForm.list = []
       merge(state.widgetForm, JSON.parse(JSON.stringify(antd.widgetForm)))
-      state.widgetFormSelect = null
+      state.widgetFormSelect = undefined
     }
 
     const handleReset = () => state.generateFormRef.reset()

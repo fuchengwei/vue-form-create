@@ -258,7 +258,11 @@ export default defineComponent({
       context.emit('update:widgetFormSelect', list[newIndex])
     }
 
-    const handleColMoveAdd = (event: any, row: any, index: number) => {
+    const handleColMoveAdd = (
+      event: any,
+      row: any,
+      index: string | number | symbol
+    ) => {
       const { newIndex, oldIndex, item } = event
       const list = JSON.parse(JSON.stringify(props.widgetForm.list))
 
