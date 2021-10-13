@@ -272,14 +272,12 @@ export default defineComponent({
       required: true
     }
   },
-  emits: ['update:model'],
-  setup(props, context) {
+  setup(props) {
     const data = computed({
       get: () => props.model[props.element.model],
       set: val => {
-        const model = JSON.parse(JSON.stringify(props.model))
-        model[props.element.model] = val
-        context.emit('update:model', model)
+        // eslint-disable-next-line vue/no-mutating-props
+        props.model[props.element.model] = val
       }
     })
 

@@ -27,7 +27,7 @@
             >
               <ElGenerateFormItem
                 v-for="colItem of col.list"
-                v-model:model="model"
+                :model="model"
                 :key="colItem.key"
                 :element="colItem"
                 :config="data.config"
@@ -38,7 +38,7 @@
         </template>
         <ElGenerateFormItem
           v-else
-          v-model:model="model"
+          :model="model"
           :key="element.key"
           :element="widgetForm.list[index]"
           :config="data.config"

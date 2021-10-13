@@ -19,14 +19,10 @@
             :justify="element.options.justify"
             :align="element.options.align"
           >
-            <a-col
-              v-for="(col, colIndex) of element.columns"
-              :key="colIndex"
-              :span="col.span ?? 0"
-            >
+            <a-col v-for="(col, colIndex) of element.columns" :key="colIndex" :span="col.span ?? 0">
               <AntdGenerateFormItem
                 v-for="colItem of col.list"
-                v-model:model="model"
+                :model="model"
                 :key="colItem.key"
                 :element="colItem"
                 :config="data.config"
@@ -37,7 +33,7 @@
         </template>
         <AntdGenerateFormItem
           v-else
-          v-model:model="model"
+          :model="model"
           :key="element.key"
           :element="widgetForm.list[index]"
           :config="data.config"

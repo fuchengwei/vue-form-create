@@ -1,10 +1,5 @@
 <template>
-  <el-form-item
-    v-if="element"
-    :key="element.key"
-    :label="element.label"
-    :prop="element.model"
-  >
+  <el-form-item v-if="element" :key="element.key" :label="element.label" :prop="element.model">
     <template v-if="element.type === 'input'">
       <el-input
         v-model="data"
@@ -15,18 +10,10 @@
         :readonly="element.options.readonly"
         :disabled="disabled || element.options.disabled"
       >
-        <template #prefix v-if="element.options.prefix">
-          {{ element.options.prefix }}
-        </template>
-        <template #suffix v-if="element.options.suffix">
-          {{ element.options.suffix }}
-        </template>
-        <template #prepend v-if="element.options.prepend">
-          {{ element.options.prepend }}
-        </template>
-        <template #append v-if="element.options.append">
-          {{ element.options.append }}
-        </template>
+        <template #prefix v-if="element.options.prefix">{{ element.options.prefix }}</template>
+        <template #suffix v-if="element.options.suffix">{{ element.options.suffix }}</template>
+        <template #prepend v-if="element.options.prepend">{{ element.options.prepend }}</template>
+        <template #append v-if="element.options.append">{{ element.options.append }}</template>
       </el-input>
     </template>
 
@@ -41,18 +28,10 @@
         :readonly="element.options.readonly"
         :show-password="element.options.showPassword"
       >
-        <template #prefix v-if="element.options.prefix">
-          {{ element.options.prefix }}
-        </template>
-        <template #suffix v-if="element.options.suffix">
-          {{ element.options.suffix }}
-        </template>
-        <template #prepend v-if="element.options.prepend">
-          {{ element.options.prepend }}
-        </template>
-        <template #append v-if="element.options.append">
-          {{ element.options.append }}
-        </template>
+        <template #prefix v-if="element.options.prefix">{{ element.options.prefix }}</template>
+        <template #suffix v-if="element.options.suffix">{{ element.options.suffix }}</template>
+        <template #prepend v-if="element.options.prepend">{{ element.options.prepend }}</template>
+        <template #append v-if="element.options.append">{{ element.options.append }}</template>
       </el-input>
     </template>
 
@@ -91,15 +70,14 @@
       >
         <el-radio
           v-for="item of element.options.remote
-            ? element.options.remoteOptions
-            : element.options.options"
+          ? element.options.remoteOptions
+          : element.options.options"
           :key="item.value"
           :label="item.value"
           :style="{
             display: element.options.inline ? 'inline-block' : 'block'
           }"
-          >{{ element.options.showLabel ? item.label : item.value }}</el-radio
-        >
+        >{{ element.options.showLabel ? item.label : item.value }}</el-radio>
       </el-radio-group>
     </template>
 
@@ -111,17 +89,18 @@
       >
         <el-checkbox
           v-for="item of element.options.remote
-            ? element.options.remoteOptions
-            : element.options.options"
+          ? element.options.remoteOptions
+          : element.options.options"
           :key="item.value"
           :value="item.value"
           :style="{
             display: element.options.inline ? 'inline-block' : 'block'
           }"
-          >{{
-            element.options.showLabel ? item.label : item.value
-          }}</el-checkbox
         >
+          {{
+            element.options.showLabel ? item.label : item.value
+          }}
+        </el-checkbox>
       </el-checkbox-group>
     </template>
 
@@ -172,8 +151,8 @@
       >
         <el-option
           v-for="item of element.options.remote
-            ? element.options.remoteOptions
-            : element.options.options"
+          ? element.options.remoteOptions
+          : element.options.options"
           :key="item.value"
           :value="item.value"
           :label="element.options.showLabel ? item.label : item.value"
@@ -218,13 +197,9 @@
         :disabled="disabled || element.options.disabled"
         :on-success="handleUploadSuccess"
       >
-        <SvgIcon
-          v-if="element.options.listType === 'picture-card'"
-          iconClass="insert"
-        />
+        <SvgIcon v-if="element.options.listType === 'picture-card'" iconClass="insert" />
         <el-button v-else>
-          <SvgIcon iconClass="img-upload" style="margin-right: 10px;" />
-          点击上传
+          <SvgIcon iconClass="img-upload" style="margin-right: 10px;" />点击上传
         </el-button>
       </el-upload>
     </template>
@@ -281,14 +256,12 @@ export default defineComponent({
       required: true
     }
   },
-  emits: ['update:model'],
-  setup(props, context) {
+  setup(props) {
     const data = computed({
       get: () => props.model[props.element.model],
       set: val => {
-        const model = JSON.parse(JSON.stringify(props.model))
-        model[props.element.model] = val
-        context.emit('update:model', model)
+        // eslint-disable-next-line vue/no-mutating-props
+        props.model[props.element.model] = val
       }
     })
 
