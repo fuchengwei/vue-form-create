@@ -1,16 +1,13 @@
 [
   {
-    "key": "1",
     "label": "远端label1",
     "value": "远端value1",
     "children": [
       {
-        "key": "2",
         "label": "远端label1-1",
         "value": "远端value1-1",
         "children": [
           {
-            "key": "3",
             "label": "远端label1-1-1",
             "value": "远端value1-1-1"
           }
@@ -19,17 +16,14 @@
     ]
   },
   {
-    "key": "4",
     "label": "远端label2",
     "value": "远端value2",
     "children": [
       {
-        "key": "5",
         "label": "远端label2-1",
         "value": "远端value2-1",
         "children": [
           {
-            "key": "6",
             "label": "远端label2-1-1",
             "value": "远端value2-1-1"
           }
@@ -38,17 +32,14 @@
     ]
   },
   {
-    "key": "7",
     "label": "远端label3",
     "value": "远端value3",
     "children": [
       {
-        "key": "8",
         "label": "远端label3-1",
         "value": "远端value3-1",
         "children": [
           {
-            "key": "9",
             "label": "远端label3-1-1",
             "value": "远端value3-1-1"
           }
