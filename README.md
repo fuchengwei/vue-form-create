@@ -19,7 +19,7 @@
 
 ### 演示地址（gitee）
 
-[http://fuchengwei.gitee.io/vue-form-create/example/index.html](http://fuchengwei.gitee.io/vue-form-create/example/index.html)
+[http://fuchengwei.gitee.io/vue-form-create](http://fuchengwei.gitee.io/vue-form-create)
 
 ### github
 
