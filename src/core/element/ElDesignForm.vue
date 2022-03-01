@@ -75,9 +75,9 @@
       </el-main>
 
       <el-dialog v-model="uploadJsonVisible" title="导入JSON" :width="800">
-        <a-alert
+        <el-alert
           type="info"
-          message="JSON格式如下，直接复制生成的json覆盖此处代码点击确定即可"
+          title="JSON格式如下，直接复制生成的json覆盖此处代码点击确定即可"
           style="margin-bottom: 10px"
         />
         <CodeEditor v-model:value="jsonEg" language="json" />
@@ -138,18 +138,18 @@
       </el-dialog>
 
       <el-dialog v-model="dataCodeVisible" title="生产代码" :width="800">
-        <a-tabs
+        <el-tabs
           type="card"
-          v-model:activeKey="codeLanguage"
+          v-model="codeLanguage"
           :tabBarStyle="{ margin: 0 }"
         >
-          <a-tab-pane tab="Vue Component" :key="codeType.Vue">
+          <el-tab-pane label="Vue Component" :name="codeType.Vue">
             <CodeEditor :value="dataCodeTemplate" language="html" readonly />
-          </a-tab-pane>
-          <a-tab-pane tab="HTML" :key="codeType.Html">
+          </el-tab-pane>
+          <el-tab-pane label="HTML" :name="codeType.Html">
             <CodeEditor :value="dataCodeTemplate" language="html" readonly />
-          </a-tab-pane>
-        </a-tabs>
+          </el-tab-pane>
+        </el-tabs>
 
         <template #footer>
           <el-button size="medium" @click="() => (dataCodeVisible = false)"
