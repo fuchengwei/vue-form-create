@@ -5,6 +5,7 @@
     item-key="type"
     ghostClass="ghost"
     :group="{ name: 'people', pull: 'clone', put: false }"
+    :clone="choneHandler"
     :sort="false"
     :list="list"
   >
@@ -45,6 +46,13 @@ export default defineComponent({
     },
     list: {
       required: true
+    }
+  },
+  setup() {
+    return {
+      choneHandler(data:any) {
+        return JSON.parse(JSON.stringify(data))
+      }
     }
   }
 })
