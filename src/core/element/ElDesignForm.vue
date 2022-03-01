@@ -247,7 +247,7 @@ export default defineComponent({
     const state = reactive({
       element,
       codeType: CodeType,
-      widgetForm: JSON.parse(JSON.stringify(element.widgetForm)),
+      widgetForm: element.widgetForm(),
       widgetFormSelect: undefined,
       generateFormRef: null as any,
       configTab: 'widget',
@@ -257,17 +257,17 @@ export default defineComponent({
       dataCodeVisible: false,
       generateJsonVisible: false,
       generateCodeVisible: false,
-      generateJsonTemplate: JSON.stringify(element.widgetForm, null, 2),
+      generateJsonTemplate: JSON.stringify(element.widgetForm(), null, 2),
       dataJsonTemplate: '',
       dataCodeTemplate: '',
       codeLanguage: CodeType.Vue,
-      jsonEg: JSON.stringify(element.widgetForm, null, 2)
+      jsonEg: JSON.stringify(element.widgetForm(), null, 2)
     })
 
     const handleUploadJson = () => {
       try {
         state.widgetForm.list = []
-        defaultsDeep(state.widgetForm, JSON.parse(state.jsonEg))
+        state.widgetForm = defaultsDeep(JSON.parse(state.jsonEg), state.widgetForm)
 
         if (state.widgetForm.list) {
           state.widgetFormSelect = state.widgetForm.list[0]
@@ -316,9 +316,9 @@ export default defineComponent({
 
     const handleClearable = () => {
       state.widgetForm.list = []
-      defaultsDeep(
-        state.widgetForm,
-        JSON.parse(JSON.stringify(element.widgetForm))
+      state.widgetForm = defaultsDeep(
+        element.widgetForm(),
+        state.widgetForm
       )
       state.widgetFormSelect = undefined
     }
@@ -329,7 +329,7 @@ export default defineComponent({
 
     const setJson = (json: WidgetForm) => {
       state.widgetForm.list = []
-      defaultsDeep(state.widgetForm, json)
+      state.widgetForm = defaultsDeep(json, state.widgetForm)
       if (json.list.length) {
         state.widgetFormSelect = json.list[0]
       }

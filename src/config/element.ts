@@ -32,7 +32,7 @@ const rules: Rules = {
   type: 'any'
 }
 
-export const widgetForm: WidgetForm = {
+export const widgetForm = (): WidgetForm => ({
   list: [],
   config: {
     size: 'small',
@@ -40,7 +40,7 @@ export const widgetForm: WidgetForm = {
     labelWidth: 100,
     labelPosition: 'right'
   }
-}
+})
 
 export const basicComponents = [
   {

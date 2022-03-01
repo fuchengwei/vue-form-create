@@ -63,7 +63,7 @@ export default defineComponent({
   props: {
     data: {
       type: Object,
-      default: element.widgetForm
+      default: element.widgetForm()
     },
     value: {
       type: Object
@@ -80,7 +80,7 @@ export default defineComponent({
       rules: {} as any,
       widgetForm:
         (props.data && JSON.parse(JSON.stringify(props.data))) ??
-        element.widgetForm
+        element.widgetForm()
     })
 
     const generateModel = (list: any[]) => {
@@ -129,7 +129,7 @@ export default defineComponent({
       () => props.data,
       val => {
         state.widgetForm =
-          (val && JSON.parse(JSON.stringify(val))) ?? element.widgetForm
+          (val && JSON.parse(JSON.stringify(val))) ?? element.widgetForm()
         state.model = {}
         state.rules = {}
         generateModel(state.widgetForm.list)

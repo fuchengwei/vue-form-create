@@ -1,6 +1,6 @@
 <template>
   <div class="form-config-container">
-    <el-form label-position="top" size="small">
+    <el-form label-position="top" @submit.prevent size="small">
       <el-form-item label="标签对齐方式">
         <el-radio-group v-model="data.labelPosition">
           <el-radio-button label="left">左对齐</el-radio-button>
@@ -30,7 +30,7 @@
 
 <script lang="ts">
 import { WidgetForm } from '@/config/element'
-import { defineComponent, PropType, ref, watch } from 'vue'
+import { defineComponent, PropType, toRef } from 'vue'
 
 export default defineComponent({
   name: 'ElFormConfig',
@@ -40,14 +40,9 @@ export default defineComponent({
       required: true
     }
   },
-  emits: ['update:config'],
-  setup(props, context) {
-    const data = ref(props.config)
-
-    watch(data, () => context.emit('update:config', data))
-
+  setup(props) {
     return {
-      data
+      data: toRef(props, 'config')
     }
   }
 })
