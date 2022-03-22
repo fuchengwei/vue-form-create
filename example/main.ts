@@ -4,7 +4,7 @@ import element from 'element-plus'
 import App from './App.vue'
 import DesignForm from '../src'
 import 'ant-design-vue/dist/antd.css'
-import 'element-plus/lib/theme-chalk/index.css'
+import 'element-plus/dist/index.css'
 
 createApp(App)
   .use(antd)
