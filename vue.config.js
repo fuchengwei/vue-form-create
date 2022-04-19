@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 
-const resolve = dir => {
+const resolve = (dir) => {
   return path.join(__dirname, dir)
 }
 
@@ -12,22 +12,20 @@ module.exports = {
   css: {
     extract: false
   },
-  configureWebpack: config => {
+  configureWebpack: (config) => {
     config.performance = {
       hints: 'warning',
       maxEntrypointSize: 50000000,
       maxAssetSize: 30000000,
-      assetFilter: assetFilename => assetFilename.endsWith('.js')
+      assetFilter: (assetFilename) => assetFilename.endsWith('.js')
     }
     config.externals = {
-      ace: 'ace'
+      ace: 'ace',
+      vue: 'Vue'
     }
   },
-  chainWebpack: config => {
-    config.module
-      .rule('svg')
-      .exclude.add(resolve('src/icons'))
-      .end()
+  chainWebpack: (config) => {
+    config.module.rule('svg').exclude.add(resolve('src/icons')).end()
     config.module
       .rule('icons')
       .test(/\.svg$/)
