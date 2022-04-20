@@ -82,10 +82,10 @@
         />
         <CodeEditor v-model:value="jsonEg" language="json" />
         <template #footer>
-          <el-button size="medium" @click="() => (uploadJsonVisible = false)"
+          <el-button @click="() => (uploadJsonVisible = false)"
             >取消</el-button
           >
-          <el-button type="primary" size="medium" @click="handleUploadJson"
+          <el-button type="primary" @click="handleUploadJson"
             >导入</el-button
           >
         </template>
@@ -98,8 +98,8 @@
           :data="widgetForm"
         />
         <template #footer>
-          <el-button size="medium" @click="handleReset">重置</el-button>
-          <el-button type="primary" size="medium" @click="handleGetData"
+          <el-button @click="handleReset">重置</el-button>
+          <el-button type="primary" @click="handleGetData"
             >获取数据</el-button
           >
         </template>
@@ -108,12 +108,11 @@
           <CodeEditor :value="dataJsonTemplate" language="json" readonly />
 
           <template #footer>
-            <el-button size="medium" @click="() => (dataJsonVisible = false)"
+            <el-button @click="() => (dataJsonVisible = false)"
               >取消</el-button
             >
             <el-button
               type="primary"
-              size="medium"
               @click="handleCopyClick(dataJsonTemplate)"
               >Copy</el-button
             >
@@ -125,12 +124,11 @@
         <CodeEditor :value="generateJsonTemplate" language="json" readonly />
 
         <template #footer>
-          <el-button size="medium" @click="() => (generateJsonVisible = false)"
+          <el-button @click="() => (generateJsonVisible = false)"
             >取消</el-button
           >
           <el-button
             type="primary"
-            size="medium"
             @click="handleCopyClick(generateJsonTemplate)"
             >Copy</el-button
           >
@@ -152,12 +150,11 @@
         </el-tabs>
 
         <template #footer>
-          <el-button size="medium" @click="() => (dataCodeVisible = false)"
+          <el-button @click="() => (dataCodeVisible = false)"
             >取消</el-button
           >
           <el-button
             type="primary"
-            size="medium"
             @click="handleCopyClick(dataCodeTemplate)"
             >Copy</el-button
           >
