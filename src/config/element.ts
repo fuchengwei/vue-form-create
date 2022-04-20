@@ -35,7 +35,7 @@ const rules: Rules = {
 export const widgetForm: WidgetForm = {
   list: [],
   config: {
-    size: 'small',
+    size: 'default',
     hideRequiredAsterisk: false,
     labelWidth: 100,
     labelPosition: 'right'
