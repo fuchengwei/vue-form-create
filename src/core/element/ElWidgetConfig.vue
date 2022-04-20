@@ -210,7 +210,7 @@
               :list="data.options.options"
             >
               <template #item="{ element, index }">
-                <el-space direction="vertical" size="mini">
+                <el-space direction="vertical" size="small">
                   <div>
                     <el-radio
                       :label="element.value"
