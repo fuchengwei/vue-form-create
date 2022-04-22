@@ -37,7 +37,7 @@
     "element-plus": "^2.1.10",
     "lodash": "^4.17.21",
     "uuid": "^8.3.2",
-    "vue": "^3.0.11",
+    "vue": "^3.2.33",
     "vuedraggable": "^4.0.1",
     "wangeditor": "^4.6.13"
   },
@@ -53,7 +53,6 @@
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-typescript": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.11",
     "@vue/eslint-config-standard": "^5.1.2",
     "@vue/eslint-config-typescript": "^7.0.0",
     "babel-plugin-import": "^1.13.3",
