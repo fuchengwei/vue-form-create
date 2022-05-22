@@ -21,7 +21,6 @@ module.exports = {
     }
     config.externals = {
       ace: 'ace',
-      vue: 'Vue'
     }
   },
   chainWebpack: (config) => {
