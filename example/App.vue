@@ -1,3 +1,3 @@
 <template>
-  <ElDesignForm />
+  <AntdDesignForm />
 </template>

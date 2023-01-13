@@ -210,6 +210,7 @@ export const basicComponents = [
       width: '',
       placeholder: '请选择时间',
       format: 'YYYY-MM-DD',
+      valueFormat: 'YYYY-MM-DD',
       readonly: false,
       allowClear: true,
       disabled: false,
