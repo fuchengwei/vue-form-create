@@ -6,6 +6,7 @@ module.exports = {
   extends: ['plugin:vue/vue3-essential', 'standard-with-typescript', 'plugin:prettier/recommended'],
   overrides: [],
   parserOptions: {
+    project: ['./tsconfig.json'],
     ecmaVersion: 'latest',
     sourceType: 'module'
   },
