@@ -18,7 +18,9 @@
             {{ tab.title }}
           </div>
         </el-header>
-        <el-main> 配置区域 </el-main>
+        <el-main class="p-3">
+          <global-config v-if="currentTab === 'GlobalSetting'" />
+        </el-main>
       </el-container>
     </el-aside>
   </el-container>
@@ -26,6 +28,7 @@
 
 <script setup lang="ts">
 import HeaderBar from './header-bar.vue'
+import GlobalConfig from './global-config.vue'
 
 defineOptions({
   name: 'DesignForm'
