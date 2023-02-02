@@ -1,5 +1,5 @@
 <template>
-  <el-header height="45px" class="border-b-2 border-slate-300 flex flex-row-reverse items-center space-x-3 space-x-reverse">
+  <el-header height="45px" class="border-b-2 border-slate-200 flex flex-row-reverse items-center space-x-3 space-x-reverse">
     <div class="flex items-center space-x-1 text-sm text-blue-400 cursor-pointer" v-for="button of buttons" :key="button.name" @click="button.callBack">
       <svg-icon :name="button.icon" size="18px" color="#60A5FA" />
       <span>{{ button.name }}</span>
