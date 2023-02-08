@@ -6,13 +6,13 @@
       <el-main>Main</el-main>
     </el-container>
     <el-aside width="300px">
-      <el-container>
+      <el-container class="h-screen">
         <el-header height="45px" class="border-b-2 border-slate-200 flex items-center text-sm text-center cursor-pointer">
           <div
-            class="flex-1 relative"
+            class="flex-1 relative h-full flex items-center justify-center"
             v-for="tab of tabs"
             :key="tab.key"
-            :class="[currentTab === tab.key && 'after:absolute after:-left-2 after:-right-2 after:-bottom-2.5 after:content-[\'\'] after:h-0.5 after:bg-blue-400']"
+            :class="[currentTab === tab.key && 'after:absolute after:-left-2 after:-right-2 after:bottom-0 after:content-[\'\'] after:h-0.5 after:bg-blue-400']"
             @click="currentTab = tab.key"
           >
             {{ tab.title }}
