@@ -21,6 +21,7 @@ specifiers:
   eslint-plugin-vue: ^9.9.0
   husky: ^8.0.0
   lint-staged: ^13.1.0
+  monaco-editor: ^0.35.0
   postcss: ^8.4.21
   prettier: ^2.8.3
   tailwindcss: ^3.2.4
@@ -31,7 +32,6 @@ specifiers:
   vite: ^4.0.0
   vite-plugin-svg-icons: ^2.0.1
   vue: ^3.2.45
-  vue-eslint-parser: ^9.1.0
   vue-tsc: ^1.0.11
 
 dependencies:
@@ -58,6 +58,7 @@ devDependencies:
   eslint-plugin-vue: 9.9.0_eslint@8.33.0
   husky: 8.0.3
   lint-staged: 13.1.0
+  monaco-editor: 0.35.0
   postcss: 8.4.21
   prettier: 2.8.3
   tailwindcss: 3.2.4_postcss@8.4.21
@@ -67,7 +68,6 @@ devDependencies:
   unplugin-vue-define-options: 1.2.0_vue@3.2.45
   vite: 4.0.4
   vite-plugin-svg-icons: 2.0.1_vite@4.0.4
-  vue-eslint-parser: 9.1.0_eslint@8.33.0
   vue-tsc: 1.0.24_typescript@4.9.5
 
 packages:
@@ -4378,6 +4378,10 @@ packages:
       pathe: 1.1.0
       pkg-types: 1.0.1
       ufo: 1.0.1
+    dev: true
+
+  /monaco-editor/0.35.0:
+    resolution: {integrity: sha512-BJfkAZ0EJ7JgrgWzqjfBNP9hPSS8NlfECEDMEIIiozV2UaPq22yeuOjgbd3TwMh3anH0krWZirXZfn8KUSxiOA==}
     dev: true
 
   /mri/1.2.0:

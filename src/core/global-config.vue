@@ -90,16 +90,45 @@
     <el-form-item label="是否禁用">
       <el-switch v-model="state.formConfig.disabled" />
     </el-form-item>
+
+    <el-form-item label="表单动作设置">
+      <el-dropdown trigger="click" class="w-full" :popper-options="{}">
+        <el-button class="w-full">设置</el-button>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item
+              v-for="(_, key) in state.formEvents"
+              :key="key"
+              @click="
+                () => {
+                  eventName = key
+                  functionEditorDialogVisible = true
+                }
+              "
+            >
+              {{ key }}
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
+    </el-form-item>
   </el-form>
+
+  <function-editor-dialog v-model="functionEditorDialogVisible" :event-name="eventName" field="formEvents" />
 </template>
 
 <script setup lang="ts">
+import FunctionEditorDialog from './function-editor-dialog.vue'
+
 import { state } from '@/store'
 import locales from '@/utils/locales'
 
 defineOptions({
   name: 'GlobalConfig'
 })
+
+const eventName = ref('')
+const functionEditorDialogVisible = ref(false)
 </script>
 
 <style scoped>
