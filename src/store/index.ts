@@ -5,12 +5,18 @@ import type { Component } from '@/config'
 
 export interface State {
   selectWidgetItem?: Component
+  widgetFormList: Component[]
   globalConfig: Omit<ConfigProviderProps, 'a11y' | 'namespace' | 'keyboardNavigation'>
+  globalCss: string
+  globalClass: string
+  globalStyle: string
+  globalState: Record<string, any>
   formConfig: FormProps
   formEvents: Record<string, string>
 }
 
 export const state = reactive<State>({
+  widgetFormList: [],
   globalConfig: {
     locale: zhCn,
     size: 'default',
@@ -19,6 +25,10 @@ export const state = reactive<State>({
     },
     message: {}
   },
+  globalCss: '',
+  globalClass: '[]',
+  globalStyle: '{}',
+  globalState: {},
   formConfig: {
     labelPosition: 'right',
     requireAsteriskPosition: 'left',

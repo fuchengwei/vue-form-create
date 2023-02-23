@@ -91,8 +91,20 @@
       <el-switch v-model="state.formConfig.disabled" />
     </el-form-item>
 
+    <el-form-item label="全局样式表">
+      <el-button class="w-full" @click="cssEditorDialogVisible = true">设置</el-button>
+    </el-form-item>
+
+    <el-form-item label="自定义Class">
+      <el-button class="w-full" @click="classEditorDialogVisible = true">设置</el-button>
+    </el-form-item>
+
+    <el-form-item label="自定义Style">
+      <el-button class="w-full" @click="styleEditorDialogVisible = true">设置</el-button>
+    </el-form-item>
+
     <el-form-item label="表单动作设置">
-      <el-dropdown trigger="click" class="w-full" :popper-options="{}">
+      <el-dropdown trigger="click" class="w-full">
         <el-button class="w-full">设置</el-button>
         <template #dropdown>
           <el-dropdown-menu>
@@ -112,12 +124,18 @@
         </template>
       </el-dropdown>
     </el-form-item>
-  </el-form>
 
-  <function-editor-dialog v-model="functionEditorDialogVisible" :event-name="eventName" field="formEvents" />
+    <css-editor-dialog v-model="cssEditorDialogVisible" />
+    <class-editor-dialog v-model="classEditorDialogVisible" is-global />
+    <style-editor-dialog v-model="styleEditorDialogVisible" is-global />
+    <function-editor-dialog v-model="functionEditorDialogVisible" :event-name="eventName" field="formEvents" />
+  </el-form>
 </template>
 
 <script setup lang="ts">
+import CssEditorDialog from './css-editor-dialog.vue'
+import ClassEditorDialog from './class-editor-dialog.vue'
+import StyleEditorDialog from './style-editor-dialog.vue'
 import FunctionEditorDialog from './function-editor-dialog.vue'
 
 import { state } from '@/store'
@@ -128,6 +146,9 @@ defineOptions({
 })
 
 const eventName = ref('')
+const cssEditorDialogVisible = ref(false)
+const classEditorDialogVisible = ref(false)
+const styleEditorDialogVisible = ref(false)
 const functionEditorDialogVisible = ref(false)
 </script>
 

@@ -15,8 +15,12 @@ module.exports = {
   plugins: ['vue', '@typescript-eslint'],
 
   rules: {
+    'no-eval': 'off',
     'no-undef': 'off',
     '@typescript-eslint/triple-slash-reference': 'off',
-    '@typescript-eslint/consistent-type-imports': 'off'
+    '@typescript-eslint/consistent-type-imports': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/strict-boolean-expressions': 'off',
+    '@typescript-eslint/no-confusing-void-expression': 'off'
   }
 }

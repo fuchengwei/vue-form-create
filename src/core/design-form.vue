@@ -1,9 +1,11 @@
 <template>
   <el-container direction="horizontal" class="h-full font-mono">
-    <el-aside width="250px">左侧字段</el-aside>
+    <el-aside width="250px">
+      <components-group />
+    </el-aside>
     <el-container direction="vertical" class="border-x border-slate-300">
       <header-bar />
-      <el-main>Main</el-main>
+      <widget-form />
     </el-container>
     <el-aside width="300px">
       <el-container class="h-screen">
@@ -19,7 +21,8 @@
           </div>
         </el-header>
         <el-main class="p-3">
-          <global-config v-if="currentTab === 'GlobalSetting'" />
+          <global-config v-show="currentTab === 'GlobalSetting'" />
+          <widget-config v-show="currentTab === 'FieldSetting'" />
         </el-main>
       </el-container>
     </el-aside>
@@ -27,8 +30,11 @@
 </template>
 
 <script setup lang="ts">
+import ComponentsGroup from './components-group.vue'
 import HeaderBar from './header-bar.vue'
+import WidgetForm from './widget-form.vue'
 import GlobalConfig from './global-config.vue'
+import WidgetConfig from './widget-config.vue'
 
 defineOptions({
   name: 'DesignForm'

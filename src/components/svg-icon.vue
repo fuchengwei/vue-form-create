@@ -1,6 +1,6 @@
 <template>
-  <svg aria-hidden="true" class="svg-icon" :width="props.size" :height="props.size" v-on="$attrs">
-    <use :xlink:href="symbolId" rel="external nofollow" :fill="props.color" />
+  <svg aria-hidden="true" class="svg-icon" :width="props.size" :height="props.size" :style="{ color: props.color }" v-on="$attrs">
+    <use :xlink:href="symbolId" rel="external nofollow" fill="currentcolor" />
   </svg>
 </template>
 
