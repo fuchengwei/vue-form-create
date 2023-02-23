@@ -92,7 +92,7 @@
           ? element.options.remoteOptions
           : element.options.options"
           :key="item.value"
-          :value="item.value"
+          :label="item.value"
           :style="{
             display: element.options.inline ? 'inline-block' : 'block'
           }"
