@@ -38,11 +38,13 @@
         </template>
         <ElGenerateFormItem
           v-else
+          ref="bnnn"
           :model="model"
           :key="element.key"
           :element="widgetForm.list[index]"
           :config="data.config"
           :disabled="disabled"
+          @update:change-select="changeSelect"
         />
       </template>
     </el-form>
@@ -50,13 +52,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, toRefs, watch } from 'vue'
-import { ElMessage } from 'element-plus'
-import ElGenerateFormItem from './ElGenerateFormItem.vue'
-import { element } from '@/config'
+import { defineComponent, onMounted, reactive, toRefs, watch } from "vue";
+import { ElMessage } from "element-plus";
+import ElGenerateFormItem from "./ElGenerateFormItem.vue";
+import { element } from "@/config";
 
 export default defineComponent({
-  name: 'ElGenerateForm',
+  name: "ElGenerateForm",
   components: {
     ElGenerateFormItem
   },
@@ -78,70 +80,70 @@ export default defineComponent({
       generateForm: null as any,
       model: {} as any,
       rules: {} as any,
+      ceshi: null as any,
+      bnnn: null as any,
       widgetForm:
-        (props.data && JSON.parse(JSON.stringify(props.data))) ??
-        element.widgetForm
-    })
+        (props.data && JSON.parse(JSON.stringify(props.data))) ?? element.widgetForm
+    });
 
     const generateModel = (list: any[]) => {
       for (let index = 0; index < list.length; index++) {
-        const model = list[index].model
+        const model = list[index].model;
         if (!model) {
-          return
+          return;
         }
-        if (list[index].type === 'grid') {
-          list[index].columns.forEach((col: any) => generateModel(col.list))
+        if (list[index].type === "grid") {
+          list[index].columns.forEach((col: any) => generateModel(col.list));
         } else {
           if (props.value && Object.keys(props.value).includes(model)) {
-            state.model[model] = props.value[model]
+            state.model[model] = props.value[model];
           } else {
-            state.model[model] = list[index].options.defaultValue
+            state.model[model] = list[index].options.defaultValue;
           }
 
-          state.rules[model] = list[index].options.rules
+          state.rules[model] = list[index].options.rules;
         }
       }
-    }
+    };
 
     const generateOptions = (list: any[]) => {
-      list.forEach(item => {
-        if (item.type === 'grid') {
-          item.columns.forEach((col: any) => generateOptions(col.list))
+      list.forEach((item) => {
+        if (item.type === "grid") {
+          item.columns.forEach((col: any) => generateOptions(col.list));
         } else {
           if (item.options.remote && item.options.remoteFunc) {
             fetch(item.options.remoteFunc)
-              .then(resp => resp.json())
-              .then(json => {
+              .then((resp) => resp.json())
+              .then((json) => {
                 if (json instanceof Array) {
-                  item.options.remoteOptions = json.map(data => ({
+                  item.options.remoteOptions = json.map((data) => ({
                     label: data[item.options.props.label],
                     value: data[item.options.props.value],
                     children: data[item.options.props.children]
-                  }))
+                  }));
                 }
-              })
+              });
           }
         }
-      })
-    }
+      });
+    };
 
     watch(
       () => props.data,
-      val => {
-        state.widgetForm =
-          (val && JSON.parse(JSON.stringify(val))) ?? element.widgetForm
-        state.model = {}
-        state.rules = {}
-        generateModel(state.widgetForm.list)
-        generateOptions(state.widgetForm.list)
+      (val) => {
+        state.widgetForm = (val && JSON.parse(JSON.stringify(val))) ?? element.widgetForm;
+        state.model = {};
+        state.rules = {};
+        generateModel(state.widgetForm.list);
+        generateOptions(state.widgetForm.list);
       },
       { deep: true, immediate: true }
-    )
+    );
 
     onMounted(() => {
-      generateModel(state.widgetForm?.list ?? [])
-      generateOptions(state.widgetForm?.list ?? [])
-    })
+      generateModel(state.widgetForm?.list ?? []);
+      generateOptions(state.widgetForm?.list ?? []);
+    });
 
     const getData = () => {
       return new Promise((resolve, reject) => {
@@ -149,26 +151,32 @@ export default defineComponent({
           .validate()
           .then((validate: boolean) => {
             if (validate) {
-              resolve(state.model)
+              resolve(state.model);
             } else {
-              ElMessage.error('验证失败')
+              ElMessage.error("验证失败");
             }
           })
           .catch((error: Error) => {
-            reject(error)
-          })
-      })
-    }
+            reject(error);
+          });
+      });
+    };
 
     const reset = () => {
-      state.generateForm.resetFields()
-    }
+      state.generateForm.resetFields();
+    };
+
+    const changeSelect = (type: string, data: any) => {
+      console.log(type, data);
+      state.ceshi = data;
+    };
 
     return {
       ...toRefs(state),
       getData,
-      reset
-    }
+      reset,
+      changeSelect
+    };
   }
-})
+});
 </script>

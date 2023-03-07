@@ -1,66 +1,81 @@
 <template>
-  <a-form-item
+  <el-form-item
     v-if="element"
     :key="element.key"
     :label="element.label"
-    :name="element.model"
+    :prop="element.model"
   >
     <template v-if="element.type === 'input'">
-      <a-input
-        v-model:value="data"
-        :size="config.size"
+      <el-input
+        v-model="data"
         :style="{ width: element.options.width }"
         :placeholder="element.options.placeholder"
         :maxlength="parseInt(element.options.maxlength)"
-        :prefix="element.options.prefix"
-        :suffix="element.options.suffix"
-        :addonBefore="element.options.addonBefore"
-        :addonAfter="element.options.addonAfter"
-        :allowClear="element.options.allowClear"
+        :clearable="element.options.clearable"
         :readonly="element.options.readonly"
         :disabled="disabled || element.options.disabled"
-      />
+      >
+        <template #prefix v-if="element.options.prefix">{{
+          element.options.prefix
+        }}</template>
+        <template #suffix v-if="element.options.suffix">{{
+          element.options.suffix
+        }}</template>
+        <template #prepend v-if="element.options.prepend">{{
+          element.options.prepend
+        }}</template>
+        <template #append v-if="element.options.append">{{
+          element.options.append
+        }}</template>
+      </el-input>
     </template>
 
     <template v-if="element.type === 'password'">
-      <a-input-password
-        v-model:value="data"
-        :size="config.size"
+      <el-input
+        v-model="data"
         :style="{ width: element.options.width }"
         :placeholder="element.options.placeholder"
-        :maxlength="element.options.maxlength"
-        :prefix="element.options.prefix"
-        :suffix="element.options.suffix"
-        :addonBefore="element.options.addonBefore"
-        :addonAfter="element.options.addonAfter"
-        :allowClear="element.options.allowClear"
+        :maxlength="parseInt(element.options.maxlength)"
+        :clearable="element.options.clearable"
         :disabled="disabled || element.options.disabled"
         :readonly="element.options.readonly"
-        :visibilityToggle="element.options.visibilityToggle"
-      />
+        :show-password="element.options.showPassword"
+      >
+        <template #prefix v-if="element.options.prefix">{{
+          element.options.prefix
+        }}</template>
+        <template #suffix v-if="element.options.suffix">{{
+          element.options.suffix
+        }}</template>
+        <template #prepend v-if="element.options.prepend">{{
+          element.options.prepend
+        }}</template>
+        <template #append v-if="element.options.append">{{
+          element.options.append
+        }}</template>
+      </el-input>
     </template>
 
     <template v-if="element.type === 'textarea'">
-      <a-textarea
-        style="resize: none"
-        v-model:value="data"
-        :size="config.size"
+      <el-input
+        type="textarea"
+        resize="none"
+        v-model="data"
         :rows="element.options.rows"
         :style="{ width: element.options.width }"
         :placeholder="element.options.placeholder"
-        :maxlength="element.options.maxlength"
-        :showCount="element.options.showCount"
-        :autoSize="element.options.autoSize"
-        :allowClear="element.options.allowClear"
+        :maxlength="parseInt(element.options.maxlength)"
+        :show-word-limit="element.options.showWordLimit"
+        :autosize="element.options.autosize"
+        :clearable="element.options.clearable"
         :readonly="element.options.readonly"
         :disabled="disabled || element.options.disabled"
       />
     </template>
 
     <template v-if="element.type === 'number'">
-      <a-input-number
-        v-model:value="data"
-        :size="config.size"
+      <el-input-number
+        v-model="data"
         :style="{ width: element.options.width }"
         :max="element.options.max"
         :min="element.options.min"
@@ -69,67 +84,66 @@
     </template>
 
     <template v-if="element.type === 'radio'">
-      <a-radio-group
-        v-model:value="data"
-        :size="config.size"
+      <el-radio-group
+        v-model="data"
         :style="{ width: element.options.width }"
         :disabled="disabled || element.options.disabled"
       >
-        <a-radio
+        <el-radio
           v-for="item of element.options.remote
             ? element.options.remoteOptions
             : element.options.options"
           :key="item.value"
-          :value="item.value"
+          :label="item.value"
           :style="{
-            display: element.options.inline ? 'inline-block' : 'block'
+            display: element.options.inline ? 'inline-block' : 'block',
           }"
-          >{{ element.options.showLabel ? item.label : item.value }}</a-radio
+          >{{ element.options.showLabel ? item.label : item.value }}</el-radio
         >
-      </a-radio-group>
+      </el-radio-group>
     </template>
 
-    <template v-if="element.type === 'checkbox'">
-      <a-checkbox-group
-        v-model:value="data"
+    <template v-if="element.type === 'checkbox' && data">
+      <el-checkbox-group
+        v-model="data"
         :style="{ width: element.options.width }"
         :disabled="disabled || element.options.disabled"
       >
-        <a-checkbox
+        <el-checkbox
           v-for="item of element.options.remote
             ? element.options.remoteOptions
             : element.options.options"
           :key="item.value"
-          :value="item.value"
+          :label="item.value"
           :style="{
-            display: element.options.inline ? 'inline-block' : 'block'
+            display: element.options.inline ? 'inline-block' : 'block',
           }"
-          >{{ element.options.showLabel ? item.label : item.value }}</a-checkbox
         >
-      </a-checkbox-group>
+          {{ element.options.showLabel ? item.label : item.value }}
+        </el-checkbox>
+      </el-checkbox-group>
     </template>
 
     <template v-if="element.type === 'time'">
-      <a-time-picker
-        v-model:value="data"
-        :size="config.size"
+      <el-time-picker
+        v-model="data"
         :placeholder="element.options.placeholder"
-        :inputReadOnly="element.options.readonly"
-        :allowClear="element.options.allowClear"
+        :readonly="element.options.readonly"
+        :editable="element.options.editable"
+        :clearable="element.options.clearable"
         :format="element.options.format"
-        :valueFormat="element.options.valueFormat"
         :disabled="disabled || element.options.disabled"
         :style="{ width: element.options.width }"
       />
     </template>
 
     <template v-if="element.type === 'date'">
-      <a-date-picker
-        v-model:value="data"
-        :size="config.size"
+      <el-date-picker
+        v-model="data"
         :placeholder="element.options.placeholder"
-        :inputReadOnly="element.options.readonly"
-        :allowClear="element.options.allowClear"
+        :readonly="element.options.readonly"
+        :editable="element.options.editable"
+        :clearable="element.options.clearable"
         :format="element.options.format"
         :disabled="disabled || element.options.disabled"
         :style="{ width: element.options.width }"
@@ -137,58 +151,52 @@
     </template>
 
     <template v-if="element.type === 'rate'">
-      <a-rate
-        v-model:value="data"
-        :count="element.options.max"
+      <el-rate
+        v-model="data"
+        :max="element.options.max"
         :allowHalf="element.options.allowHalf"
-        :allowClear="element.options.allowClear"
         :disabled="disabled || element.options.disabled"
       />
     </template>
 
     <template v-if="element.type === 'select'">
-      <a-select
-        v-model:value="data"
-        :size="config.size"
-        :mode="element.options.mode"
+      <el-select
+        v-model="data"
+        :multiple="element.options.multiple"
         :placeholder="element.options.placeholder"
-        :filter-option="handleFilterOption"
-        :allowClear="element.options.clearable"
-        :showSearch="element.options.showSearch"
+        :clearable="element.options.clearable"
+        :filterable="element.options.filterable"
         :disabled="disabled || element.options.disabled"
         :style="{ width: element.options.width }"
+        @change="selectChange(element.type, $event, element.options)"
       >
-        <a-select-option
+        <el-option
           v-for="item of element.options.remote
             ? element.options.remoteOptions
             : element.options.options"
           :key="item.value"
           :value="item.value"
           :label="element.options.showLabel ? item.label : item.value"
-        >
-          {{ element.options.showLabel ? item.label : item.value }}
-        </a-select-option>
-      </a-select>
+        />
+      </el-select>
     </template>
 
     <template v-if="element.type === 'switch'">
-      <a-switch
-        v-model:checked="data"
-        :size="config.size === 'large' ? 'default' : config.size"
-        :checkedChildren="element.options.checkedChildren"
-        :unCheckedChildren="element.options.unCheckedChildren"
+      <el-switch
+        v-model="data"
+        :active-text="element.options.activeText"
+        :inactive-text="element.options.inactiveText"
         :disabled="disabled || element.options.disabled"
       />
     </template>
 
     <template v-if="element.type === 'slider'">
-      <a-slider
-        v-model:value="data"
+      <el-slider
+        v-model="data"
         :min="element.options.min"
         :max="element.options.max"
         :step="element.options.step"
         :range="element.options.range"
-        :reverse="element.options.reverse"
         :disabled="disabled || element.options.disabled"
         :style="{ width: element.options.width }"
       />
@@ -199,25 +207,22 @@
     </template>
 
     <template v-if="element.type === 'img-upload'">
-      <a-upload
+      <el-upload
         :name="element.options.file"
         :action="element.options.action"
         :accept="element.options.accept"
-        :file-list="data"
+        :file-list="element.options.defaultValue"
         :listType="element.options.listType"
         :multiple="element.options.multiple"
+        :limit="element.options.limit"
         :disabled="disabled || element.options.disabled"
-        @change="handleUploadChange"
+        :on-success="handleUploadSuccess"
       >
-        <SvgIcon
-          v-if="element.options.listType === 'picture-card'"
-          iconClass="insert"
-        />
-        <a-button v-else>
-          <SvgIcon iconClass="img-upload" style="margin-right: 10px;" />
-          点击上传
-        </a-button>
-      </a-upload>
+        <SvgIcon v-if="element.options.listType === 'picture-card'" iconClass="insert" />
+        <el-button v-else>
+          <SvgIcon iconClass="img-upload" style="margin-right: 10px" />点击上传
+        </el-button>
+      </el-upload>
     </template>
 
     <template v-if="element.type === 'richtext-editor'">
@@ -229,34 +234,34 @@
     </template>
 
     <template v-if="element.type === 'cascader'">
-      <a-cascader
-        v-model:value="data"
-        :size="config.size"
+      <el-cascader
+        v-model="data"
         :options="element.options.remoteOptions"
         :placeholder="element.options.placeholder"
-        :allowClear="element.options.allowClear"
+        :filterable="element.options.filterable"
+        :clearable="element.options.clearable"
         :disabled="disabled || element.options.disabled"
         :style="{ width: element.options.width }"
       />
     </template>
-  </a-form-item>
+  </el-form-item>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue'
-import SvgIcon from '@/components/SvgIcon.vue'
-import RichTextEditor from '@/components/RichTextEditor.vue'
-import { WidgetForm } from '@/config/antd'
+import { computed, defineComponent, PropType, toRaw, watch } from "vue";
+import SvgIcon from "@/components/SvgIcon.vue";
+import RichTextEditor from "@/components/RichTextEditor.vue";
+import { WidgetForm } from "@/config/element";
 
 export default defineComponent({
-  name: 'AntdGenerateFormItem',
+  name: "ElGenerateFormItem",
   components: {
     SvgIcon,
     RichTextEditor
   },
   props: {
     config: {
-      type: Object as PropType<WidgetForm['config']>,
+      type: Object as PropType<WidgetForm["config"]>,
       required: true
     },
     element: {
@@ -270,29 +275,51 @@ export default defineComponent({
     disabled: {
       type: Boolean,
       required: true
+    },
+    ceshi: {
+      type: String
     }
   },
-  setup(props) {
+  emits: ["update:changeSelect"],
+  setup(props, context) {
+    watch(
+      () => props.ceshi,
+      (val, v) => {
+        console.log(val, v, ";;;;");
+      }
+    );
+
     const data = computed({
       get: () => props.model[props.element.model],
-      set: val => {
+      set: (val) => {
         // eslint-disable-next-line vue/no-mutating-props
-        props.model[props.element.model] = val
+        props.model[props.element.model] = val;
       }
-    })
+    });
 
     const handleFilterOption = (input: string, option: { label: string }) =>
-      option.label.toLowerCase().includes(input)
+      option.label.toLowerCase().includes(input);
 
-    const handleUploadChange = ({ fileList }: any) => {
-      data.value = fileList
-    }
+    const handleUploadSuccess = (_res: any, _file: any, fileList: any[]) => {
+      data.value = fileList;
+    };
+
+    const selectChange = (type: string, data: any, option: any) => {
+      console.log(type, data, toRaw(option));
+      context.emit("update:changeSelect", type, data, option);
+    };
+
+    const getSelectData = () => {
+      console.log(123455);
+    };
 
     return {
       data,
       handleFilterOption,
-      handleUploadChange
-    }
+      handleUploadSuccess,
+      selectChange,
+      getSelectData
+    };
   }
-})
+});
 </script>

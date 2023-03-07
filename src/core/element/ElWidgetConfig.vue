@@ -174,6 +174,19 @@
         direction="vertical"
         style="margin-top: 10px"
       >
+        <el-radio-group v-model="data.options.relevancy">
+          <el-radio-button :label="false">不关联</el-radio-button>
+          <el-radio-button :label="true">关联</el-radio-button>
+        </el-radio-group>
+        <el-input v-model="data.options.publish">
+          <template #prepend> 发布code </template>
+        </el-input>
+        <el-input v-model="data.options.subscribe">
+          <template #prepend> 订阅code </template>
+        </el-input>
+        <el-input v-model="data.options.params">
+          <template #prepend> 参数 </template>
+        </el-input>
         <el-input v-model="data.options.remoteFunc">
           <template #prepend> 远端方法 </template>
         </el-input>

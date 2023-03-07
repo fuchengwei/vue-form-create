@@ -252,6 +252,10 @@ export const basicComponents = [
         }
       ],
       remoteOptions: [],
+      params: '',
+      relevancy: false,
+      publish: '',
+      subscribe: '',
       remoteFunc:
         'https://raw.githubusercontent.com/fuchengwei/vue-form-create/master/mock/mock.json',
       rules
