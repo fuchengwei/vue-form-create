@@ -17,7 +17,7 @@
 
 [https://fuchengwei.github.io/vue-form-create/example/index.html](https://fuchengwei.github.io/vue-form-create/example/index.html)
 
-### 演示地址（gitee）
+### 演示地址（gitee
 
 [http://fuchengwei.gitee.io/vue-form-create](http://fuchengwei.gitee.io/vue-form-create)
 

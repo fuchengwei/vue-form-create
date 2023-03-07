@@ -12,12 +12,15 @@ module.exports = {
     '@vue/typescript/recommended'
   ],
   rules: {
+    'semi': 0,
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'space-before-function-paren': [2, { anonymous: 'never', named: 'never' }],
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': ['off'],
     '@typescript-eslint/no-non-null-assertion': 'off',
+    "quotes": "off",
+    "@typescript-eslint/no-var-requires": 0,
     '@typescript-eslint/member-delimiter-style': [
       2,
       {

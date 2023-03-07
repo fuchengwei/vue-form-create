@@ -28,7 +28,8 @@
     "serve": "vue-cli-service serve ./example/main.ts --open",
     "build": "vue-cli-service build --target lib --name formCreate ./src/index.ts",
     "lint": "vue-cli-service lint",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "package": "vue-cli-service build --target lib ./src/index.ts --name formCreate --dest moan-ui"
   },
   "peerDependencies": {
     "vue": ">=3.2.0"

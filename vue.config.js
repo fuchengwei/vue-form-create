@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 
 const resolve = (dir) => {
@@ -20,7 +19,7 @@ module.exports = {
       assetFilter: (assetFilename) => assetFilename.endsWith('.js')
     }
     config.externals = {
-      ace: 'ace',
+      ace: 'ace'
     }
   },
   chainWebpack: (config) => {
