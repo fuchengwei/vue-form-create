@@ -19,7 +19,11 @@
             :justify="element.options.justify"
             :align="element.options.align"
           >
-            <a-col v-for="(col, colIndex) of element.columns" :key="colIndex" :span="col.span ?? 0">
+            <a-col
+              v-for="(col, colIndex) of element.columns"
+              :key="colIndex"
+              :span="col.span ?? 0"
+            >
               <AntdGenerateFormItem
                 v-for="colItem of col.list"
                 :model="model"
@@ -45,7 +49,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, toRefs, watch } from 'vue'
+import {
+  defineComponent,
+  onMounted,
+  reactive,
+  toRefs,
+  watch,
+  nextTick
+} from 'vue'
 import { message } from 'ant-design-vue'
 import AntdGenerateFormItem from './AntdGenerateFormItem.vue'
 import { antd } from '@/config'
@@ -93,22 +104,28 @@ export default defineComponent({
             state.model[model] = list[index].options.defaultValue
           }
 
-          state.rules[model] = list[index].options.rules
+          state.rules[model] = JSON.parse(
+            JSON.stringify(list[index].options.rules)
+          )
+          if (state.rules[model].enum) {
+            // eslint-disable-next-line no-eval
+            state.rules[model].enum = eval(state.rules[model].enum)
+          }
         }
       }
     }
 
     const generateOptions = (list: any[]) => {
-      list.forEach(item => {
+      list.forEach((item) => {
         if (item.type === 'grid') {
           item.columns.forEach((col: any) => generateOptions(col.list))
         } else {
           if (item.options.remote && item.options.remoteFunc) {
             fetch(item.options.remoteFunc)
-              .then(resp => resp.json())
-              .then(json => {
+              .then((resp) => resp.json())
+              .then((json) => {
                 if (json instanceof Array) {
-                  item.options.remoteOptions = json.map(data => ({
+                  item.options.remoteOptions = json.map((data) => ({
                     label: data[item.options.props.label],
                     value: data[item.options.props.value],
                     children: data[item.options.props.children]
@@ -120,15 +137,22 @@ export default defineComponent({
       })
     }
 
+    const reset = () => {
+      nextTick(() => {
+        state.generateForm.resetFields()
+      })
+    }
+
     watch(
       () => props.data,
-      val => {
+      (val) => {
         state.widgetForm =
           (val && JSON.parse(JSON.stringify(val))) ?? antd.widgetForm
         state.model = {}
         state.rules = {}
         generateModel(state.widgetForm.list)
         generateOptions(state.widgetForm.list)
+        reset()
       },
       { deep: true, immediate: true }
     )
@@ -136,6 +160,7 @@ export default defineComponent({
     onMounted(() => {
       generateModel(state.widgetForm?.list ?? [])
       generateOptions(state.widgetForm?.list ?? [])
+      reset()
     })
 
     const getData = () => {
@@ -153,10 +178,6 @@ export default defineComponent({
             reject(error)
           })
       })
-    }
-
-    const reset = () => {
-      state.generateForm.resetFields()
     }
 
     return {

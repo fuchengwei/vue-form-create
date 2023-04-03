@@ -485,7 +485,7 @@
         </el-form-item>
 
         <el-form-item label="枚举类型">
-          <el-input v-model:value="data.options.rules.enum" />
+          <el-input v-model="data.options.rules.enum" />
         </el-form-item>
 
         <el-form-item label="字段长度">

@@ -50,7 +50,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, toRefs, watch } from 'vue'
+import { defineComponent, onMounted, reactive, toRefs, watch, nextTick } from 'vue'
 import { ElMessage } from 'element-plus'
 import ElGenerateFormItem from './ElGenerateFormItem.vue'
 import { element } from '@/config'
@@ -98,7 +98,11 @@ export default defineComponent({
             state.model[model] = list[index].options.defaultValue
           }
 
-          state.rules[model] = list[index].options.rules
+          state.rules[model] = JSON.parse(JSON.stringify(list[index].options.rules))
+          if (state.rules[model].enum) {
+            // eslint-disable-next-line no-eval
+            state.rules[model].enum = eval(state.rules[model].enum)
+          }
         }
       }
     }
@@ -125,6 +129,12 @@ export default defineComponent({
       })
     }
 
+    const reset = () => {
+      nextTick(() => {
+        state.generateForm.resetFields()
+      })
+    }
+
     watch(
       () => props.data,
       val => {
@@ -134,6 +144,7 @@ export default defineComponent({
         state.rules = {}
         generateModel(state.widgetForm.list)
         generateOptions(state.widgetForm.list)
+        reset()
       },
       { deep: true, immediate: true }
     )
@@ -141,6 +152,7 @@ export default defineComponent({
     onMounted(() => {
       generateModel(state.widgetForm?.list ?? [])
       generateOptions(state.widgetForm?.list ?? [])
+      reset()
     })
 
     const getData = () => {
@@ -158,10 +170,6 @@ export default defineComponent({
             reject(error)
           })
       })
-    }
-
-    const reset = () => {
-      state.generateForm.resetFields()
     }
 
     return {
