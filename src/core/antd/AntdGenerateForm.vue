@@ -104,12 +104,21 @@ export default defineComponent({
             state.model[model] = list[index].options.defaultValue
           }
 
-          state.rules[model] = JSON.parse(
-            JSON.stringify(list[index].options.rules)
-          )
-          if (state.rules[model].enum) {
-            // eslint-disable-next-line no-eval
-            state.rules[model].enum = eval(state.rules[model].enum)
+          if (list[index].options.rules) {
+            state.rules[model] = JSON.parse(
+              JSON.stringify(list[index].options.rules)
+            )
+
+            if (state.rules[model].enum) {
+              // eslint-disable-next-line no-eval
+              state.rules[model].enum = eval(state.rules[model].enum)
+            }
+
+            if (state.rules[model].pattern) {
+              // eslint-disable-next-line no-eval
+              state.rules[model].pattern = eval(state.rules[model].pattern)
+              state.rules[model].type = 'string'
+            }
           }
         }
       }

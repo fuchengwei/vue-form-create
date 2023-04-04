@@ -50,10 +50,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, toRefs, watch, nextTick } from 'vue'
+import {
+  defineComponent,
+  onMounted,
+  reactive,
+  toRefs,
+  watch,
+  nextTick
+} from 'vue'
 import { ElMessage } from 'element-plus'
 import ElGenerateFormItem from './ElGenerateFormItem.vue'
 import { element } from '@/config'
+import { stat } from 'fs'
 
 export default defineComponent({
   name: 'ElGenerateForm',
@@ -98,26 +106,37 @@ export default defineComponent({
             state.model[model] = list[index].options.defaultValue
           }
 
-          state.rules[model] = JSON.parse(JSON.stringify(list[index].options.rules))
-          if (state.rules[model].enum) {
-            // eslint-disable-next-line no-eval
-            state.rules[model].enum = eval(state.rules[model].enum)
+          if (list[index].options.rules) {
+            state.rules[model] = JSON.parse(
+              JSON.stringify(list[index].options.rules)
+            )
+
+            if (state.rules[model].enum) {
+              // eslint-disable-next-line no-eval
+              state.rules[model].enum = eval(state.rules[model].enum)
+            }
+
+            if (state.rules[model].pattern) {
+              // eslint-disable-next-line no-eval
+              state.rules[model].pattern = eval(state.rules[model].pattern)
+              state.rules[model].type = 'string'
+            }
           }
         }
       }
     }
 
     const generateOptions = (list: any[]) => {
-      list.forEach(item => {
+      list.forEach((item) => {
         if (item.type === 'grid') {
           item.columns.forEach((col: any) => generateOptions(col.list))
         } else {
           if (item.options.remote && item.options.remoteFunc) {
             fetch(item.options.remoteFunc)
-              .then(resp => resp.json())
-              .then(json => {
+              .then((resp) => resp.json())
+              .then((json) => {
                 if (json instanceof Array) {
-                  item.options.remoteOptions = json.map(data => ({
+                  item.options.remoteOptions = json.map((data) => ({
                     label: data[item.options.props.label],
                     value: data[item.options.props.value],
                     children: data[item.options.props.children]
@@ -137,7 +156,7 @@ export default defineComponent({
 
     watch(
       () => props.data,
-      val => {
+      (val) => {
         state.widgetForm =
           (val && JSON.parse(JSON.stringify(val))) ?? element.widgetForm
         state.model = {}
