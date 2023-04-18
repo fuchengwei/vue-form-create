@@ -14,6 +14,7 @@ export interface State {
   globalState: Record<string, any>
   formConfig: FormProps
   formEvents: Record<string, string>
+  pageLifecycle: Record<string, string>
 }
 
 export const state = reactive<State>({
@@ -47,6 +48,11 @@ export const state = reactive<State>({
   },
   formEvents: {
     validate: 'function click(prop, isValid, message, formInstance, formModel, state) {}'
+  },
+  pageLifecycle: {
+    onMounted: 'function onMounted(formInstance, formModel, state) {}',
+    onUpdated: 'function onUpdated(formInstance, formModel, state) {}',
+    onUnmounted: 'function onUnmounted(formInstance, formModel, state) {}'
   }
 })
 

@@ -44,7 +44,12 @@
       <class-editor-dialog v-model="classEditorDialogVisible" />
       <style-editor-dialog v-model="styleEditorDialogVisible" />
       <props-editor-dialog v-model="propsEditorDialogVisible" field-name="dynamicProps" />
-      <function-editor-dialog v-model="functionEditorDialogVisible" :event-name="eventName" />
+      <function-editor-dialog
+        v-if="state.selectWidgetItem.events && eventName"
+        v-model:model-visible="functionEditorDialogVisible"
+        v-model:model-value="state.selectWidgetItem.events[eventName]"
+        title="动作设置"
+      />
     </template>
   </el-form>
 </template>

@@ -57,6 +57,22 @@ const handlerDragAdd = ({ newIndex }: { newIndex: number }) => {
 
   state.widgetFormList[newIndex] = state.selectWidgetItem = widgetFormList[newIndex]
 }
+
+watch(
+  [state.pageLifecycle, formInstance],
+  () => {
+    if (!formInstance.value) return
+
+    const pageLifecycle = createEventFunction(state.pageLifecycle, {}, formInstance.value)
+
+    pageLifecycle.onMounted()
+    pageLifecycle.onUpdated()
+  },
+  {
+    deep: true,
+    immediate: true
+  }
+)
 </script>
 
 <style scoped>

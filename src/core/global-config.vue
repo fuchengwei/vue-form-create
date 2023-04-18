@@ -121,6 +121,30 @@
               :key="key"
               @click="
                 () => {
+                  eventField = 'formEvents'
+                  eventName = key
+                  functionEditorDialogVisible = true
+                }
+              "
+            >
+              {{ key }}
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
+    </el-form-item>
+
+    <el-form-item label="页面生命周期">
+      <el-dropdown trigger="click" class="w-full">
+        <el-button class="w-full">设置</el-button>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item
+              v-for="(_, key) in state.pageLifecycle"
+              :key="key"
+              @click="
+                () => {
+                  eventField = 'pageLifecycle'
                   eventName = key
                   functionEditorDialogVisible = true
                 }
@@ -137,7 +161,11 @@
     <class-editor-dialog v-model="classEditorDialogVisible" is-global />
     <style-editor-dialog v-model="styleEditorDialogVisible" is-global />
     <state-editor-dialog v-model="stateEditorDialogVisible" is-global />
-    <function-editor-dialog v-model="functionEditorDialogVisible" :event-name="eventName" field="formEvents" />
+    <function-editor-dialog
+      v-model:model-visible="functionEditorDialogVisible"
+      v-model:model-value="state[eventField][eventName]"
+      :title="eventField === 'pageLifecycle' ? '页面生命周期设置' : '表单动作设置'"
+    />
   </el-form>
 </template>
 
@@ -155,7 +183,8 @@ defineOptions({
   name: 'GlobalConfig'
 })
 
-const eventName = ref('')
+const eventField = ref<'formEvents' | 'pageLifecycle'>('pageLifecycle')
+const eventName = ref('onMounted')
 const cssEditorDialogVisible = ref(false)
 const classEditorDialogVisible = ref(false)
 const styleEditorDialogVisible = ref(false)
