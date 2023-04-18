@@ -36,6 +36,9 @@ import WidgetForm from './widget-form.vue'
 import GlobalConfig from './global-config.vue'
 import WidgetConfig from './widget-config.vue'
 
+import { state } from '@/store'
+import { debounceLoadRemoteIcon } from '@/utils'
+
 defineOptions({
   name: 'DesignForm'
 })
@@ -54,4 +57,6 @@ const tabs: { key: TabType; title: string }[] = [
     title: '全局设置'
   }
 ]
+
+watchEffect(() => debounceLoadRemoteIcon(state.iconSrc))
 </script>

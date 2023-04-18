@@ -1,5 +1,5 @@
 import { debounce } from 'lodash-es'
-import { state } from '@/store'
+import { remoteIconList, state } from '@/store'
 
 import type { Component } from '@/config'
 import { ElMessage, FormInstance } from 'element-plus'
@@ -8,6 +8,19 @@ const debounceErrorMessage = debounce(ElMessage.error, 500)
 
 // 删除domNode
 export const removeDomNode = (selectors: string) => document.querySelectorAll(selectors).forEach((node) => node.remove())
+
+// 加载js链接
+export const loadJsLink = (id: string, src: string) => {
+  if (!src) return
+
+  removeDomNode(`#${id}`)
+
+  const script = document.createElement('script')
+  script.id = id
+  script.src = src
+
+  document.getElementsByTagName('head')[0].appendChild(script)
+}
 
 // 加载css
 export const loadCss = (cssText: string) => {
@@ -52,3 +65,13 @@ export const createEventFunction = (component: Component, formModel: Record<stri
 
   return eventFunction
 }
+
+// 加载远程Icon
+export const debounceLoadRemoteIcon = debounce((src: string) => {
+  loadJsLink('icon-script', src)
+  fetch(src)
+    .then((resp) => resp.text())
+    .then((text) => {
+      remoteIconList.value = text.match(/(?<=id=").*?(?=")/g) ?? []
+    })
+}, 500)

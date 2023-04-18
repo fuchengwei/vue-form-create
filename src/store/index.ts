@@ -7,6 +7,7 @@ export interface State {
   selectWidgetItem?: Component
   widgetFormList: Component[]
   globalConfig: Omit<ConfigProviderProps, 'a11y' | 'namespace' | 'keyboardNavigation'>
+  iconSrc: string
   globalCss: string
   globalClass: string
   globalStyle: string
@@ -25,6 +26,7 @@ export const state = reactive<State>({
     },
     message: {}
   },
+  iconSrc: '//at.alicdn.com/t/c/font_4020511_polrwyz4x7j.js',
   globalCss: '',
   globalClass: '[]',
   globalStyle: '{}',
@@ -47,3 +49,5 @@ export const state = reactive<State>({
     validate: 'function click(prop, isValid, message, formInstance, formModel, state) {}'
   }
 })
+
+export const remoteIconList = ref<string[]>([])

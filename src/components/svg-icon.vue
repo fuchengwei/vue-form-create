@@ -17,10 +17,9 @@ const props = withDefaults(
     prefix?: string
   }>(),
   {
-    size: '1em',
-    prefix: 'svg-icon'
+    size: '1em'
   }
 )
 
-const symbolId = computed(() => `#${props.prefix}-${props.name}`)
+const symbolId = computed(() => `#${props.prefix ? `${props.prefix}-${props.name}` : props.name}`)
 </script>

@@ -4,7 +4,7 @@
       <el-input v-model="state.selectWidgetItem.key" readonly />
     </el-form-item>
 
-    <button-config v-if="state.selectWidgetItem?.type === 'Button'" />
+    <component :is="currentComponent" />
 
     <template v-if="state.selectWidgetItem">
       <el-form-item label="自定义Class">
@@ -54,9 +54,9 @@ import ClassEditorDialog from './class-editor-dialog.vue'
 import StyleEditorDialog from './style-editor-dialog.vue'
 import PropsEditorDialog from './props-editor-dialog.vue'
 import FunctionEditorDialog from './function-editor-dialog.vue'
-import ButtonConfig from '@/config/button-config.vue'
 
 import { state } from '@/store'
+import { componentConfigMap } from '@/config'
 
 defineOptions({
   name: 'WidgetConfig'
@@ -67,4 +67,6 @@ const styleEditorDialogVisible = ref(false)
 const propsEditorDialogVisible = ref(false)
 const functionEditorDialogVisible = ref(false)
 const eventName = ref('')
+
+const currentComponent = computed(() => state.selectWidgetItem && componentConfigMap[`${state.selectWidgetItem?.type}Config`])
 </script>

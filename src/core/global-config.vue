@@ -26,6 +26,10 @@
       <el-input-number v-model="state.globalConfig.message!.max" :controls="false" placeholder="可同时显示消息最大数量" />
     </el-form-item>
 
+    <el-form-item label="Icon地址">
+      <el-input placeholder="Iconfont Symbol" v-model="state.iconSrc" />
+    </el-form-item>
+
     <h4 class="text-sm font-semibold text-gray-600 pb-2 border-b mb-5">表单配置</h4>
 
     <el-form-item label="表单大小">

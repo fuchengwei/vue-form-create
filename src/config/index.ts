@@ -18,6 +18,15 @@ export interface ComponentGroup {
   components: Component[]
 }
 
+export const componentConfigMap: Record<string, any> = {}
+
+Object.values(
+  import.meta.glob('./*.vue', {
+    import: 'default',
+    eager: true
+  })
+).forEach((componentConfig: any) => (componentConfigMap[componentConfig.name] = componentConfig))
+
 const basicComponents: Component[] = [
   {
     label: '按钮',
@@ -43,7 +52,24 @@ const basicComponents: Component[] = [
       autofocus: false,
       nativeType: 'button',
       autoInsertSpace: undefined,
-      color: ''
+      color: '',
+      isHidden: false
+    }
+  },
+  {
+    label: '图标',
+    type: 'Icon',
+    customClass: '[]',
+    customStyle: '{}',
+    dynamicProps: '{}',
+    events: {
+      click: 'function click(event, formInstance, formModel, state) {}'
+    },
+    config: {
+      name: '',
+      size: '30px',
+      color: '',
+      isHidden: false
     }
   }
 ]

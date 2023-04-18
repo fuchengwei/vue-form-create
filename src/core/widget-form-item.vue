@@ -9,10 +9,13 @@
     @click="state.selectWidgetItem = props.component"
   >
     <el-button v-if="props.component.type === 'Button'" v-bind="commonProps" v-on="eventFunction"> {{ commonProps.content }} </el-button>
+
+    <svg-icon v-if="props.component.type === 'Icon'" :name="props.component.config.name" v-bind="commonProps" v-on="eventFunction" />
   </div>
 </template>
 
 <script lang="ts" setup>
+import SvgIcon from '@/components/svg-icon.vue'
 import { state } from '@/store'
 import { createEventFunction } from '@/utils'
 

@@ -25,7 +25,7 @@ import Draggable from 'vuedraggable'
 import { v4 } from 'uuid'
 import { cloneDeep } from 'lodash-es'
 import WidgetFormItem from './widget-form-item.vue'
-import { state } from '@/store'
+import { remoteIconList, state } from '@/store'
 
 import type { FormInstance } from 'element-plus'
 
@@ -42,8 +42,11 @@ const handlerDragAdd = ({ newIndex }: { newIndex: number }) => {
 
   widgetFormList[newIndex].key = `${widgetFormList[newIndex].type}_${key}`
 
-  state.widgetFormList[newIndex] = widgetFormList[newIndex]
-  state.selectWidgetItem = widgetFormList[newIndex]
+  if (widgetFormList[newIndex].type === 'Icon' && remoteIconList.value.length) {
+    widgetFormList[newIndex].config.name = remoteIconList.value[0]
+  }
+
+  state.widgetFormList[newIndex] = state.selectWidgetItem = widgetFormList[newIndex]
 }
 </script>
 
