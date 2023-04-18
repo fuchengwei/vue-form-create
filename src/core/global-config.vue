@@ -99,6 +99,10 @@
       <el-button class="w-full" @click="cssEditorDialogVisible = true">设置</el-button>
     </el-form-item>
 
+    <el-form-item label="全局State">
+      <el-button class="w-full" @click="stateEditorDialogVisible = true">设置</el-button>
+    </el-form-item>
+
     <el-form-item label="自定义Class">
       <el-button class="w-full" @click="classEditorDialogVisible = true">设置</el-button>
     </el-form-item>
@@ -132,6 +136,7 @@
     <css-editor-dialog v-model="cssEditorDialogVisible" />
     <class-editor-dialog v-model="classEditorDialogVisible" is-global />
     <style-editor-dialog v-model="styleEditorDialogVisible" is-global />
+    <state-editor-dialog v-model="stateEditorDialogVisible" is-global />
     <function-editor-dialog v-model="functionEditorDialogVisible" :event-name="eventName" field="formEvents" />
   </el-form>
 </template>
@@ -140,6 +145,7 @@
 import CssEditorDialog from './css-editor-dialog.vue'
 import ClassEditorDialog from './class-editor-dialog.vue'
 import StyleEditorDialog from './style-editor-dialog.vue'
+import StateEditorDialog from './state-editor-dialog.vue'
 import FunctionEditorDialog from './function-editor-dialog.vue'
 
 import { state } from '@/store'
@@ -153,6 +159,7 @@ const eventName = ref('')
 const cssEditorDialogVisible = ref(false)
 const classEditorDialogVisible = ref(false)
 const styleEditorDialogVisible = ref(false)
+const stateEditorDialogVisible = ref(false)
 const functionEditorDialogVisible = ref(false)
 </script>
 

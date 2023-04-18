@@ -1,8 +1,6 @@
+import { ElMessage, FormInstance } from 'element-plus'
 import { debounce } from 'lodash-es'
 import { remoteIconList, state } from '@/store'
-
-import type { Component } from '@/config'
-import { ElMessage, FormInstance } from 'element-plus'
 
 const debounceErrorMessage = debounce(ElMessage.error, 500)
 
@@ -39,6 +37,27 @@ export const loadCss = (cssText: string) => {
   document.getElementsByTagName('head')[0].appendChild(styleElement)
 }
 
+// 加载动态参数
+export const loadDynamicParams = (paramsText: string, initValue: Record<string, any> | [], errorMessage: string, state: Record<string, any>) => {
+  try {
+    initValue = eval(`(${paramsText})`)
+  } catch (error) {
+    debounceErrorMessage(errorMessage)
+  }
+
+  return initValue
+}
+
+// 加载远程Icon
+export const debounceLoadRemoteIcon = debounce((src: string) => {
+  loadJsLink('icon-script', src)
+  fetch(src)
+    .then((resp) => resp.text())
+    .then((text) => {
+      remoteIconList.value = text.match(/(?<=id=").*?(?=")/g) ?? []
+    })
+}, 500)
+
 // 加载function
 export const loadFunction = (funcText: string, formModel: Record<string, any>, formInstance?: FormInstance, ...args: any) => {
   let func
@@ -53,8 +72,7 @@ export const loadFunction = (funcText: string, formModel: Record<string, any>, f
 }
 
 // 创建event函数
-export const createEventFunction = (component: Component, formModel: Record<string, any>, formInstance?: FormInstance) => {
-  const { events } = component
+export const createEventFunction = (events: Record<string, any> | undefined, formModel: Record<string, any>, formInstance?: FormInstance) => {
   const eventFunction: Record<string, any> = {}
 
   if (events) {
@@ -65,13 +83,3 @@ export const createEventFunction = (component: Component, formModel: Record<stri
 
   return eventFunction
 }
-
-// 加载远程Icon
-export const debounceLoadRemoteIcon = debounce((src: string) => {
-  loadJsLink('icon-script', src)
-  fetch(src)
-    .then((resp) => resp.text())
-    .then((text) => {
-      remoteIconList.value = text.match(/(?<=id=").*?(?=")/g) ?? []
-    })
-}, 500)

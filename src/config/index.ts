@@ -4,7 +4,7 @@ export interface Component {
   type: string
   customClass: string
   customStyle: string
-  dynamicProps?: string
+  dynamicProps: string
   dynamicFormItemProps?: string
   events?: Record<string, string>
   config: Record<string, any>

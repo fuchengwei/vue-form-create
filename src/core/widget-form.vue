@@ -1,7 +1,7 @@
 <template>
   <el-main class="bg-zinc-50 p-2 relative box-border">
     <div v-if="!state.widgetFormList.length" class="absolute top-[40%] w-[98%] text-center text-xl text-gray-400">从左侧拖拽来添加字段</div>
-    <el-form ref="formInstance" v-bind="state.formConfig">
+    <el-form ref="formInstance" v-bind="state.formConfig" v-on="eventFunction">
       <draggable
         tag="div"
         item-key="key"
@@ -11,6 +11,7 @@
         :list="state.widgetFormList"
         @add="handlerDragAdd"
         class="widget-form-list bg-white shadow-2xl shadow-slate-200"
+        v-bind="commonProps"
       >
         <template #item="{ element }">
           <widget-form-item :component="element" :form-instance="formInstance" />
@@ -26,6 +27,7 @@ import { v4 } from 'uuid'
 import { cloneDeep } from 'lodash-es'
 import WidgetFormItem from './widget-form-item.vue'
 import { remoteIconList, state } from '@/store'
+import { createEventFunction, loadDynamicParams } from '@/utils'
 
 import type { FormInstance } from 'element-plus'
 
@@ -34,6 +36,13 @@ defineOptions({
 })
 
 const formInstance = ref<FormInstance>()
+
+const commonProps = computed(() => ({
+  class: loadDynamicParams(state.globalClass, {}, '加载自定义类名失败', state.globalState),
+  style: loadDynamicParams(state.globalStyle, [], '加载自定义样式失败', state.globalState)
+}))
+
+const eventFunction = computed(() => createEventFunction(state.formEvents, {}, formInstance.value))
 
 const handlerDragAdd = ({ newIndex }: { newIndex: number }) => {
   const key = v4().replaceAll('-', '')

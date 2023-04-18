@@ -17,7 +17,7 @@
 <script lang="ts" setup>
 import SvgIcon from '@/components/svg-icon.vue'
 import { state } from '@/store'
-import { createEventFunction } from '@/utils'
+import { createEventFunction, loadDynamicParams } from '@/utils'
 
 import type { Component } from '@/config'
 import type { FormInstance } from 'element-plus'
@@ -31,13 +31,12 @@ const props = defineProps<{
   formInstance?: FormInstance
 }>()
 
-const commonProps = computed(() => {
-  const _commonProps = {
-    ...props.component.config
-  }
+const commonProps = computed<any>(() => ({
+  ...props.component.config,
+  ...loadDynamicParams(props.component.dynamicProps, {}, '加载props失败', state.globalState),
+  class: loadDynamicParams(props.component.customClass, {}, '加载自定义类名失败', state.globalState),
+  style: loadDynamicParams(props.component.customStyle, [], '加载自定义样式失败', state.globalState)
+}))
 
-  return _commonProps
-})
-
-const eventFunction = computed(() => createEventFunction(props.component, {}, props.formInstance))
+const eventFunction = computed(() => createEventFunction(props.component.events, {}, props.formInstance))
 </script>
