@@ -13,6 +13,13 @@
     <svg-icon v-if="props.component.type === 'Icon'" :name="props.component.config.name" v-bind="commonProps" v-on="eventFunction" />
 
     <el-text v-if="props.component.type === 'Text'" v-bind="commonProps" v-on="eventFunction"> {{ commonProps.content }} </el-text>
+
+    <el-link v-if="props.component.type === 'Link'" v-bind="commonProps" v-on="eventFunction">
+      {{ commonProps.content }}
+      <template #icon v-if="commonProps.icon">
+        <svg-icon :name="commonProps.icon" />
+      </template>
+    </el-link>
   </div>
 </template>
 

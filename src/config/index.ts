@@ -88,6 +88,24 @@ const basicComponents: Component[] = [
       truncated: false,
       tag: 'span'
     }
+  },
+  {
+    label: '链接',
+    type: 'Link',
+    customClass: '[]',
+    customStyle: '{}',
+    dynamicProps: '{}',
+    events: {
+      click: 'function click(event, formInstance, formModel, state) {}'
+    },
+    config: {
+      content: '链接',
+      type: 'default',
+      underline: true,
+      disabled: false,
+      href: '',
+      icon: ''
+    }
   }
 ]
 

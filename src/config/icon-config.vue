@@ -1,6 +1,6 @@
 <template>
   <el-form-item label="IconName">
-    <ChoiceIcon v-model="state.selectWidgetItem!.config.name" />
+    <choice-icon v-model="state.selectWidgetItem!.config.name" />
   </el-form-item>
 
   <el-form-item label="Size">
