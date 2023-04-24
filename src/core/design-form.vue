@@ -35,7 +35,6 @@ import HeaderBar from './header-bar.vue'
 import WidgetForm from './widget-form.vue'
 import GlobalConfig from './global-config.vue'
 import WidgetConfig from './widget-config.vue'
-
 import { state } from '@/store'
 import { debounceLoadRemoteIcon } from '@/utils'
 

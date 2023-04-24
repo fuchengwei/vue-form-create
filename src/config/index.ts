@@ -71,12 +71,29 @@ const basicComponents: Component[] = [
       color: '',
       isHidden: false
     }
+  },
+  {
+    label: '文本',
+    type: 'Text',
+    customClass: '[]',
+    customStyle: '{}',
+    dynamicProps: '{}',
+    events: {
+      click: 'function click(event, formInstance, formModel, state) {}'
+    },
+    config: {
+      content: '文本',
+      type: undefined,
+      size: 'default',
+      truncated: false,
+      tag: 'span'
+    }
   }
 ]
 
 export default [
   {
-    title: '基础组件',
+    title: 'Basic 基础组件',
     components: basicComponents
   }
 ] as ComponentGroup[]

@@ -10,6 +10,8 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ChoiceIcon: typeof import('./../components/choice-icon.vue')['default']
+    ComponentSize: typeof import('./../components/component-size.vue')['default']
+    ComponentType: typeof import('./../components/component-type.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElColorPicker: typeof import('element-plus/es')['ElColorPicker']
@@ -31,6 +33,7 @@ declare module '@vue/runtime-core' {
     ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
+    ElText: typeof import('element-plus/es')['ElText']
     MonacoEditor: typeof import('./../components/monaco-editor.vue')['default']
     SvgIcon: typeof import('./../components/svg-icon.vue')['default']
   }

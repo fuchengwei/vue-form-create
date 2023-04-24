@@ -3,26 +3,9 @@
     <el-input v-model="state.selectWidgetItem!.config.content" />
   </el-form-item>
 
-  <el-form-item label="尺寸">
-    <el-radio-group
-      v-model="state.selectWidgetItem!.config.size"
-      @click="(event: any) => event.target!.value === state.selectWidgetItem!.config.size && (state.selectWidgetItem!.config.size = undefined)"
-    >
-      <el-radio-button label="large">large</el-radio-button>
-      <el-radio-button label="default">default</el-radio-button>
-      <el-radio-button label="small">small</el-radio-button>
-    </el-radio-group>
-  </el-form-item>
+  <component-size />
 
-  <el-form-item label="类型">
-    <el-select v-model="state.selectWidgetItem!.config.type" clearable class="w-full">
-      <el-option label="Primary" value="primary" />
-      <el-option label="Success" value="success" />
-      <el-option label="Warning" value="warning" />
-      <el-option label="Danger" value="danger" />
-      <el-option label="Info" value="info" />
-    </el-select>
-  </el-form-item>
+  <component-type />
 
   <el-form-item label="原生type属性">
     <el-radio-group v-model="state.selectWidgetItem!.config.nativeType">
@@ -78,6 +61,8 @@
 </template>
 
 <script setup lang="ts">
+import ComponentType from '@/components/component-type.vue'
+import ComponentSize from '@/components/component-size.vue'
 import { state } from '@/store'
 
 defineOptions({

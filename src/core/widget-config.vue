@@ -59,7 +59,6 @@ import ClassEditorDialog from './class-editor-dialog.vue'
 import StyleEditorDialog from './style-editor-dialog.vue'
 import PropsEditorDialog from './props-editor-dialog.vue'
 import FunctionEditorDialog from './function-editor-dialog.vue'
-
 import { state } from '@/store'
 import { componentConfigMap } from '@/config'
 

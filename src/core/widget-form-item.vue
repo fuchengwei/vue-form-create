@@ -11,6 +11,8 @@
     <el-button v-if="props.component.type === 'Button'" v-bind="commonProps" v-on="eventFunction"> {{ commonProps.content }} </el-button>
 
     <svg-icon v-if="props.component.type === 'Icon'" :name="props.component.config.name" v-bind="commonProps" v-on="eventFunction" />
+
+    <el-text v-if="props.component.type === 'Text'" v-bind="commonProps" v-on="eventFunction"> {{ commonProps.content }} </el-text>
   </div>
 </template>
 
