@@ -20,6 +20,8 @@
         <svg-icon :name="commonProps.icon" />
       </template>
     </el-link>
+
+    <el-divider v-if="props.component.type === 'Divider'" v-bind="commonProps"> {{ commonProps.content }} </el-divider>
   </div>
 </template>
 

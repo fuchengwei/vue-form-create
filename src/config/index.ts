@@ -109,9 +109,29 @@ const basicComponents: Component[] = [
   }
 ]
 
+const otherComponents: Component[] = [
+  {
+    label: '分割线',
+    type: 'Divider',
+    customClass: '[]',
+    customStyle: '{}',
+    dynamicProps: '{}',
+    config: {
+      content: '分割线',
+      direction: 'horizontal',
+      borderStyle: 'solid',
+      contentPosition: 'center'
+    }
+  }
+]
+
 export default [
   {
     title: 'Basic 基础组件',
     components: basicComponents
+  },
+  {
+    title: 'Others 其他组件',
+    components: otherComponents
   }
 ] as ComponentGroup[]
