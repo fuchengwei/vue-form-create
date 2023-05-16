@@ -44,7 +44,6 @@ export const loadDynamicParams = (paramsText: string, initValue: Record<string, 
   } catch (error) {
     debounceErrorMessage(errorMessage)
   }
-
   return initValue
 }
 

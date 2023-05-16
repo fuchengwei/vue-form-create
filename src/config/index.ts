@@ -27,7 +27,7 @@ Object.values(
   })
 ).forEach((componentConfig: any) => (componentConfigMap[componentConfig.name] = componentConfig))
 
-const basicComponents: Component[] = [
+export const basicComponents: Component[] = [
   {
     label: '按钮',
     type: 'Button',
@@ -109,7 +109,7 @@ const basicComponents: Component[] = [
   }
 ]
 
-const otherComponents: Component[] = [
+export const layoutComponents: Component[] = [
   {
     label: '分割线',
     type: 'Divider',
@@ -122,6 +122,40 @@ const otherComponents: Component[] = [
       borderStyle: 'solid',
       contentPosition: 'center'
     }
+  },
+  {
+    label: '栅格-行',
+    type: 'Row',
+    customClass: '[]',
+    customStyle: '{}',
+    dynamicProps: '{}',
+    config: {
+      gutter: 0,
+      justify: 'start',
+      align: 'top',
+      tag: 'div'
+    },
+    childNodes: []
+  },
+  {
+    label: '栅格-列',
+    type: 'Col',
+    customClass: '[]',
+    customStyle: '{}',
+    dynamicProps: '{}',
+    config: {
+      span: 24,
+      offset: 0,
+      push: 0,
+      pull: 0,
+      xs: undefined,
+      sm: undefined,
+      md: undefined,
+      lg: undefined,
+      xl: undefined,
+      tag: 'div'
+    },
+    childNodes: []
   }
 ]
 
@@ -131,7 +165,7 @@ export default [
     components: basicComponents
   },
   {
-    title: 'Others 其他组件',
-    components: otherComponents
+    title: 'Layout 布局组件',
+    components: layoutComponents
   }
 ] as ComponentGroup[]

@@ -1,23 +1,24 @@
 <template>
   <el-main class="bg-zinc-50 p-2 relative box-border">
     <div v-if="!state.widgetFormList.length" class="absolute top-[40%] w-[98%] text-center text-xl text-gray-400">从左侧拖拽来添加字段</div>
-    <el-form ref="formInstance" v-bind="state.formConfig" v-on="eventFunction">
-      <draggable
-        tag="div"
-        item-key="key"
-        handler=".drag-widget"
-        :animation="200"
-        :group="{ name: 'people' }"
-        :list="state.widgetFormList"
-        @add="handlerDragAdd"
-        class="widget-form-list bg-white shadow-2xl shadow-slate-200"
-        v-bind="commonProps"
-      >
-        <template #item="{ element }">
-          <widget-form-item :component="element" :form-instance="formInstance" />
-        </template>
-      </draggable>
-    </el-form>
+    <el-config-provider v-bind="state.globalConfig">
+      <el-form ref="formInstance" v-bind="state.formConfig" v-on="eventFunction">
+        <draggable
+          tag="div"
+          item-key="key"
+          :animation="200"
+          :group="{ name: 'people' }"
+          :list="state.widgetFormList"
+          class="widget-form-list bg-white shadow-2xl shadow-slate-200"
+          v-bind="commonProps"
+          @add="handlerDragAdd"
+        >
+          <template #item="{ element }">
+            <widget-form-item :component="element" :form-instance="formInstance" />
+          </template>
+        </draggable>
+      </el-form>
+    </el-config-provider>
   </el-main>
 </template>
 
